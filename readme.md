@@ -1,5 +1,7 @@
-<h1 style="text-align: center">ТРиЗБД: курсовая работа</h1>
-<p style="text-align: center">Группа ПО-316</p>
-<p style="text-align: center">Тема: "Курсы повышения квалификации"</p>
+<h1 align="center">ТРиЗБД: курсовая работа</h1>
+<p align="center">Группа ПО-316</p>
+<p align="center">Тема: "Курсы повышения квалификации"</p>
+
+<hr>
 
 <img align="center" alt="logic model" src="./logic_model.png">
