@@ -1,0 +1,23 @@
+{
+  "name": "course_project-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsh-12/course_project-db.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rsh-12/course_project-db/issues"
+  },
+  "homepage": "https://github.com/rsh-12/course_project-db#readme",
+  "dependencies": {
+    "node-pg-migrate": "^6.0.0"
+  }
+}
