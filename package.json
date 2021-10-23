@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/rsh-12/course_project-db#readme",
   "dependencies": {
-    "node-pg-migrate": "^6.0.0"
+    "node-pg-migrate": "^6.0.0",
+    "pg": "^8.7.1"
   }
 }
