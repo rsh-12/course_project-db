@@ -29,9 +29,9 @@ exports.up = pgm => {
 
             -- хоть что-нибудь или все должно быть указано
             CONSTRAINT students_email_and_phone_check
-                CHECK (coalesce(char_length(phone) :: BOOLEAN :: INTEGER, 0)
+                CHECK (coalesce(char_length(phone)::BOOLEAN::INTEGER, 0)
                            +
-                       coalesce(char_length(email) :: BOOLEAN :: INTEGER, 0)
+                       coalesce(char_length(email)::BOOLEAN::INTEGER, 0)
                     > 0)
         );
 
