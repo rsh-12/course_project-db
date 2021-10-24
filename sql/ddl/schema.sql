@@ -22,7 +22,7 @@ CREATE TABLE students
     date_of_birth DATE        NOT NULL,
     phone         VARCHAR(20),
     email         VARCHAR(20),
-    company_id    INT REFERENCES companies (id)
+    company_id    INT         NOT NULL REFERENCES companies (id)
         ON DELETE CASCADE,
     created_at    TIMESTAMP DEFAULT current_timestamp,
     updated_at    TIMESTAMP DEFAULT current_timestamp,
@@ -87,3 +87,20 @@ CREATE TABLE courses
 );
 
 COMMENT ON TABLE courses IS 'Курсы, доступные для прохождения';
+
+
+/* СЕРТИФИКАТЫ */
+CREATE TABLE certificates
+(
+    id            SERIAL PRIMARY KEY,
+    student_id    INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+    course_id     INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+    date_of_issue DATE      DEFAULT current_date,
+    created_at    TIMESTAMP DEFAULT current_timestamp,
+    UNIQUE (student_id, course_id, date_of_issue)
+);
+
+COMMENT ON TABLE certificates IS 'Сертификаты, выданные студентам';
+
+
+/* ... */

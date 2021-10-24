@@ -12,7 +12,7 @@ exports.up = pgm => {
             date_of_birth DATE        NOT NULL,
             phone         VARCHAR(20),
             email         VARCHAR(20),
-            company_id    INT REFERENCES companies (id)
+            company_id    INT         NOT NULL REFERENCES companies (id)
                 ON DELETE CASCADE,
             created_at    TIMESTAMP DEFAULT current_timestamp,
             updated_at    TIMESTAMP DEFAULT current_timestamp,
