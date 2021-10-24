@@ -113,3 +113,15 @@ CREATE TABLE courses_instructors
 );
 
 COMMENT ON TABLE courses_instructors IS 'Курсы и преподаватели';
+
+
+/* КУРСЫ И СТУДЕНТЫ */
+CREATE TABLE courses_students
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+    course_id  INT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT current_timestamp
+);
+
+COMMENT ON TABLE courses_students IS 'Курсы и студенты';
