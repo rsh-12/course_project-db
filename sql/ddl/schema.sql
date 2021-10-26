@@ -2,10 +2,10 @@
 CREATE TABLE companies
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(30) NOT NULL,
+    name        VARCHAR(30) NOT NULL UNIQUE,
     description VARCHAR(120),
     created_at  TIMESTAMP DEFAULT current_timestamp,
-    upated_at   TIMESTAMP DEFAULT current_timestamp,
+    updated_at  TIMESTAMP DEFAULT current_timestamp,
 
     CHECK (trim(name) <> '')
 );
@@ -20,8 +20,8 @@ CREATE TABLE students
     first_name    VARCHAR(30) NOT NULL,
     last_name     VARCHAR(30) NOT NULL,
     date_of_birth DATE        NOT NULL,
-    phone         VARCHAR(20),
-    email         VARCHAR(20),
+    phone         VARCHAR(20) UNIQUE,
+    email         VARCHAR(20) UNIQUE,
     company_id    INT         NOT NULL REFERENCES companies (id)
         ON DELETE CASCADE,
     created_at    TIMESTAMP DEFAULT current_timestamp,
