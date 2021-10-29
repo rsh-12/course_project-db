@@ -1,3 +1,10 @@
+-- Компании-клиенты центра повышения квалификации
+INSERT INTO companies(name, description)
+VALUES ('IT cat', 'Разработка и сопровождение ПО'),
+       ('МойДокумент', 'Продажа ПО и оказание услуг B2B'),
+       ('Bank Investment', 'Денежно-кредитная организация');
+
+-- Курсы, доступные компаниям для приобретения
 INSERT INTO courses(name, category, description, hours, start_date, end_date, created_at)
 VALUES ('Деловой английский для начинающих',
         'Иностранные языки',
