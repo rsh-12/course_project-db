@@ -4,10 +4,10 @@ CREATE TABLE companies
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(30) NOT NULL UNIQUE,
     description VARCHAR(120),
-    created_at  TIMESTAMP DEFAULT current_timestamp,
-    updated_at  TIMESTAMP DEFAULT current_timestamp,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CHECK (trim(name) <> '')
+    CHECK (TRIM(name) <> '')
 );
 
 COMMENT ON TABLE companies IS 'Компании, где работают слушатели курсов';
@@ -24,24 +24,24 @@ CREATE TABLE students
     email         VARCHAR(20) UNIQUE,
     company_id    INT         NOT NULL REFERENCES companies (id)
         ON DELETE CASCADE,
-    created_at    TIMESTAMP DEFAULT current_timestamp,
-    updated_at    TIMESTAMP DEFAULT current_timestamp,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     -- студенты должны быть совершеннолетними
-    CHECK ( (date_part('year', current_date) - date_part('year', date_of_birth)) > 17 ),
+    CHECK ( (DATE_PART('year', CURRENT_DATE) - DATE_PART('year', date_of_birth)) > 17 ),
 
     -- номер телефона не менее 8
-    CHECK ( phone IS NULL OR (char_length(trim(phone)) > 7 AND phone ~ '\+?[0-9]{8,20}')),
+    CHECK ( phone IS NULL OR (CHAR_LENGTH(TRIM(phone)) > 7 AND phone ~ '\+?[0-9]{8,20}')),
 
     -- длина почта не менее 6
-    CHECK (email IS NULL OR (char_length(trim(email)) > 5
+    CHECK (email IS NULL OR (CHAR_LENGTH(TRIM(email)) > 5
         AND email ~* '(^[a-z]{2})([a-z_|0-9-]{1,15})@([a-z]{1,15})\.(com|ru)$')),
 
     -- хоть что-нибудь или все должно быть указано
     CONSTRAINT students_email_and_phone_check
-        CHECK (coalesce(char_length(phone)::BOOLEAN::INTEGER, 0)
+        CHECK (COALESCE(CHAR_LENGTH(phone)::BOOLEAN::INTEGER, 0)
                    +
-               coalesce(char_length(email)::BOOLEAN::INTEGER, 0)
+               COALESCE(CHAR_LENGTH(email)::BOOLEAN::INTEGER, 0)
             > 0)
 );
 
@@ -59,11 +59,11 @@ CREATE TABLE instructors
     last_name  VARCHAR(30) NOT NULL,
     education  VARCHAR(50) NOT NULL, -- образование инструктора
     degree     VARCHAR(30) NOT NULL, -- уровни квалификации инструктора
-    created_at TIMESTAMP DEFAULT current_timestamp,
-    updated_at TIMESTAMP DEFAULT current_timestamp,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CHECK ( trim(education) <> '' ),
-    CHECK ( trim(degree) <> '' )
+    CHECK ( TRIM(education) <> '' ),
+    CHECK ( TRIM(degree) <> '' )
 );
 
 COMMENT ON TABLE instructors IS 'Преподаватели определенных курсов';
@@ -74,15 +74,15 @@ CREATE TABLE courses
 (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(50) NOT NULL UNIQUE,
-    category    VARCHAR(10),
-    description VARCHAR(120) DEFAULT 'No description',
+    category    VARCHAR(50),
+    description VARCHAR(250) DEFAULT 'No description',
     hours       INT,
-    start_date  DATE         DEFAULT current_date,
-    end_date    DATE         DEFAULT current_date + INTERVAL '1 month',
-    created_at  TIMESTAMP    DEFAULT current_timestamp,
-    updated_at  TIMESTAMP    DEFAULT current_timestamp,
+    start_date  DATE         DEFAULT CURRENT_DATE,
+    end_date    DATE         DEFAULT CURRENT_DATE + INTERVAL '1 month',
+    created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
 
-    CHECK ( trim(name) <> ''),
+    CHECK ( TRIM(name) <> ''),
     CHECK ( end_date > courses.start_date )
 );
 
@@ -95,8 +95,8 @@ CREATE TABLE certificates
     id            SERIAL PRIMARY KEY,
     student_id    INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
     course_id     INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
-    date_of_issue DATE      DEFAULT current_date,
-    created_at    TIMESTAMP DEFAULT current_timestamp,
+    date_of_issue DATE      DEFAULT CURRENT_DATE,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (student_id, course_id, date_of_issue)
 );
 
@@ -109,7 +109,7 @@ CREATE TABLE courses_instructors
     id            SERIAL PRIMARY KEY,
     instructor_id INT NOT NULL REFERENCES instructors (id) ON DELETE CASCADE,
     course_id     INT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
-    created_at    TIMESTAMP DEFAULT current_timestamp
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 COMMENT ON TABLE courses_instructors IS 'Курсы и преподаватели';
@@ -121,7 +121,7 @@ CREATE TABLE courses_students
     id         SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
     course_id  INT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT current_timestamp
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 COMMENT ON TABLE courses_students IS 'Курсы и студенты';
@@ -131,13 +131,13 @@ COMMENT ON TABLE courses_students IS 'Курсы и студенты';
 CREATE TABLE contracts
 (
     id              SERIAL PRIMARY KEY,
-    conclusion_date DATE      DEFAULT current_date,
-    completion_date DATE      DEFAULT current_date + INTERVAL '1 year',
+    conclusion_date DATE      DEFAULT CURRENT_DATE,
+    completion_date DATE      DEFAULT CURRENT_DATE + INTERVAL '1 year',
     company_id      INT NOT NULL REFERENCES companies (id) ON DELETE CASCADE,
     student_id      INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
     instructor_id   INT NOT NULL REFERENCES instructors (id) ON DELETE CASCADE,
     course_id       INT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
-    created_at      TIMESTAMP DEFAULT current_timestamp,
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CHECK ( completion_date > conclusion_date )
 );
