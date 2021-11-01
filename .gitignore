@@ -3,3 +3,4 @@ node_modules/
 .idea/
 package-lock.json
 env.sh
+backend/app/config/db.config.js
