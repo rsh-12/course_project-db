@@ -143,3 +143,13 @@ CREATE TABLE contracts
 );
 
 COMMENT ON TABLE contracts IS 'Договоры, заключенные между сторонами';
+
+/* USERS */
+CREATE TABLE users
+(
+    id         SERIAL PRIMARY KEY,
+    username   VARCHAR(30)  NOT NULL UNIQUE,
+    password   VARCHAR(150) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
