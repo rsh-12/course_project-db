@@ -9,13 +9,8 @@ exports.signUp = async (req, res) => {
     const {username, password} = req.body
     const encryptedPassword = bcrypt.hashSync(password, 8);
 
-    await pool.query('insert into users(username, password) values ($1, $2);',
-        [username, encryptedPassword], err => {
-            if (err) {
-                return res.status(500).send({message: err.message});
-            }
-            return res.send({message: "User was created successfully"});
-        });
+    const user = await UserRepo.insert(username, encryptedPassword);
+    user ? res.send(user) : res.sendStatus(500);
 };
 
 exports.signIn = async (req, res) => {
