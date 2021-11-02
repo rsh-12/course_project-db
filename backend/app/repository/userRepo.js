@@ -11,8 +11,11 @@ class UserRepo {
         return rows[0];
     }
 
-    static async insert() {
+    static async insert(username, password) {
+        const {rows} = await pool.query('insert into users(username, password) values ($1, $2) returning *;',
+            [username, password]);
 
+        return rows[0];
     }
 }
 
