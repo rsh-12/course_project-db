@@ -1,7 +1,6 @@
 const config = require('../config/auth.config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const pool = require('../config/pool.confg');
 const UserRepo = require('../repository/userRepo');
 
 exports.signUp = async (req, res) => {
