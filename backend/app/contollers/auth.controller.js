@@ -1,7 +1,8 @@
-const config = require("../config/auth.config");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const config = require('../config/auth.config');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const pool = require('../config/pool.confg');
+const UserRepo = require('../repository/userRepo');
 
 exports.signUp = async (req, res) => {
     // Save User to Database
@@ -19,14 +20,12 @@ exports.signUp = async (req, res) => {
 
 exports.signIn = async (req, res) => {
     const username = req.body.username;
-    await pool.query('select id, username, password from users where username = $1', [username], (err, result) => {
-        if (err) return res.status(500).send({message: err.stack});
-        if (!result.rows.length) return res.status(404).send({message: "User Not found."});
+    const user = await UserRepo.findByUsername(username);
 
-        const data = result.rows[0];
+    if (user) {
         const passwordIsValid = bcrypt.compareSync(
             req.body.password,
-            data.password
+            user.password
         );
 
         if (!passwordIsValid) return res.status(401).send({
@@ -34,11 +33,16 @@ exports.signIn = async (req, res) => {
             message: "Invalid Password!"
         });
 
-        const token = jwt.sign({id: data.id}, config.secret, {expiresIn: 86400});
-        return res.status(200).send({
-            id: data.id,
-            username: data.username,
+        const token = jwt.sign({id: user.id}, config.secret, {expiresIn: 86400});
+
+        res.status(200).send({
+            id: user.id,
+            username: user.username,
             accessToken: token
         });
-    });
+
+    } else {
+        res.status(404).send({message: "User Not found."});
+    }
+
 }
