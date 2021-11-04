@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION update_timestamp() RETURNS TRIGGER AS
 $update_timestamp$
 BEGIN
-    new.updated_at := current_timestamp;
+    new.updated_at := CURRENT_TIMESTAMP;
     RETURN new;
 END;
 $update_timestamp$ LANGUAGE plpgsql;
@@ -27,6 +27,12 @@ EXECUTE PROCEDURE update_timestamp();
 CREATE TRIGGER updated_at_students
     BEFORE INSERT OR UPDATE
     ON students
+    FOR EACH ROW
+EXECUTE PROCEDURE update_timestamp();
+
+CREATE TRIGGER updated_at_users
+    BEFORE INSERT OR UPDATE
+    ON users
     FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp();
 

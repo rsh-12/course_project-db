@@ -1,0 +1,26 @@
+#!/bin/bash
+
+function generatePhoneNumber() {
+  for (( j = 0; j < 10; j++ )); do
+      # shellcheck disable=SC2004
+      A+=$(($RANDOM % 10))
+  done
+  echo "+7"$A >> numbers.txt
+  A=''
+}
+
+function foo() {
+  LIMIT=10
+
+  if [ "$1" ]; then
+    LIMIT=$(($1))
+  fi
+
+  for (( i = 0; i < LIMIT; i++ )); do
+    generatePhoneNumber
+  done
+
+  echo "$LIMIT numbers have created"
+}
+
+foo "$1"
