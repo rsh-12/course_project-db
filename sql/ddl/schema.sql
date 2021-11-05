@@ -55,10 +55,10 @@ COMMENT ON COLUMN students.email IS 'При вводе должен совпад
 CREATE TABLE instructors
 (
     id         SERIAL PRIMARY KEY,
-    first_name VARCHAR(30) NOT NULL,
-    last_name  VARCHAR(30) NOT NULL,
-    education  VARCHAR(50) NOT NULL, -- образование инструктора
-    degree     VARCHAR(30) NOT NULL, -- уровни квалификации инструктора
+    first_name VARCHAR(30)  NOT NULL,
+    last_name  VARCHAR(30)  NOT NULL,
+    education  VARCHAR(150) NOT NULL, -- образование инструктора
+    degree     VARCHAR(30)  NOT NULL, -- уровни квалификации инструктора
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
