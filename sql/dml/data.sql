@@ -88,3 +88,8 @@ VALUES (1, 2),
        (2, 1),
        (3, 3),
        (3, 4);
+
+INSERT INTO courses_students(student_id, course_id)
+VALUES (1, 3),
+       (1, 4),
+       (2, 4);
