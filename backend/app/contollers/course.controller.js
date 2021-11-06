@@ -57,3 +57,41 @@ exports.delete = async (req, res) => {
 
     return res.send(course);
 }
+
+exports.add = async (req, res) => {
+    const {
+        name, category, description,
+        hours, startDate, endDate
+    } = req.body;
+
+    const course = await CourseRepo.insert(name, category, description, hours, startDate, endDate);
+
+    if (!course) {
+        return res.sendStatus(500);
+    }
+
+    cache.del('courses');
+    console.debug('the key "courses" has been deleted');
+
+    return res.send(course);
+}
+
+exports.update = async (req, res) => {
+    const {id} = req.params;
+
+    const {
+        name, category, description,
+        hours, startDate, endDate
+    } = req.body;
+
+    const course = await CourseRepo.update(id, name, category, description, hours, startDate, endDate);
+
+    if (!course) {
+        return res.sendStatus(500);
+    }
+
+    cache.del('courses');
+    console.debug('the key "courses" has been deleted');
+
+    return res.send(course);
+}
