@@ -4,19 +4,27 @@ const InstructorRepo = require('./instructor.repo');
 
 class CourseRepo {
     static async find() {
-        const {rows} = await pool.query('select * from courses_info');
+        const {rows} = await pool.query('select * from courses_info;');
 
         return toCamelCase(rows);
     }
 
     static async findById(id) {
-        const {rows} = await pool.query('select * from courses where id = $1', [id]);
-        const instructors  = await InstructorRepo.findByCourseId(id);
+        const {rows} = await pool.query('select * from courses where id = $1;', [id]);
+        const instructors = await InstructorRepo.findByCourseId(id);
 
         return {
             course: toCamelCase(rows),
             instructors: instructors
         };
+    }
+
+    static async delete(id) {
+        const {rows} = await pool.query(`delete
+                                         from courses
+                                         where id = $1 returning *;`, [id]);
+
+        return toCamelCase(rows)[0];
     }
 
 }
