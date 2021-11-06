@@ -8,17 +8,17 @@ exports.getAll = async (req, res) => {
 
     if (!!courses) {
         console.debug('courses from cache')
-
-        res.send(courses);
-    } else {
-        console.debug('courses from DB')
-        courses = await CourseRepo.find();
-        cache.set('courses', courses, 12 * 60 * 60);
-
-        return courses
-            ? res.send(courses)
-            : res.sendStatus(404);
+        return res.send(courses);
     }
+
+    console.debug('courses from DB')
+    courses = await CourseRepo.find();
+
+    cache.set('courses', courses, 12 * 60 * 60);
+
+    return courses
+        ? res.send(courses)
+        : res.sendStatus(404);
 };
 
 exports.getOne = async (req, res) => {
@@ -46,13 +46,14 @@ exports.getOne = async (req, res) => {
 exports.delete = async (req, res) => {
     const {id} = req.params;
     const course = await CourseRepo.delete(id);
-    if (course) {
-        cache.del(`instructors_by_course_${id}`);
-        cache.del('courses');
-        console.debug('the key "courses" has been deleted');
 
-        return res.send(course);
-    } else {
+    if (!course) {
         return res.status(404).send({message: `Course(id=${id}) not found`});
     }
+
+    cache.del(`instructors_by_course_${id}`);
+    cache.del('courses');
+    console.debug('the key "courses" has been deleted');
+
+    return res.send(course);
 }
