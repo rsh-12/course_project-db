@@ -17,4 +17,9 @@ module.exports = function (app) {
         controller.getOne
     );
 
+    app.delete("/api/courses/:id",
+        // [authJwt.verifyToken], todo: uncomment later
+        controller.delete
+    );
+
 }
