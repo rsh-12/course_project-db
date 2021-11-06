@@ -13,7 +13,17 @@ exports.getAll = async (req, res) => {
         courses = await CourseRepo.find();
         cache.set('courses', courses, 12 * 60 * 60);
 
-        res.send(courses);
+        courses
+            ? res.send(courses)
+            : res.sendStatus(404);
     }
 };
 
+exports.getOne = async (req, res) => {
+    const {id} = req.params;
+    const course = await CourseRepo.findById(id);
+
+    course
+        ? res.send(course)
+        : res.sendStatus(404);
+}
