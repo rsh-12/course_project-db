@@ -8,18 +8,27 @@ module.exports = function (app) {
     });
 
     app.get("/api/courses",
-        // [authJwt.verifyToken], todo: uncomment later
+        // todo: uncomment later
+        // [authJwt.verifyToken],
         controller.getAll
     );
 
     app.get("/api/courses/:id",
-        // [authJwt.verifyToken], todo: uncomment later
+        // todo: uncomment later
+        // [authJwt.verifyToken],
         controller.getOne
     );
 
     app.delete("/api/courses/:id",
-        // [authJwt.verifyToken], todo: uncomment later
+        // todo: uncomment later
+        // [authJwt.verifyToken],
         controller.delete
+    );
+
+    app.post("/api/courses",
+        // todo: uncomment later
+        // [authJwt.verifyToken],
+        controller.add
     );
 
 }
