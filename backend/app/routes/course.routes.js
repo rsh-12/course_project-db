@@ -1,4 +1,5 @@
 const {authJwt} = require('../middleware');
+const {validateRequest} = require('../middleware');
 const controller = require('../contollers/course.controller');
 
 module.exports = function (app) {
@@ -28,7 +29,18 @@ module.exports = function (app) {
     app.post("/api/courses",
         // todo: uncomment later
         // [authJwt.verifyToken],
+        [
+            validateRequest.courseRequestBody,
+            validateRequest.courseUniqueName
+        ],
         controller.add
+    );
+
+    app.put("/api/courses/:id",
+        // todo: uncomment later
+        // [authJwt.verifyToken],
+        [validateRequest.courseRequestBody],
+        controller.update
     );
 
 }
