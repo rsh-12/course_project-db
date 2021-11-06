@@ -1,7 +1,7 @@
 const config = require('../config/auth.config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const UserRepo = require('../repository/userRepo');
+const UserRepo = require('../repository/user.repo');
 
 exports.signUp = async (req, res) => {
     // Save User to Database

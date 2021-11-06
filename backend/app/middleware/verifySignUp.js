@@ -1,4 +1,4 @@
-const UserRepo = require('../repository/userRepo');
+const UserRepo = require('../repository/user.repo');
 
 checkDuplicateUsername = async (req, res, next) => {
     const userExists = await UserRepo.existsByUsername(req.body.username);
