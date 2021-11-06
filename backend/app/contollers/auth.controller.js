@@ -7,9 +7,11 @@ exports.signUp = async (req, res) => {
     // Save User to Database
     const {username, password} = req.body
     const encryptedPassword = bcrypt.hashSync(password, 8);
-
     const user = await UserRepo.insert(username, encryptedPassword);
-    return user ? res.send(user) : res.sendStatus(500);
+
+    return user
+        ? res.send(user)
+        : res.sendStatus(500);
 };
 
 exports.signIn = async (req, res) => {
