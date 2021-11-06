@@ -27,3 +27,16 @@ exports.getOne = async (req, res) => {
         ? res.send(course)
         : res.sendStatus(404);
 }
+
+exports.delete = async (req, res) => {
+    const {id} = req.params;
+    const course = await CourseRepo.delete(id);
+    if (course) {
+        cache.del('courses');
+        console.debug('the key "courses" has been deleted')
+
+        res.send(course);
+    } else {
+        res.status(404).send({message: `Course(id=${id}) not found`});
+    }
+}
