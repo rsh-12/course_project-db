@@ -1,4 +1,4 @@
-const CourseRepo = require('../repository/courseRepo');
+const CourseRepo = require('../repository/course.repo');
 const cache = require('../config/cache.config');
 
 exports.getAll = async (req, res) => {
