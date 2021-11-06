@@ -9,7 +9,7 @@ exports.signUp = async (req, res) => {
     const encryptedPassword = bcrypt.hashSync(password, 8);
 
     const user = await UserRepo.insert(username, encryptedPassword);
-    user ? res.send(user) : res.sendStatus(500);
+    return user ? res.send(user) : res.sendStatus(500);
 };
 
 exports.signIn = async (req, res) => {
@@ -29,14 +29,14 @@ exports.signIn = async (req, res) => {
 
         const token = jwt.sign({id: user.id}, config.secret, {expiresIn: 86400});
 
-        res.status(200).send({
+        return res.status(200).send({
             id: user.id,
             username: user.username,
             accessToken: token
         });
 
     } else {
-        res.status(404).send({message: "User Not found."});
+        return res.status(404).send({message: "User Not found."});
     }
 
 }

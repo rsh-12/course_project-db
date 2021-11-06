@@ -1,5 +1,6 @@
 const CourseRepo = require('../repository/course.repo');
 const InstructorRepo = require('../repository/instructor.repo');
+const StudentRepo = require('../repository/student.repo');
 const cache = require('../config/cache.config');
 
 exports.getAll = async (req, res) => {
@@ -14,7 +15,7 @@ exports.getAll = async (req, res) => {
         courses = await CourseRepo.find();
         cache.set('courses', courses, 12 * 60 * 60);
 
-        courses
+        return courses
             ? res.send(courses)
             : res.sendStatus(404);
     }
@@ -24,8 +25,11 @@ exports.getOne = async (req, res) => {
     const {id} = req.params;
     const course = await CourseRepo.findById(id);
 
-    let instructors = cache.get(`instructors_by_course_${id}`);
+    if (!course) {
+        return res.status(404).send({message: `Course(id=${id}) not found`});
+    }
 
+    let instructors = cache.get(`instructors_by_course_${id}`);
     if (!!instructors) {
         console.debug("instructors from cache");
     } else {
@@ -34,9 +38,9 @@ exports.getOne = async (req, res) => {
         cache.set(`instructors_by_course_${id}`, instructors, 12 * 60 * 60);
     }
 
-    course
-        ? res.send({course, instructors})
-        : res.sendStatus(404);
+    const totalStudents = await StudentRepo.countByCourseId(id);
+
+    return res.send({course, instructors, totalStudents})
 }
 
 exports.delete = async (req, res) => {
@@ -47,8 +51,8 @@ exports.delete = async (req, res) => {
         cache.del('courses');
         console.debug('the key "courses" has been deleted');
 
-        res.send(course);
+        return res.send(course);
     } else {
-        res.status(404).send({message: `Course(id=${id}) not found`});
+        return res.status(404).send({message: `Course(id=${id}) not found`});
     }
 }
