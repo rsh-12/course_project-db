@@ -53,6 +53,16 @@ class CourseRepo {
 
         return rows[0].exists;
     }
+
+    static async priceInfo() {
+        const {rows} = await pool.query(`
+            SELECT (SELECT MIN(price) FROM courses AS min_price),
+                   (SELECT AVG(price) FROM courses AS avg_price),
+                   (SELECT MAX(price) FROM courses AS max_price),
+                   (SELECT SUM(price) FROM courses AS sum_price);`);
+
+        return toCamelCase(rows)[0];
+    }
 }
 
 module.exports = CourseRepo
