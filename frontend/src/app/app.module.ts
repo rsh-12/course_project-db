@@ -11,6 +11,12 @@ import {HomeComponent} from './components/home/home.component';
 import {ProfileComponent} from './components/profile/profile.component';
 
 import {authInterceptorProviders} from './helpers/auth.interceptor';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
     declarations: [
@@ -24,7 +30,13 @@ import {authInterceptorProviders} from './helpers/auth.interceptor';
         BrowserModule,
         AppRoutingModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
