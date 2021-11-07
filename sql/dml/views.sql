@@ -16,3 +16,12 @@ FROM courses c
          LEFT JOIN courses_students cs ON c.id = cs.course_id
 GROUP BY c.id, c.name, i.first_name, i.last_name
     );
+
+CREATE VIEW total_records AS
+(
+SELECT (SELECT COUNT(*) FROM companies)    companies,
+       (SELECT COUNT(*) FROM students)     students,
+       (SELECT COUNT(*) FROM contracts)    contracts,
+       (SELECT COUNT(*) FROM courses)      courses,
+       (SELECT COUNT(*) FROM instructors)  instructors,
+       (SELECT COUNT(*) FROM certificates) certificates );
