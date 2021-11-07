@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 //     res.json({message: "OK"});
 // });
 
+require('./app/routes/common.routes')(app);
 require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
 require('./app/routes/course.routes')(app);
 
 module.exports = app;
