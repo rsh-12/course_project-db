@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {CommonService} from "../../services/common-service";
 
 @Component({
     selector: 'app-home',
@@ -8,11 +8,21 @@ import {UserService} from "../../services/user.service";
 })
 export class HomeComponent implements OnInit {
     content?: string;
+    errorMessage = '';
 
-    constructor() {
+    constructor(private commonService: CommonService) {
     }
 
     ngOnInit(): void {
+        this.commonService.getStatistics().subscribe(
+            data => {
+                console.log(data)
+            },
+            err => {
+                console.log(err.error.message);
+                this.errorMessage = err.error.message;
+            }
+        )
     }
 
 }
