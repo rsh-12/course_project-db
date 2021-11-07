@@ -24,7 +24,6 @@
     "node-cache": "^5.1.2",
     "nodemon": "^2.0.14",
     "pg": "^8.7.1",
-    "pg-hstore": "^2.3.4",
     "supertest": "^6.1.6"
   }
 }
