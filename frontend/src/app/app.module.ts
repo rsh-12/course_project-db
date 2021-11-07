@@ -9,7 +9,6 @@ import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
 import {ProfileComponent} from './components/profile/profile.component';
-import {BoardAdminComponent} from './components/board-admin/board-admin.component';
 
 import {authInterceptorProviders} from './helpers/auth.interceptor';
 
@@ -20,7 +19,6 @@ import {authInterceptorProviders} from './helpers/auth.interceptor';
         RegisterComponent,
         HomeComponent,
         ProfileComponent,
-        BoardAdminComponent,
     ],
     imports: [
         BrowserModule,
