@@ -61,10 +61,10 @@ exports.delete = async (req, res) => {
 exports.add = async (req, res) => {
     const {
         name, category, description,
-        hours, startDate, endDate
+        hours, startDate, endDate, price
     } = req.body;
 
-    const course = await CourseRepo.insert(name, category, description, hours, startDate, endDate);
+    const course = await CourseRepo.insert(name, category, description, hours, startDate, endDate, price);
 
     if (!course) {
         return res.sendStatus(500);
@@ -81,10 +81,10 @@ exports.update = async (req, res) => {
 
     const {
         name, category, description,
-        hours, startDate, endDate
+        hours, startDate, endDate, price
     } = req.body;
 
-    const course = await CourseRepo.update(id, name, category, description, hours, startDate, endDate);
+    const course = await CourseRepo.update(id, name, category, description, hours, startDate, endDate, price);
 
     if (!course) {
         return res.sendStatus(500);
