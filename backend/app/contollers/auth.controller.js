@@ -39,6 +39,7 @@ exports.signIn = async (req, res) => {
     return res.status(200).send({
         id: user.id,
         username: user.username,
+        expires: 86400,
         accessToken: token
     });
 }
