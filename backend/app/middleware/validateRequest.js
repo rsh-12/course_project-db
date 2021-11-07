@@ -14,8 +14,8 @@ courseRequestBody = (req, res, next) => {
     next();
 }
 
-courseUniqueName = (req, res, next) => {
-    const exists = CourseRepo.existsByName(req.body.name);
+courseUniqueName = async (req, res, next) => {
+    const exists = await CourseRepo.existsByName(req.body.name);
     if (exists) {
         return res.status(400).send({message: 'A course with this name already exists'})
     }
