@@ -3,10 +3,10 @@ const CourseRepo = require("../repository/course.repo");
 courseRequestBody = (req, res, next) => {
     const {
         name, category, description,
-        hours, startDate, endDate
+        hours, startDate, endDate, price
     } = req.body;
 
-    if (!name || !category || !description || !hours || !startDate || !endDate) {
+    if (!name || !category || !description || !hours || !startDate || !endDate || !price) {
         return res.status(400)
             .send({message: 'Name, category, description, hours, start and end dates are required'})
     }
