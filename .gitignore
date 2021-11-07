@@ -16,6 +16,8 @@ backend/app/config/db.config.js
 # frontend
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+
+frontend/package-lock.json
 # compiled output
 /dist
 /tmp
