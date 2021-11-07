@@ -9,27 +9,23 @@ module.exports = function (app) {
     });
 
     app.get("/api/courses",
-        // todo: uncomment later
-        // [authJwt.verifyToken],
+        [authJwt.verifyToken],
         controller.getAll
     );
 
     app.get("/api/courses/:id",
-        // todo: uncomment later
-        // [authJwt.verifyToken],
+        [authJwt.verifyToken],
         controller.getOne
     );
 
     app.delete("/api/courses/:id",
-        // todo: uncomment later
-        // [authJwt.verifyToken],
+        [authJwt.verifyToken],
         controller.delete
     );
 
     app.post("/api/courses",
-        // todo: uncomment later
-        // [authJwt.verifyToken],
         [
+            authJwt.verifyToken,
             validateRequest.courseRequestBody,
             validateRequest.courseUniqueName
         ],
@@ -37,9 +33,7 @@ module.exports = function (app) {
     );
 
     app.put("/api/courses/:id",
-        // todo: uncomment later
-        // [authJwt.verifyToken],
-        [validateRequest.courseRequestBody],
+        [authJwt.verifyToken, validateRequest.courseRequestBody],
         controller.update
     );
 
