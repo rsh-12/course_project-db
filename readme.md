@@ -4,4 +4,4 @@
 
 <hr>
 
-<img align="center" alt="logic model" src="./logic_model.png">
+<img align="center" alt="logic model" src="database/logic_model.png">
