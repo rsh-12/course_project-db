@@ -1,5 +1,5 @@
 const {authJwt} = require('../middleware');
-const controller = require('../contollers/user.controller');
+const controller = require('../contollers/common.controller');
 
 module.exports = function (app) {
     app.use(function (req, res, next) {
@@ -10,10 +10,9 @@ module.exports = function (app) {
         next();
     });
 
-    app.get("/api/test/all", controller.allAccess);
-
-    app.get("/api/test/admin", [authJwt.verifyToken],
-        controller.securedContent
+    app.get("/api/statistics",
+        [authJwt.verifyToken],
+        controller.statistics
     );
 
 }
