@@ -6,12 +6,13 @@ import {LoginComponent} from "./components/login/login.component";
 import {HomeComponent} from "./components/home/home.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {BoardAdminComponent} from "./components/board-admin/board-admin.component";
+import {AuthGuardService} from "./services/auth-guard.service";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'profile', component: ProfileComponent},
+    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
     {path: 'admin', component: BoardAdminComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
