@@ -1,19 +1,32 @@
 <div class="container">
     <header class="jumbotron">
+        <h2 class="text-center">Total records</h2>
         <div *ngIf="stats">
-            <ul>
-                <li>companies - {{stats.totalRecords.companies}}</li>
-                <li>students - {{stats.totalRecords.students}}</li>
-                <li>contracts - {{stats.totalRecords.contracts}}</li>
-                <li>certificates - {{stats.totalRecords.certificates}}</li>
-                <li>courses - {{stats.totalRecords.courses}}</li>
-                <li>instructors - {{stats.totalRecords.instructors}}</li>
-                <li></li>
-                <li>min - {{stats.priceInfo.min | currency}}</li>
-                <li>max - {{stats.priceInfo.max | currency}}</li>
-                <li>avg - {{stats.priceInfo.avg | currency}}</li>
-                <li>sum - {{stats.priceInfo.sum | currency}}</li>
-            </ul>
+            <div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">Companies</th>
+                        <th scope="col">Students</th>
+                        <th scope="col">Contracts</th>
+                        <th scope="col">Certificates</th>
+                        <th scope="col">Courses</th>
+                        <th scope="col">Instructors</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{stats.totalRecords.companies}}</td>
+                        <td>{{stats.totalRecords.students}}</td>
+                        <td>{{stats.totalRecords.contracts}}</td>
+                        <td>{{stats.totalRecords.certificates}}</td>
+                        <td>{{stats.totalRecords.courses}}</td>
+                        <td>{{stats.totalRecords.instructors}}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div *ngIf="!stats">

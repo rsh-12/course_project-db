@@ -1,22 +1,21 @@
-<div class="container" *ngIf="currentUser; else loggedOut">
-    <header class="jumbotron">
+<div class="" *ngIf="currentUser; else loggedOut">
+    <header class="jumbotron m-0">
         <h3>
             <strong>{{currentUser.username}}</strong>
-            Profile
         </h3>
     </header>
-    <p>
-        <strong>Token:</strong>
-        {{currentUser.accessToken.substring(0, 20)}} ...
-        {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
+    <div class="m-0">
+        <div>
+            <span>Joined at: {{currentUser.createdAt | date}}</span>
+        </div>
+        <div>
+            <span>Updated at: {{currentUser.updatedAt | date}}</span>
+        </div>
+    </div>
+</div>
 
-    <strong>Roles:</strong>
-    <ul>
-        <li *ngFor="let role of currentUser.roles">
-            {{role}}
-        </li>
-    </ul>
+<div *ngIf="!currentUser">
+    <mat-spinner class="spinner" [diameter]="100"></mat-spinner>
 </div>
 
 <ng-template #loggedOut>
