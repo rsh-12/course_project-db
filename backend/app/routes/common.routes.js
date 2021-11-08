@@ -15,4 +15,9 @@ module.exports = function (app) {
         controller.statistics
     );
 
+    app.get("/api/whoami",
+        [authJwt.verifyToken],
+        controller.whoami
+    );
+
 }
