@@ -1,5 +1,6 @@
 const pool = require('../config/pool.confg');
 const CourseRepo = require('../repository/course.repo');
+const UserRepo = require('../repository/user.repo');
 
 exports.statistics = async (req, res) => {
     const {rows} = await pool.query('SELECT * FROM total_records');
@@ -15,6 +16,13 @@ exports.statistics = async (req, res) => {
         totalRecords,
         priceInfo
     });
-
 };
+
+exports.whoami = async (req, res) => {
+    const user = await UserRepo.findById(req.userId);
+
+    return user
+        ? res.send(user)
+        : res.sendStatus(404);
+}
 
