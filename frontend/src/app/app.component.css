@@ -9,10 +9,18 @@
 .link-white {
     color: white;
     text-decoration: none;
+    font-weight: bolder;
 }
 
 .login-register-home {
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.link-white-btn {
+    margin: 0 15px;
+    background: none;
+    border: none;
+    font-weight: bolder;
 }
