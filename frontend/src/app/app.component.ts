@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./services/token-storage.service";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {ButtonSheetComponent} from "./components/button-sheet/button-sheet.component";
 
 @Component({
     selector: 'app-root',
@@ -11,7 +13,12 @@ export class AppComponent implements OnInit {
     isLoggedIn = false;
     username?: string;
 
-    constructor(private tokenStorageService: TokenStorageService) {
+    constructor(private tokenStorageService: TokenStorageService,
+                private bottomSheet: MatBottomSheet) {
+    }
+
+    openBottomSheet() {
+        this.bottomSheet.open(ButtonSheetComponent);
     }
 
     ngOnInit(): void {
