@@ -17,6 +17,10 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
+import {MatListModule} from "@angular/material/list";
+import {MatLineModule} from "@angular/material/core";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {ButtonSheetComponent} from './components/button-sheet/button-sheet.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +29,7 @@ import {MatButtonModule} from "@angular/material/button";
         RegisterComponent,
         HomeComponent,
         ProfileComponent,
+        ButtonSheetComponent
     ],
     imports: [
         BrowserModule,
@@ -36,9 +41,11 @@ import {MatButtonModule} from "@angular/material/button";
         MatToolbarModule,
         MatIconModule,
         MatMenuModule,
-        MatButtonModule
+        MatButtonModule,
+        MatListModule,
+        MatLineModule
     ],
-    providers: [authInterceptorProviders],
+    providers: [authInterceptorProviders, MatBottomSheet],
     bootstrap: [AppComponent]
 })
 export class AppModule {
