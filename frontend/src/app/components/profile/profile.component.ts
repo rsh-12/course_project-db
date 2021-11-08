@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
+import {CommonService} from "../../services/common-service";
+import {CurrentUser} from "../../common/currentUser";
 
 @Component({
     selector: 'app-profile',
@@ -7,12 +9,22 @@ import {TokenStorageService} from "../../services/token-storage.service";
     styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-    currentUser: any;
+    currentUser!: CurrentUser;
+    errorMessage: string = '';
+    error: boolean = false;
 
-    constructor(private token: TokenStorageService) {
+    constructor(private token: TokenStorageService, private commonService: CommonService) {
     }
 
     ngOnInit(): void {
-        this.currentUser = this.token.getUser();
+        this.commonService.whoAmI().subscribe(
+            data => {
+                this.currentUser = data;
+            }, err => {
+                this.errorMessage = err.error.message;
+                this.error = true;
+            }
+        )
+
     }
 }
