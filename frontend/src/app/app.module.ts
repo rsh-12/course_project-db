@@ -21,6 +21,9 @@ import {MatListModule} from "@angular/material/list";
 import {MatLineModule} from "@angular/material/core";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ButtonSheetComponent} from './components/button-sheet/button-sheet.component';
+import {AddCourseComponent} from './components/add-course/add-course.component';
+import {CourseDetailsComponent} from './components/course-details/course-details.component';
+import {CoursesListComponent} from './components/courses-list/courses-list.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +32,10 @@ import {ButtonSheetComponent} from './components/button-sheet/button-sheet.compo
         RegisterComponent,
         HomeComponent,
         ProfileComponent,
-        ButtonSheetComponent
+        ButtonSheetComponent,
+        AddCourseComponent,
+        CourseDetailsComponent,
+        CoursesListComponent
     ],
     imports: [
         BrowserModule,
