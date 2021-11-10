@@ -1,9 +1,12 @@
 export class Course {
+    id?: number;
     name?: string;
     category?: string;
     description?: string;
     hours?: number;
     startDate?: Date;
     endDate?: Date;
-    price?: number
+    createdAt?: Date;
+    updatedAt?: Date;
+    price?: number;
 }
