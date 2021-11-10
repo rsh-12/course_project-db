@@ -3,11 +3,11 @@ const toCamelCase = require('./utils/toCamelCase');
 
 class InstructorRepo {
     static async findByCourseId(id) {
-        const {rows} = await pool.query(`select i.*
-                                         from instructors i
-                                                  join courses_instructors ci on i.id = ci.instructor_id
-                                         where course_id = $1;`, [id]);
-        console.log(`> InstructorRepo.findByCourseId(${id})`)
+        const {rows} = await pool.query(`SELECT i.*
+                                         FROM instructors i
+                                                  JOIN courses_instructors ci ON i.id = ci.instructor_id
+                                         WHERE course_id = $1;`, [id]);
+        console.log(`> InstructorRepo.findByCourseId(${id}): ${rows.length}`)
 
         return toCamelCase(rows);
     }

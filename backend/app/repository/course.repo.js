@@ -31,7 +31,7 @@ class CourseRepo {
              VALUES ($1, $2, $3, $4, $5, $6, $7) returning *;`,
             [name, category, description, hours, startDate, endDate, price]);
 
-        console.log(`> CourseRepo.insert(values)`)
+        console.log(`> CourseRepo.insert(values): ${rows.length}`)
 
         return toCamelCase(rows)[0];
     }
@@ -49,16 +49,17 @@ class CourseRepo {
                                          WHERE id = $1 returning *;`,
             [id, name, category, description, hours, startDate, endDate, price]);
 
-        console.log(`> CourseRepo.update(values)`)
+        console.log(`> CourseRepo.update(values): ${rows.length}`)
 
         return toCamelCase(rows)[0];
     }
 
     static async existsByName(name) {
         const {rows} = await pool.query('SELECT EXISTS(SELECT * FROM courses WHERE name = $1);', [name]);
-        console.log(`> CourseRepo.existsByName(${name})`)
+        const courseExists = rows[0].exists;
+        console.log(`> CourseRepo.existsByName(${name}): ${courseExists}`);
 
-        return rows[0].exists;
+        return courseExists;
     }
 
     static async priceInfo() {
@@ -68,7 +69,7 @@ class CourseRepo {
                    (SELECT MAX(price) FROM courses AS max_price),
                    (SELECT SUM(price) FROM courses AS sum_price);`);
 
-        console.log(`> CourseRepo.priceInfo()`)
+        console.log(`> CourseRepo.priceInfo(): ${rows.length}`)
 
         return toCamelCase(rows)[0];
     }
@@ -79,7 +80,7 @@ class CourseRepo {
             FROM courses_info
             WHERE name ILIKE $1;`, [`%${name}%`]);
 
-        console.log(`> CourseRepo.findByName(${name})`)
+        console.log(`> CourseRepo.findByName(${name}): ${rows.length}`)
 
         return toCamelCase(rows);
     }
