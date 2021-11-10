@@ -2,6 +2,7 @@
 node_modules/
 .git
 .idea/
+tmpdir
 
 # database
 database/utils/numbers.txt
