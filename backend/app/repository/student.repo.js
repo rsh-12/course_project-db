@@ -7,6 +7,7 @@ class StudentRepo {
                                          from students s
                                                   join courses_students cs on s.id = cs.student_id
                                          where course_id = $1;`, [id]);
+        console.log(`> StudentRepo.findByCourseId(${id})`);
 
         return toCamelCase(rows);
     }
@@ -16,6 +17,7 @@ class StudentRepo {
                                          from students s
                                                   join courses_students cs on s.id = cs.student_id
                                          where course_id = $1;`, [id]);
+        console.log(`> StudentRepo.countByCourseId(${id})`);
 
         return +rows[0].count;
     }
