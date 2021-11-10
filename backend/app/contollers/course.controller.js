@@ -6,8 +6,14 @@ const cache = require('../config/cache.config');
 exports.getAll = async (req, res) => {
     let courses = cache.get('courses');
 
+    const {name} = req.query;
+    if (name) {
+        const courses = await CourseRepo.findByName(name);
+        return res.send(courses);
+    }
+
     if (!!courses) {
-        console.debug('courses from cache')
+        console.debug('courses from cache');
         return res.send(courses);
     }
 
