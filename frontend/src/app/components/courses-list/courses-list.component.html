@@ -1,0 +1,101 @@
+<div class="list row">
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search by name"
+                   [(ngModel)]="name">
+
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                        (click)="searchByName()">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Courses list ({{totalCourses}})</h4>
+        <ul class="list-group">
+            <li
+                    class="list-group-item"
+                    *ngFor="let course of courses; let i = index"
+                    [class.active]="i == currentIndex"
+                    (click)="setActiveCourse(course, i)">
+                {{course.name}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+        <div *ngIf="currentCourse.id">
+            <h4>Course</h4>
+            <div>
+                <label>
+                    <strong>Name: </strong>
+                </label>
+                {{currentCourse.name}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Category: </strong>
+                </label>
+                {{currentCourse.category}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Start date: </strong>
+                </label>
+                {{currentCourse.startDate | date}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>End date: </strong>
+                </label>
+                {{currentCourse.endDate | date}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Updated at: </strong>
+                </label>
+                {{currentCourse.updatedAt | date}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>First name: </strong>
+                </label>
+                {{currentCourse.firstName}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Last name: </strong>
+                </label>
+                {{currentCourse.lastName}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Total students: </strong>
+                </label>
+                {{currentCourse.studentsCount}}
+            </div>
+
+            <a routerLink="/courses/{{currentCourse.id}}" class="btn btn-warning">Edit</a>
+        </div>
+        <div *ngIf="!currentCourse.name">
+            <br>
+            <p>Please click on a course</p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi atque cumque deserunt earum eligendi enim
+            fugiat harum laborum magni necessitatibus nostrum officia quibusdam reiciendis sunt, temporibus ullam
+            voluptas voluptatibus?
+        </div>
+    </div>
+
+</div>
