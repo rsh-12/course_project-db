@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonService} from "../../services/common-service";
-import {Statistics} from "../../common/statistics";
+import {TotalRecords} from "../../common/totalRecords";
 
 @Component({
     selector: 'app-home',
@@ -9,14 +9,14 @@ import {Statistics} from "../../common/statistics";
 })
 export class HomeComponent implements OnInit {
     errorMessage = '';
-    stats!: Statistics;
+    totalRecords!: TotalRecords;
 
     constructor(private commonService: CommonService) {
     }
 
     ngOnInit(): void {
         this.commonService.getStatistics().subscribe(
-            data => this.stats = data,
+            data => this.totalRecords = data,
             err => {
                 console.log(err.error.message);
                 this.errorMessage = err.error.message;

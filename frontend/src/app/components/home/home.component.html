@@ -1,7 +1,7 @@
 <div class="container">
     <header class="jumbotron">
         <h2 class="text-center">Total records</h2>
-        <div *ngIf="stats">
+        <div *ngIf="totalRecords">
             <div>
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -16,12 +16,12 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>{{stats.totalRecords.companies}}</td>
-                        <td>{{stats.totalRecords.students}}</td>
-                        <td>{{stats.totalRecords.contracts}}</td>
-                        <td>{{stats.totalRecords.certificates}}</td>
-                        <td>{{stats.totalRecords.courses}}</td>
-                        <td>{{stats.totalRecords.instructors}}</td>
+                        <td>{{totalRecords.companies}}</td>
+                        <td>{{totalRecords.students}}</td>
+                        <td>{{totalRecords.contracts}}</td>
+                        <td>{{totalRecords.certificates}}</td>
+                        <td>{{totalRecords.courses}}</td>
+                        <td>{{totalRecords.instructors}}</td>
                     </tr>
 
                     </tbody>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div *ngIf="!stats">
+        <div *ngIf="!totalRecords">
             <mat-spinner class="spinner" [diameter]="100"></mat-spinner>
         </div>
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Statistics} from "../common/statistics";
+import {TotalRecords} from "../common/totalRecords";
 import {CurrentUser} from "../common/currentUser";
 
 const API_URL = 'http://localhost:8080/api/';
@@ -14,8 +14,8 @@ export class CommonService {
     constructor(private http: HttpClient) {
     }
 
-    getStatistics(): Observable<Statistics> {
-        return this.http.get<Statistics>(API_URL + 'statistics');
+    getStatistics(): Observable<TotalRecords> {
+        return this.http.get<TotalRecords>(API_URL + 'statistics');
     }
 
     whoAmI(): Observable<CurrentUser> {
