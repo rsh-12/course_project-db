@@ -20,11 +20,12 @@ exports.getAll = async (req, res) => {
     console.debug('courses from DB')
     courses = await CourseRepo.find();
 
-    cache.set('courses', courses, 12 * 60 * 60);
+    if (courses) {
+        cache.set('courses', courses, 12 * 60 * 60);
+        return res.send(courses);
+    }
 
-    return courses
-        ? res.send(courses)
-        : res.sendStatus(404);
+    return res.status(404).send({message: 'Courses not found'});
 };
 
 exports.getOne = async (req, res) => {
