@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from "../../common/course";
-import {CourseService} from "../../services/course-service";
+import {Course} from "../../../common/course";
+import {CourseService} from "../../../services/course-service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Instructor} from "../../common/instructor";
-import {CourseById} from "../../common/courseById";
+import {Instructor} from "../../../common/instructor";
+import {CourseById} from "../../../common/courseById";
 
 @Component({
     selector: 'app-course-details',
@@ -23,6 +23,7 @@ export class CourseDetailsComponent implements OnInit {
     }
 
     instructors: Instructor[] = [];
+    currentInstructor: Instructor = {};
     totalStudents = 0;
 
     response: CourseById = {
@@ -52,5 +53,9 @@ export class CourseDetailsComponent implements OnInit {
                 console.log(error);
             }
         )
+    }
+
+    setActiveInstructor(instructor: Instructor) {
+        this.currentInstructor = instructor;
     }
 }
