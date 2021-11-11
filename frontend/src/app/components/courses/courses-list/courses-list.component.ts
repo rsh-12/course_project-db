@@ -23,7 +23,7 @@ export class CoursesListComponent implements OnInit {
     }
 
     private retrieveCourses() {
-        this.courseService.getAll().subscribe(
+        this.courseService.findAll().subscribe(
             data => {
                 this.totalCourses = data.length
                 this.courses = data;
