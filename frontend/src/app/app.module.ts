@@ -25,6 +25,7 @@ import {AddCourseComponent} from './components/courses/add-course/add-course.com
 import {CourseDetailsComponent} from './components/courses/course-details/course-details.component';
 import {CoursesListComponent} from './components/courses/courses-list/courses-list.component';
 import {MatSelectModule} from "@angular/material/select";
+import { CompaniesListComponent } from './components/companies/companies-list/companies-list.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import {MatSelectModule} from "@angular/material/select";
         ButtonSheetComponent,
         AddCourseComponent,
         CourseDetailsComponent,
-        CoursesListComponent
+        CoursesListComponent,
+        CompaniesListComponent
     ],
     imports: [
         BrowserModule,
