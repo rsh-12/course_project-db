@@ -6,9 +6,9 @@ import {LoginComponent} from "./components/login/login.component";
 import {HomeComponent} from "./components/home/home.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {AuthGuardService} from "./services/auth-guard.service";
-import {CoursesListComponent} from "./components/courses-list/courses-list.component";
-import {CourseDetailsComponent} from "./components/course-details/course-details.component";
-import {AddCourseComponent} from "./components/add-course/add-course.component";
+import {CoursesListComponent} from "./components/courses/courses-list/courses-list.component";
+import {CourseDetailsComponent} from "./components/courses/course-details/course-details.component";
+import {AddCourseComponent} from "./components/courses/add-course/add-course.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
