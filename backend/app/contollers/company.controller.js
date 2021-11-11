@@ -10,7 +10,7 @@ exports.getAll = async (req, res) => {
     }
 
     console.debug('companies from DB');
-    companies = CompanyRepo.find();
+    companies = await CompanyRepo.find();
 
     if (companies) {
         cache.set('companies', companies, 12 * 60 * 60);
