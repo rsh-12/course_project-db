@@ -10,6 +10,10 @@ import {CoursesListComponent} from "./components/courses/courses-list/courses-li
 import {CourseDetailsComponent} from "./components/courses/course-details/course-details.component";
 import {AddCourseComponent} from "./components/courses/add-course/add-course.component";
 import {CompaniesListComponent} from "./components/companies/companies-list/companies-list.component";
+import {StudentsListComponent} from "./components/students/students-list/students-list.component";
+import {ContractsListComponent} from "./components/contracts/contracts-list/contracts-list.component";
+import {CertificatesListComponent} from "./components/certificates/certificates-list/certificates-list.component";
+import {InstructorsListComponent} from "./components/instructors/instructors-list/instructors-list.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
@@ -20,6 +24,20 @@ const routes: Routes = [
     {path: 'courses/:id', component: CourseDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'courses/add', component: AddCourseComponent, canActivate: [AuthGuardService]},
     {path: 'companies', component: CompaniesListComponent, canActivate: [AuthGuardService]},
+    // {path: 'companies/:id', component: , canActivate: [AuthGuardService]},
+    // {path: 'companies/add', component: , canActivate: [AuthGuardService]},
+    {path: 'students', component: StudentsListComponent, canActivate: [AuthGuardService]},
+    // {path: 'students/:id', component: , canActivate: [AuthGuardService]},
+    // {path: 'students/add', component: , canActivate: [AuthGuardService]},
+    {path: 'contracts', component: ContractsListComponent, canActivate: [AuthGuardService]},
+    // {path: 'contracts/:id', component: , canActivate: [AuthGuardService]},
+    // {path: 'contracts/add', component: , canActivate: [AuthGuardService]},
+    {path: 'certificates', component: CertificatesListComponent, canActivate: [AuthGuardService]},
+    // {path: 'certificates/:id', component: , canActivate: [AuthGuardService]},
+    // {path: 'certificates/add', component: , canActivate: [AuthGuardService]},
+    {path: 'instructors', component: InstructorsListComponent, canActivate: [AuthGuardService]},
+    // {path: 'instructors/:id', component: , canActivate: [AuthGuardService]},
+    // {path: 'instructors/add', component: , canActivate: [AuthGuardService]},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
 ];
 
