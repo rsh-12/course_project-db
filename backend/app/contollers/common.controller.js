@@ -12,7 +12,7 @@ exports.statistics = async (req, res) => {
     return res.send(totalRecords);
 };
 
-exports.whoami = async (req, res) => {
+exports.whoAmI = async (req, res) => {
     const user = await UserRepo.findById(req.userId);
 
     return user

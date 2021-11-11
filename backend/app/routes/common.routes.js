@@ -17,7 +17,7 @@ module.exports = function (app) {
 
     app.get("/api/whoami",
         [authJwt.verifyToken],
-        controller.whoami
+        controller.whoAmI
     );
 
 }
