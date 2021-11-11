@@ -18,12 +18,13 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
-import {MatLineModule} from "@angular/material/core";
+import {MatLineModule, MatOptionModule} from "@angular/material/core";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ButtonSheetComponent} from './components/button-sheet/button-sheet.component';
-import {AddCourseComponent} from './components/add-course/add-course.component';
-import {CourseDetailsComponent} from './components/course-details/course-details.component';
-import {CoursesListComponent} from './components/courses-list/courses-list.component';
+import {AddCourseComponent} from './components/courses/add-course/add-course.component';
+import {CourseDetailsComponent} from './components/courses/course-details/course-details.component';
+import {CoursesListComponent} from './components/courses/courses-list/courses-list.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
     declarations: [
@@ -49,7 +50,9 @@ import {CoursesListComponent} from './components/courses-list/courses-list.compo
         MatMenuModule,
         MatButtonModule,
         MatListModule,
-        MatLineModule
+        MatLineModule,
+        MatSelectModule,
+        MatOptionModule
     ],
     providers: [authInterceptorProviders, MatBottomSheet],
     bootstrap: [AppComponent]
