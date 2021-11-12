@@ -9,11 +9,13 @@ import {Company} from "../../../common/company";
 })
 export class CompaniesListComponent implements OnInit {
     companies?: Company[];
+    loading = false;
 
     constructor(private companyService: CompanyService) {
     }
 
     ngOnInit(): void {
+        this.loading = true;
         this.retrieveCompanies();
     }
 
@@ -22,8 +24,11 @@ export class CompaniesListComponent implements OnInit {
             data => {
                 console.log(data);
                 this.companies = data;
+                this.loading = false;
             }, error => {
+                this.loading = false;
                 console.log(error);
+
             }
         );
     }
