@@ -2,6 +2,13 @@ const pool = require('../config/pool.confg');
 const toCamelCase = require('./utils/toCamelCase');
 
 class StudentRepo {
+    static async find() {
+        const {rows} = await pool.query('SELECT * FROM students');
+        console.log(`> StudentRepo.find(): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
+
     static async findByCourseId(id) {
         const {rows} = await pool.query(`SELECT *
                                          FROM students s
