@@ -5,15 +5,15 @@ exports.getAll = async (req, res) => {
     let companies = cache.get('companies');
 
     if (!!companies) {
-        console.debug('companies from cache');
+        console.log('companies from cache');
         return res.send(companies);
     }
 
-    console.debug('companies from DB');
     companies = await CompanyRepo.find();
 
     if (companies) {
         cache.set('companies', companies, 12 * 60 * 60);
+        console.log('companies from DB');
         return res.send(companies);
     }
 
