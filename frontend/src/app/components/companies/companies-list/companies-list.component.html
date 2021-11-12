@@ -1,1 +1,25 @@
-<p>companies-list works!</p>
+<h1>Companies</h1>
+
+<div *ngIf="companies">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Updated at</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let company of companies">
+            <td>{{company.name | titlecase}}</td>
+            <td>{{company.description | slice:0:15}}...</td>
+            <td>{{company.updatedAt | date}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="!companies">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
