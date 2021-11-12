@@ -6,7 +6,7 @@ import {MatBottomSheetRef} from "@angular/material/bottom-sheet";
     template: `
         <mat-nav-list>
 
-            <a href="/companies" mat-list-item routerLink="home" (click)="openLink($event)">
+            <a href="/companies" mat-list-item routerLink="companies" (click)="openLink($event)">
                 <span mat-line>COMPANIES</span>
                 <span class="gray" mat-line>Go to the companies page</span>
             </a>
