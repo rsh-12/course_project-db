@@ -1,1 +1,29 @@
-<p>students-list works!</p>
+<h1>Companies</h1>
+
+<div *ngIf="students">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Last Name</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Updated At</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let student of students">
+            <td>{{student.lastName}}</td>
+            <td>{{student.firstName}}</td>
+            <td>{{student.phone }}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.updatedAt | date}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
