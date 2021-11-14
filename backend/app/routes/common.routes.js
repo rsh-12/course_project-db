@@ -20,4 +20,9 @@ module.exports = function (app) {
         controller.whoAmI
     );
 
+    app.get("/api/contracts",
+        [authJwt.verifyToken],
+        controller.contracts
+    );
+
 }
