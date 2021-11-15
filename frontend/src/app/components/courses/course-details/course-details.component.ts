@@ -13,6 +13,7 @@ import {CourseById} from "../../../common/courseById";
 export class CourseDetailsComponent implements OnInit {
 
     course: Course = {
+        id: 0,
         name: '',
         category: '',
         description: '',
