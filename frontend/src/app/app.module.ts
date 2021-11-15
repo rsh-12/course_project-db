@@ -25,11 +25,12 @@ import {AddCourseComponent} from './components/courses/add-course/add-course.com
 import {CourseDetailsComponent} from './components/courses/course-details/course-details.component';
 import {CoursesListComponent} from './components/courses/courses-list/courses-list.component';
 import {MatSelectModule} from "@angular/material/select";
-import { CompaniesListComponent } from './components/companies/companies-list/companies-list.component';
-import { StudentsListComponent } from './components/students/students-list/students-list.component';
-import { ContractsListComponent } from './components/contracts/contracts-list/contracts-list.component';
-import { CertificatesListComponent } from './components/certificates/certificates-list/certificates-list.component';
-import { InstructorsListComponent } from './components/instructors/instructors-list/instructors-list.component';
+import {CompaniesListComponent} from './components/companies/companies-list/companies-list.component';
+import {StudentsListComponent} from './components/students/students-list/students-list.component';
+import {ContractsListComponent} from './components/contracts/contracts-list/contracts-list.component';
+import {CertificatesListComponent} from './components/certificates/certificates-list/certificates-list.component';
+import {InstructorsListComponent} from './components/instructors/instructors-list/instructors-list.component';
+import {NavbarComponent} from "./components/navbar/navbar.component";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { InstructorsListComponent } from './components/instructors/instructors-l
         StudentsListComponent,
         ContractsListComponent,
         CertificatesListComponent,
-        InstructorsListComponent
+        InstructorsListComponent,
+        NavbarComponent
     ],
     imports: [
         BrowserModule,
