@@ -1,36 +1,7 @@
 <div id="app">
-    <mat-toolbar color="primary" class="d-flex justify-content-between wrapper">
-            <div class="login-register-home">
-                <div *ngIf="isLoggedIn">
-                    <a href="/home" class="link-white" routerLink="home">Home</a>
-                    <button class="link-white link-white-btn" (click)="openBottomSheet()">Links</button>
-                </div>
+    <app-navbar></app-navbar>
 
-                <div *ngIf="!isLoggedIn">
-                    <a href="/register" class="link-white" routerLink="register">Sign Up</a>
-                </div>
-
-                <div *ngIf="!isLoggedIn">
-                    <a href="/login" class="link-white" routerLink="login">Sign In</a>
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-end" *ngIf="isLoggedIn">
-                <mat-menu #appMenu="matMenu">
-                    <div *ngIf="isLoggedIn">
-                        <a href="/profile" class="nav-link" routerLink="profile">Profile</a>
-                        <a href class="nav-link" (click)="logout()">Sign out</a>
-                    </div>
-                </mat-menu>
-
-                <button mat-icon-button [matMenuTriggerFor]="appMenu">
-                    <span>{{username}} </span>
-                    <i class="far fa-user-circle"></i>
-                </button>
-            </div>
-    </mat-toolbar>
-
-    <div class="wrapper">
+    <div class="wrapper container">
         <router-outlet></router-outlet>
     </div>
 </div>
