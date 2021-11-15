@@ -4,14 +4,24 @@ const toCamelCase = require('../repository/utils/toCamelCase');
 const cache = require('../config/cache.config');
 
 exports.statistics = async (req, res) => {
-    const {rows} = await pool.query('SELECT * FROM total_records');
-    const totalRecords = rows[0];
+    let totalRecords = cache.get('statistics');
 
-    if (!totalRecords) {
-        return res.status(500).send({message: 'Something went wrong'});
+    if (!!totalRecords) {
+        console.log('statistics from cache');
+        return res.send(totalRecords);
     }
 
-    return res.send(totalRecords);
+    const {rows} = await pool.query('SELECT * FROM total_records');
+
+    totalRecords = rows[0];
+
+    if (totalRecords) {
+        cache.set('statistics', totalRecords, 12 * 60 * 60);
+        console.log('statistics from DB');
+        return res.send(totalRecords);
+    }
+
+    return res.status(404).send({message: 'Statistics not found'});
 };
 
 exports.whoAmI = async (req, res) => {
