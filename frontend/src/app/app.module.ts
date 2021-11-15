@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 
 import {AppRoutingModule} from './app-routing.module';
@@ -19,8 +19,6 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {MatLineModule, MatOptionModule} from "@angular/material/core";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {ButtonSheetComponent} from './components/button-sheet/button-sheet.component';
 import {AddCourseComponent} from './components/courses/add-course/add-course.component';
 import {CourseDetailsComponent} from './components/courses/course-details/course-details.component';
 import {CoursesListComponent} from './components/courses/courses-list/courses-list.component';
@@ -31,6 +29,8 @@ import {ContractsListComponent} from './components/contracts/contracts-list/cont
 import {CertificatesListComponent} from './components/certificates/certificates-list/certificates-list.component';
 import {InstructorsListComponent} from './components/instructors/instructors-list/instructors-list.component';
 import {NavbarComponent} from "./components/navbar/navbar.component";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
     declarations: [
@@ -39,7 +39,6 @@ import {NavbarComponent} from "./components/navbar/navbar.component";
         RegisterComponent,
         HomeComponent,
         ProfileComponent,
-        ButtonSheetComponent,
         AddCourseComponent,
         CourseDetailsComponent,
         CoursesListComponent,
@@ -64,9 +63,12 @@ import {NavbarComponent} from "./components/navbar/navbar.component";
         MatListModule,
         MatLineModule,
         MatSelectModule,
-        MatOptionModule
+        MatOptionModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatInputModule
     ],
-    providers: [authInterceptorProviders, MatBottomSheet],
+    providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
 })
 export class AppModule {
