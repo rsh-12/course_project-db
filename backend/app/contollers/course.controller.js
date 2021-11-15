@@ -58,9 +58,7 @@ exports.delete = async (req, res) => {
         return res.status(404).send({message: `Course(id=${id}) not found`});
     }
 
-    cache.del(`instructors_by_course_${id}`);
-    cache.del('courses');
-    console.debug('the key "courses" has been deleted');
+    cache.flushAll();
 
     return res.send(course);
 }
@@ -77,8 +75,7 @@ exports.add = async (req, res) => {
         return res.sendStatus(500);
     }
 
-    cache.del('courses');
-    console.debug('the key "courses" has been deleted');
+    cache.flushAll();
 
     return res.send(course);
 }
@@ -97,8 +94,7 @@ exports.update = async (req, res) => {
         return res.sendStatus(500);
     }
 
-    cache.del('courses');
-    console.debug('the key "courses" has been deleted');
+    cache.flushAll();
 
     return res.send(course);
 }
