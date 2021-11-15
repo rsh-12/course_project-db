@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {CommonService} from "../../services/common-service";
 import {TotalRecords} from "../../common/totalRecords";
 
@@ -52,21 +51,6 @@ export class NavbarComponent implements OnInit {
         this.tokenStorageService.signOut();
         window.location.reload();
     }
-
-    items = [
-        {
-            id: 1,
-            text: 'First item'
-        },
-        {
-            id: 2,
-            text: 'Second item'
-        },
-        {
-            id: 3,
-            text: 'Third item'
-        }
-    ];
 
 }
 
