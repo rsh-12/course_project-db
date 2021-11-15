@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
 import {CommonService} from "../../services/common-service";
 import {TotalRecords} from "../../common/totalRecords";
+import {FormControl} from "@angular/forms";
+import {Observable} from "rxjs";
+import {map, startWith} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-navbar',
@@ -16,11 +20,27 @@ export class NavbarComponent implements OnInit {
     totalRecords!: TotalRecords;
     totalCount = 0;
 
+    value = '';
+    myControl = new FormControl();
+    options: string[] = ['companies', 'students', 'contracts', 'certificates', 'home', 'instructors', 'courses'];
+    filteredOptions?: Observable<string[]>;
+
     constructor(private tokenStorageService: TokenStorageService,
-                private commonService: CommonService) {
+                private commonService: CommonService,
+                private router: Router) {
+    }
+
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
 
     ngOnInit(): void {
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value)),
+        );
         this.getUsername();
         this.getStatistics();
     }
@@ -52,5 +72,9 @@ export class NavbarComponent implements OnInit {
         window.location.reload();
     }
 
+    navigateTo() {
+        this.router.navigate([this.value]);
+        this.value = '';
+    }
 }
 

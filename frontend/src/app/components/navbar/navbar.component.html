@@ -6,11 +6,22 @@
         <form *ngIf="isLoggedIn"
               class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-                <input
+                <input matInput
+                       [(ngModel)]="value"
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto"
+                       class="bg-light form-control border-0 small" type="text"
+                       placeholder="Search for ...">
 
-                        class="bg-light form-control border-0 small" type="text"
-                        placeholder="Search for ...">
-                <button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+                <button
+
+                        (click)="navigateTo()"
+                        class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button>
             </div>
         </form>
 
@@ -46,7 +57,7 @@
                                                            aria-expanded="false" data-bs-toggle="dropdown"
                                                            href="#"><span
                         class="badge bg-danger badge-counter">{{totalCount}}</span>
-                    LINKS&nbsp;&nbsp;
+                    LINKS&nbsp;&nbsp;&nbsp;
                 </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
                         <h6 class="dropdown-header">contents</h6><a
