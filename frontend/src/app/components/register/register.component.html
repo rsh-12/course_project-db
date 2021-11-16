@@ -1,67 +1,92 @@
-<div class="col-md-4 auth-wrapper">
-    <div class="">
+<div class="container">
+    <div class="card shadow-lg o-hidden border-0 my-5">
 
-        <form *ngIf="!isSuccessful"
-              name="form"
-              (ngSubmit)="f.form.valid && onSubmit()"
-              #f="ngForm"
-              novalidate>
 
-            <div class="form-group auth-input">
-                <label for="username">Username</label>
-                <input id="username"
-                       type="text"
-                       class="form-control"
-                       name="username"
-                       [(ngModel)]="form.username"
-                       required
-                       minlength="3"
-                       maxlength="20"
-                       #username="ngModel">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-flex">
+                    <div class="flex-grow-1 bg-register-image"
+                         style="background-image: url('assets/img/dogs/image2.jpeg');"></div>
+                </div>
 
-                <div class="alert-danger" *ngIf="username.errors && f.submitted">
-                    <div *ngIf="username.errors.required">Username is required</div>
-                    <div *ngIf="username.errors.minlength">
-                        Username must be at least 3 characters
-                    </div>
-                    <div *ngIf="username.errors.maxlength">
-                        Username must be at most 20 characters
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="text-dark mb-4">Create an Account!</h4>
+                        </div>
+
+
+                        <div class="alert alert-warning" *ngIf="isSuccessful">
+                            Your registration is successful!
+                        </div>
+
+
+                        <form *ngIf="!isSuccessful"
+                              name="form"
+                              (ngSubmit)="f.form.valid && onSubmit()"
+                              #f="ngForm"
+                              novalidate
+                              class="user">
+
+                            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                                Signup failed! <br>{{errorMessage}}
+                            </div>
+
+                            <div class="mb-3">
+                                <input class="form-control form-control-user"
+                                       type="text"
+                                       id="username"
+                                       aria-describedby="emailHelp"
+                                       placeholder="Username"
+                                       name="username"
+                                       [(ngModel)]="form.username"
+                                       required
+                                       minlength="3"
+                                       maxlength="20"
+                                       #username="ngModel"
+                                >
+
+                                <div class="alert-danger" *ngIf="username.errors && f.submitted">
+                                    <div *ngIf="username.errors.required">Username is required</div>
+                                    <div *ngIf="username.errors.minlength">
+                                        Username must be at least 3 characters
+                                    </div>
+                                    <div *ngIf="username.errors.maxlength">
+                                        Username must be at most 20 characters
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="mb-3 mb-sm-0">
+                                    <input [(ngModel)]="form.password"
+                                           required
+                                           minlength="6"
+                                           #password="ngModel"
+                                           class="form-control form-control-user"
+                                           type="password"
+                                           id="password"
+                                           placeholder="Password"
+                                           name="password">
+
+                                    <div class="alert-danger" *ngIf="password.errors && f.submitted">
+                                        <div *ngIf="password.errors.required">Password is required</div>
+                                        <div *ngIf="password.errors.minlength">
+                                            Password must be at least 6 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary d-block btn-user w-100" type="submit">Register Account
+                            </button>
+                            <hr>
+                        </form>
+                        <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
+                        <div class="text-center"><a class="small" [routerLink]="['/login']">Already have an
+                            account? Login!</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="form-group auth-input">
-                <label for="password">Password</label>
-                <input
-                        id="password"
-                        type="password"
-                        class="form-control"
-                        name="password"
-                        [(ngModel)]="form.password"
-                        required
-                        minlength="6"
-                        #password="ngModel"/>
-
-                <div class="alert-danger" *ngIf="password.errors && f.submitted">
-                    <div *ngIf="password.errors.required">Password is required</div>
-                    <div *ngIf="password.errors.minlength">
-                        Password must be at least 6 characters
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <button mat-raised-button class="btn btn-primary btn-block">Sign Up</button>
-            </div>
-
-            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-                Signup failed! <br>{{errorMessage}}
-            </div>
-        </form>
-
-        <div class="alert alert-warning" *ngIf="isSuccessful">
-            Your registration is successful!
         </div>
     </div>
 </div>
