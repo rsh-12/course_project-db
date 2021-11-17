@@ -1,4 +1,4 @@
-<div class="d-flex flex-column" id="content-wrapper">
+<div *ngIf="!loading" class="d-flex flex-column" id="content-wrapper">
     <div id="content">
 
         <div class="container-fluid">
@@ -16,7 +16,9 @@
                                     <div class="text-uppercase text-primary fw-bold text-xs mb-1">
                                         <span>Earnings (monthly)</span>
                                     </div>
-                                    <div class="text-dark fw-bold h5 mb-0"><span>$40,000</span></div>
+                                    <div class="text-dark fw-bold h5 mb-0">
+                                        <span>{{income[0].value | currency}}</span>
+                                    </div>
                                 </div>
                                 <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                             </div>
@@ -30,7 +32,9 @@
                                 <div class="col me-2">
                                     <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Earnings (annual)</span>
                                     </div>
-                                    <div class="text-dark fw-bold h5 mb-0"><span>$215,000</span></div>
+                                    <div class="text-dark fw-bold h5 mb-0">
+                                        <span>{{income[1].value | currency}}</span>
+                                    </div>
                                 </div>
                                 <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                             </div>
@@ -42,11 +46,13 @@
                         <div class="card-body">
                             <div class="row align-items-center no-gutters">
                                 <div class="col me-2">
-                                    <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Tasks</span>
+                                    <div class="text-uppercase text-info fw-bold text-xs mb-1">
+                                        <span>Concluded contracts</span>
                                     </div>
                                     <div class="row g-0 align-items-center">
                                         <div class="col-auto">
-                                            <div class="text-dark fw-bold h5 mb-0 me-3"><span>50%</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0 me-3">
+                                                <span>{{income[2].value}}%</span></div>
                                         </div>
                                         <div class="col">
                                             <div class="progress progress-sm">
@@ -70,8 +76,8 @@
                             <div class="row align-items-center no-gutters">
                                 <div class="col me-2">
                                     <div class="text-uppercase text-warning fw-bold text-xs mb-1">
-                                        <span>Pending Requests</span></div>
-                                    <div class="text-dark fw-bold h5 mb-0"><span>18</span></div>
+                                        <span>Without contracts</span></div>
+                                    <div class="text-dark fw-bold h5 mb-0"><span>{{income[3].value}}</span></div>
                                 </div>
                                 <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                             </div>
@@ -82,5 +88,8 @@
 
         </div>
     </div>
+</div>
 
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
