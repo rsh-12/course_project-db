@@ -1,1 +1,30 @@
-<p>contracts-list works!</p>
+<h1>Contracts</h1>
+
+<div *ngIf="contracts">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Company</th>
+            <th scope="col">Student</th>
+            <th scope="col">Course</th>
+            <th scope="col">Instructor</th>
+            <th scope="col">Conclusion</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let contract of contracts">
+            <td>{{contract.company}}</td>
+            <td>{{contract.studentFirstName | slice:0:1}}. {{contract.studentLastName}}</td>
+            <td>{{contract.course | slice:0:20}}<span *ngIf="contract.course && contract.course.length > 20">...</span>
+            </td>
+            <td>{{contract.instructorFirstName | slice:0:1}}. {{contract.instructorLastName}}</td>
+            <td>{{contract.conclusionDate | date}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
