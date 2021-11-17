@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {TotalRecords} from "../common/totalRecords";
 import {CurrentUser} from "../common/currentUser";
 import {Income} from "../common/income";
+import {Contract} from "../common/contract";
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -25,6 +26,10 @@ export class CommonService {
 
     getIncome(): Observable<Income[]> {
         return this.http.get<Income[]>(API_URL + 'income');
+    }
+
+    getContracts(): Observable<Contract[]> {
+        return this.http.get<Contract[]>(API_URL + 'contracts');
     }
 
 }
