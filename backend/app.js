@@ -10,14 +10,14 @@ app.use(cors())
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 
-// app.get("/", (req, res) => {
+// src.get("/", (req, res) => {
 //     res.json({message: "OK"});
 // });
 
-require('./app/routes/common.routes')(app);
-require('./app/routes/auth.routes')(app);
-require('./app/routes/course.routes')(app);
-require('./app/routes/company.routes')(app);
-require('./app/routes/student.routes')(app);
+require('./src/routes/common.routes')(app);
+require('./src/routes/auth.routes')(app);
+require('./src/routes/course.routes')(app);
+require('./src/routes/company.routes')(app);
+require('./src/routes/student.routes')(app);
 
 module.exports = app;
