@@ -25,4 +25,9 @@ module.exports = function (app) {
         controller.contracts
     );
 
+    app.get("/api/income",
+        [authJwt.verifyToken],
+        controller.income
+    );
+
 }
