@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TotalRecords} from "../common/totalRecords";
 import {CurrentUser} from "../common/currentUser";
+import {Income} from "../common/income";
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -20,6 +21,10 @@ export class CommonService {
 
     whoAmI(): Observable<CurrentUser> {
         return this.http.get<CurrentUser>(API_URL + 'whoami');
+    }
+
+    getIncome(): Observable<Income[]> {
+        return this.http.get<Income[]>(API_URL + 'income');
     }
 
 }
