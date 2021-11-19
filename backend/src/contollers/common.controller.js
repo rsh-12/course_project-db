@@ -93,3 +93,26 @@ exports.income = async (req, res) => {
 
     return res.send(income);
 }
+
+exports.getCertificates = async (req, res) => {
+    let certificates = cache.get('certificates');
+
+    if (!!certificates) {
+        console.log('certificates from cache');
+        return res.send(certificates);
+    }
+
+    const {rows} = await pool.query(`
+        SELECT s.last_name student_last_name, c.name course, date_of_issue
+        FROM certificates
+                 JOIN courses_students cs ON certificates.courses_students_id = cs.id
+                 JOIN students s ON cs.student_id = s.id
+                 JOIN courses c ON cs.course_id = c.id;
+    `);
+
+    certificates = toCamelCase(rows);
+    console.log('certificates from DB');
+    cache.set('certificates', certificates);
+
+    return res.send(certificates);
+}

@@ -30,4 +30,9 @@ module.exports = function (app) {
         controller.income
     );
 
+    app.get("/api/certificates",
+        [authJwt.verifyToken],
+        controller.getCertificates
+    );
+
 }
