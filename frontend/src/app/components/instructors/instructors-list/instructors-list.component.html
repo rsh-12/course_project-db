@@ -1,1 +1,31 @@
-<p>instructors-list works!</p>
+<h1>Instructors</h1>
+
+<div *ngIf="instructors">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Education</th>
+            <th scope="col">Degree</th>
+            <th scope="col">Courses</th>
+            <th scope="col">Created at</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let instructor of instructors">
+            <td>{{instructor.firstName}}</td>
+            <td>{{instructor.lastName}}</td>
+            <td>{{instructor.education}}</td>
+            <td>{{instructor.degree}}</td>
+            <td>{{instructor.courses}}</td>
+            <td>{{instructor.createdAt | date}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
