@@ -1,0 +1,14 @@
+const {authJwt} = require("../middleware");
+const controller = require("../contollers/instructor.controller");
+
+module.exports = app => {
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
+        next();
+    });
+
+    app.get("/api/instructors",
+        [authJwt.verifyToken],
+        controller.getAll
+    );
+}
