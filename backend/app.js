@@ -19,5 +19,6 @@ require('./src/routes/auth.routes')(app);
 require('./src/routes/course.routes')(app);
 require('./src/routes/company.routes')(app);
 require('./src/routes/student.routes')(app);
+require('./src/routes/instructor.routes')(app);
 
 module.exports = app;
