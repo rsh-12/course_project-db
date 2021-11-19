@@ -1,6 +1,5 @@
-const pool = require('../config/pool.confg');
 const UserRepo = require('../repository/user.repo');
-const toCamelCase = require('../repository/utils/toCamelCase');
+const CommonRepo = require("../repository/common.repo");
 const cache = require('../config/cache.config');
 
 exports.statistics = async (req, res) => {
@@ -11,9 +10,7 @@ exports.statistics = async (req, res) => {
         return res.send(totalRecords);
     }
 
-    const {rows} = await pool.query('SELECT * FROM total_records');
-
-    totalRecords = rows[0];
+    totalRecords = await CommonRepo.findStatistics();
 
     if (totalRecords) {
         cache.set('statistics', totalRecords, 12 * 60 * 60);
@@ -40,10 +37,7 @@ exports.contracts = async (req, res) => {
         return res.send(contracts);
     }
 
-    const {rows} = await pool.query('SELECT * FROM show_contracts();');
-    console.log(`> show_contracts(): ${rows.length}`);
-
-    contracts = toCamelCase(rows);
+    contracts = await CommonRepo.findContracts();
 
     if (contracts) {
         cache.set('contracts', contracts, 12 * 60 * 60);
@@ -62,32 +56,7 @@ exports.income = async (req, res) => {
         return res.send(income);
     }
 
-    const {rows} = await pool.query(`
-        SELECT 'month' AS type, SUM(c2.price) AS value
-        FROM contracts c
-                 JOIN courses_instructors ci ON ci.id = c.course_instructor_id
-                 JOIN courses c2 ON c2.id = ci.course_id
-        WHERE c2.start_date BETWEEN CURRENT_DATE - INTERVAL '1 mon' AND CURRENT_DATE
-        UNION ALL
-        SELECT 'year', SUM(c2.price)
-        FROM contracts c
-                 JOIN courses_instructors ci ON ci.id = c.course_instructor_id
-                 JOIN courses c2 ON c2.id = ci.course_id
-        WHERE c2.start_date BETWEEN CURRENT_DATE - INTERVAL '1 year' AND CURRENT_DATE
-        UNION ALL
-        SELECT 'percentage',
-               (SELECT COUNT(*)
-                FROM students
-                WHERE NOT EXISTS(SELECT 1 FROM contracts WHERE student_id = students.id)) * 100
-                   /
-               (SELECT COUNT(*) FROM students) AS percentages
-        UNION ALL
-        SELECT 'withoutContracts', COUNT(*)
-        FROM students
-        WHERE NOT EXISTS(SELECT 1 FROM contracts WHERE student_id = students.id)
-    `);
-
-    income = rows;
+    income = await CommonRepo.findContractConclusionInfoAndIncome();
     console.log('income from DB');
     cache.set('income', income);
 
@@ -102,15 +71,8 @@ exports.getCertificates = async (req, res) => {
         return res.send(certificates);
     }
 
-    const {rows} = await pool.query(`
-        SELECT certificates.id, s.last_name student_last_name, c.name course, date_of_issue
-        FROM certificates
-                 JOIN courses_students cs ON certificates.courses_students_id = cs.id
-                 JOIN students s ON cs.student_id = s.id
-                 JOIN courses c ON cs.course_id = c.id;
-    `);
+    certificates = await CommonRepo.findCertificates();
 
-    certificates = toCamelCase(rows);
     console.log('certificates from DB');
     cache.set('certificates', certificates);
 
