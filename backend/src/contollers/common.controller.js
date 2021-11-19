@@ -103,7 +103,7 @@ exports.getCertificates = async (req, res) => {
     }
 
     const {rows} = await pool.query(`
-        SELECT s.last_name student_last_name, c.name course, date_of_issue
+        SELECT certificates.id, s.last_name student_last_name, c.name course, date_of_issue
         FROM certificates
                  JOIN courses_students cs ON certificates.courses_students_id = cs.id
                  JOIN students s ON cs.student_id = s.id
