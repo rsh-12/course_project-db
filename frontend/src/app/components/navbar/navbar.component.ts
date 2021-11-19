@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
-import {CommonService} from "../../services/common-service";
+import {CommonService} from "../../services/common.service";
 import {TotalRecords} from "../../common/totalRecords";
 import {FormControl} from "@angular/forms";
 import {Observable} from "rxjs";

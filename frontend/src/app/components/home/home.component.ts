@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Income} from "../../common/income";
-import {CommonService} from "../../services/common-service";
+import {CommonService} from "../../services/common.service";
 
 @Component({
     selector: 'app-home',
