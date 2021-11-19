@@ -5,6 +5,7 @@ import {TotalRecords} from "../common/totalRecords";
 import {CurrentUser} from "../common/currentUser";
 import {Income} from "../common/income";
 import {Contract} from "../common/contract";
+import {CertificateInfo} from "../common/certificateInfo";
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -30,6 +31,10 @@ export class CommonService {
 
     getContracts(): Observable<Contract[]> {
         return this.http.get<Contract[]>(API_URL + 'contracts');
+    }
+
+    getCertificates(): Observable<CertificateInfo[]> {
+        return this.http.get<CertificateInfo[]>(API_URL + 'certificates');
     }
 
 }
