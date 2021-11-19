@@ -24,12 +24,10 @@ export class CompaniesListComponent implements OnInit {
             data => {
                 console.log(data);
                 this.companies = data;
-                this.loading = false;
             }, error => {
-                this.loading = false;
                 console.log(error);
-
-            }
+            },
+            () => this.loading = false
         );
     }
 
