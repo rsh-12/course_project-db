@@ -1,1 +1,25 @@
-<p>certificates-list works!</p>
+<h1>Certificates</h1>
+
+<div *ngIf="certificates">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Last name</th>
+            <th scope="col">Course</th>
+            <th scope="col">Date of issue</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let certificate of certificates">
+            <td>{{certificate.studentLastName | titlecase}}</td>
+            <td>{{certificate.course}}</td>
+            <td>{{certificate.dateOfIssue | date}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>

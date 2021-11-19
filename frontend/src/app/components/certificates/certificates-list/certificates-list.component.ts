@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CommonService} from "../../../services/common-service";
+import {CourseInfo} from "../../../common/courseInfo";
+import {CertificateInfo} from "../../../common/certificateInfo";
 
 @Component({
-  selector: 'app-certificates-list',
-  templateUrl: './certificates-list.component.html',
-  styleUrls: ['./certificates-list.component.css']
+    selector: 'app-certificates-list',
+    templateUrl: './certificates-list.component.html',
+    styleUrls: ['./certificates-list.component.css']
 })
 export class CertificatesListComponent implements OnInit {
 
-  constructor() { }
+    certificates: CertificateInfo[] = [];
+    loading = false;
 
-  ngOnInit(): void {
-  }
+    constructor(private commonService: CommonService) {
+    }
 
+    ngOnInit(): void {
+        this.loading = true;
+        this.retrieveCertificates();
+    }
+
+    private retrieveCertificates() {
+        this.commonService.getCertificates().subscribe(
+            data => {
+                this.certificates = data;
+            }, error => {
+                console.log(error);
+            },
+            () => this.loading = false);
+    }
 }
