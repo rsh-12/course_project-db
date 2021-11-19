@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.loading = true;
-        this.retrieveCompanies();
+        this.retrieveIncomeInfo();
     }
 
-    private retrieveCompanies() {
+    private retrieveIncomeInfo() {
         this.commonService.getIncome().subscribe(
             data => {
                 this.income = data;
