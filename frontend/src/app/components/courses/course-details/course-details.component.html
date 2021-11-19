@@ -1,15 +1,21 @@
 <div class="row">
     <div class="col-md-6">
+
+        <div *ngIf="errorMessage"
+             class="alert alert-danger"
+             style="color: darkred">{{errorMessage}}</div>
+
         <div *ngIf="response.course.id" class="edit-form">
             <h4>Course</h4>
 
-            <form>
+            <form (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text"
                            class="form-control"
                            id="name"
                            name="name"
+                           required
                            [(ngModel)]="response.course.name"
                     >
                 </div>
@@ -77,10 +83,12 @@
 
             </form>
 
-            <!--                (click)="update()"-->
             <button type="submit"
-                    class="badge badge-success mb-2">Update
+                    class="btn btn-primary">Update
             </button>
+
+            <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
+
             <p>{{ message }}</p>
         </div>
 
