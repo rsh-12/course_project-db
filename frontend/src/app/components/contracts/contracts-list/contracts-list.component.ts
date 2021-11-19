@@ -18,8 +18,6 @@ export class ContractsListComponent implements OnInit {
     ngOnInit(): void {
         this.loading = true;
         this.retrieveContracts();
-        this.loading = false;
-
     }
 
     private retrieveContracts() {
@@ -28,7 +26,8 @@ export class ContractsListComponent implements OnInit {
                 this.contracts = data;
             }, error => {
                 console.log(error);
-            }
-        )
+            },
+            () => this.loading = false
+        );
     }
 }
