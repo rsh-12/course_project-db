@@ -6,4 +6,5 @@ export class Instructor {
     degree?: string;
     createdAt?: Date;
     updatedAt?: Date;
+    courses?: number;
 }
