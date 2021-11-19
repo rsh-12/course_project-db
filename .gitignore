@@ -3,6 +3,7 @@ node_modules/
 .git
 .idea/
 tmpdir
+*.http
 
 # database
 database/utils/numbers.txt
