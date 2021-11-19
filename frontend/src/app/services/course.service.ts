@@ -25,4 +25,8 @@ export class CourseService {
     findById(id: string): Observable<CourseById> {
         return this.http.get<CourseById>(API_URL + id);
     }
+
+    update(id: number, data: any): Observable<any> {
+        return this.http.post(API_URL, data);
+    }
 }
