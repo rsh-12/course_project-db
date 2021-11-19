@@ -69,7 +69,7 @@
                         <div class="fw-bold">
                             <div class="text-truncate"><span>Companies</span>
                             </div>
-                            <p class="small text-gray-500 mb-0">Total records - {{totalRecords.companies}}</p>
+                            <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records - {{totalRecords.companies}}</p>
                         </div>
                     </a><a class="dropdown-item d-flex align-items-center" href="/students" routerLink="students">
                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
@@ -78,7 +78,7 @@
                         <div class="fw-bold">
                             <div class="text-truncate">
                                 <span>Students</span></div>
-                            <p class="small text-gray-500 mb-0">Total records - {{totalRecords.students}}</p>
+                            <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records - {{totalRecords.students}}</p>
                         </div>
                     </a><a class="dropdown-item d-flex align-items-center" href="/contracts" routerLink="contracts">
                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
@@ -87,7 +87,7 @@
                         <div class="fw-bold">
                             <div class="text-truncate"><span>Contracts</span>
                             </div>
-                            <p class="small text-gray-500 mb-0">Total records - {{totalRecords.contracts}}</p>
+                            <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records - {{totalRecords.contracts}}</p>
                         </div>
                     </a>
                         <a class="dropdown-item d-flex align-items-center" href="/certificates"
@@ -98,7 +98,7 @@
                             <div class="fw-bold">
                                 <div class="text-truncate"><span>Certificates</span>
                                 </div>
-                                <p class="small text-gray-500 mb-0">Total records - {{totalRecords.certificates}}</p>
+                                <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records - {{totalRecords.certificates}}</p>
                             </div>
                         </a>
 
@@ -109,7 +109,7 @@
                             <div class="fw-bold">
                                 <div class="text-truncate"><span>Courses</span>
                                 </div>
-                                <p class="small text-gray-500 mb-0">Total records - {{totalRecords.courses}}</p>
+                                <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records - {{totalRecords.courses}}</p>
                             </div>
                         </a>
 
@@ -120,7 +120,7 @@
                             <div class="fw-bold">
                                 <div class="text-truncate"><span>Instructors</span>
                                 </div>
-                                <p class="small text-gray-500 mb-0">Total records - {{totalRecords.instructors}}</p>
+                                <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records - {{totalRecords.instructors}}</p>
                             </div>
                         </a>
 

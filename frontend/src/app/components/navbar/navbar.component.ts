@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     username?: string;
 
     errorMessage = '';
-    totalRecords!: TotalRecords;
+    totalRecords?: TotalRecords;
     totalCount = 0;
 
     value = '';
