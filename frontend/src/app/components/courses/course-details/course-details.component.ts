@@ -4,6 +4,7 @@ import {CourseService} from "../../../services/course.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Instructor} from "../../../common/instructor";
 import {CourseById} from "../../../common/courseById";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-course-details',
@@ -12,28 +13,20 @@ import {CourseById} from "../../../common/courseById";
 })
 export class CourseDetailsComponent implements OnInit {
 
-    course: Course = {
-        id: 0,
-        name: '',
-        category: '',
-        description: '',
-        hours: 0,
-        startDate: new Date(),
-        endDate: new Date(),
-        price: 0.00
-    }
-
+    submitted = false;
+    currentCourse: Course = {}
     instructors: Instructor[] = [];
     currentInstructor: Instructor = {};
     totalStudents = 0;
 
     response: CourseById = {
-        course: this.course,
-        instructors: this.instructors,
-        totalStudents: this.totalStudents
+        course: {},
+        instructors: [],
+        totalStudents: 0
     }
 
     message = '';
+    errorMessage: string | undefined;
 
     constructor(private courseService: CourseService,
                 private route: ActivatedRoute,
@@ -42,14 +35,26 @@ export class CourseDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.message = '';
+
         this.getCourseById(this.route.snapshot.params.id);
+    }
+
+    onSubmit() {
+        this.submitted = true;
+
+        console.log('request sent')
+        this.updateCourse();
+    }
+
+    onReset() {
+        this.submitted = false;
     }
 
     private getCourseById(id: string) {
         this.courseService.findById(id).subscribe(
             data => {
                 this.response = data;
-                console.log(data);
+                this.currentCourse = this.response.course;
             }, error => {
                 console.log(error);
             }
@@ -59,4 +64,22 @@ export class CourseDetailsComponent implements OnInit {
     setActiveInstructor(instructor: Instructor) {
         this.currentInstructor = instructor;
     }
+
+    updateCourse() {
+        if (this.currentCourse.id != null) {
+
+            this.courseService.update(this.currentCourse.id, this.currentCourse).subscribe(
+                res => {
+                    console.log(res);
+                    this.message = 'The course was updated successfully';
+                }, error => {
+                    console.log(error);
+                    this.errorMessage = error.error.message
+                }
+            );
+        } else {
+            console.log('id is null');
+        }
+    }
+
 }
