@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseInfo} from "../../../common/courseInfo";
 import {CourseService} from "../../../services/course.service";
+import {NotificationService} from "../../../services/notification.service";
 
 @Component({
     selector: 'app-courses-list',
@@ -14,8 +15,10 @@ export class CoursesListComponent implements OnInit {
     currentCourse: CourseInfo = {};
     currentIndex = -1;
     public name = '';
+    loading = false;
 
-    constructor(private courseService: CourseService) {
+    constructor(private courseService: CourseService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit(): void {
@@ -23,6 +26,8 @@ export class CoursesListComponent implements OnInit {
     }
 
     private retrieveCourses() {
+        this.loading = true;
+
         this.courseService.findAll().subscribe(
             data => {
                 this.totalCourses = data.length
@@ -30,8 +35,9 @@ export class CoursesListComponent implements OnInit {
             }, error => {
                 this.totalCourses = 0;
                 console.log(error);
-            }
-        )
+            },
+            () => this.loading = false
+        );
     }
 
     private refreshList() {
@@ -41,6 +47,7 @@ export class CoursesListComponent implements OnInit {
     }
 
     searchByName() {
+        this.loading = true;
         this.currentCourse = {};
         this.currentIndex = -1;
 
@@ -53,13 +60,40 @@ export class CoursesListComponent implements OnInit {
                 this.name = ''
             }, error => {
                 console.log(error);
-            }
-        )
+            },
+            () => this.loading = false
+        );
     }
 
     setActiveCourse(course: CourseInfo, i: number) {
         this.currentCourse = course;
         this.currentIndex = i;
+    }
+
+    confirmDeletion() {
+        this.notificationService.openDialog().afterClosed()
+            .subscribe(result => {
+                if (result) this.deleteCourse();
+            });
+    }
+
+    deleteCourse() {
+        this.loading = true;
+
+        if (this.currentCourse.id != null) {
+            this.courseService.delete(this.currentCourse.id).subscribe(
+                res => {
+                    console.log(res);
+                    this.refreshList();
+                    this.notificationService.openSnackBar('The course deleted successfully')
+                },
+                error => {
+                    console.log(error);
+                    this.notificationService.openSnackBar(error.error.message);
+                },
+                () => this.loading = false
+            );
+        }
     }
 
 }

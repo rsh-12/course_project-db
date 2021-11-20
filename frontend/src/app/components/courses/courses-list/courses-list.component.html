@@ -87,15 +87,19 @@
                 {{currentCourse.studentsCount}}
             </div>
 
-            <a routerLink="/courses/{{currentCourse.id}}" class="btn btn-warning">Edit</a>
+            <div class="action-buttons">
+                <a routerLink="/courses/{{currentCourse.id}}" class="btn btn-warning btn-custom">Edit</a>
+                <button (click)="confirmDeletion()" class="btn btn-danger btn-custom">Delete</button>
+            </div>
         </div>
         <div *ngIf="!currentCourse.name">
             <br>
             <p>Please click on a course</p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi atque cumque deserunt earum eligendi enim
-            fugiat harum laborum magni necessitatibus nostrum officia quibusdam reiciendis sunt, temporibus ullam
-            voluptas voluptatibus?
         </div>
     </div>
 
+</div>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
