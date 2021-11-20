@@ -19,7 +19,6 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {MatLineModule, MatNativeDateModule, MatOptionModule} from "@angular/material/core";
-import {AddCourseComponent} from './components/courses/add-course/add-course.component';
 import {CourseDetailsComponent} from './components/courses/course-details/course-details.component';
 import {CoursesListComponent} from './components/courses/courses-list/courses-list.component';
 import {MatSelectModule} from "@angular/material/select";
@@ -33,7 +32,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
@@ -43,7 +42,6 @@ import {MatDialogModule} from "@angular/material/dialog";
         RegisterComponent,
         HomeComponent,
         ProfileComponent,
-        AddCourseComponent,
         CourseDetailsComponent,
         CoursesListComponent,
         CompaniesListComponent,
