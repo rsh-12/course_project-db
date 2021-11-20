@@ -1,14 +1,11 @@
 <div class="row">
     <div class="col-md-6">
 
-        <div *ngIf="errorMessage"
-             class="alert alert-danger"
-             style="color: darkred">{{errorMessage}}</div>
-
-        <div *ngIf="response.course.id" class="edit-form">
+        <div *ngIf="currentCourse" class="edit-form">
             <h4>Course</h4>
 
-            <form (ngSubmit)="onSubmit()">
+            <!-- form start-->
+            <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text"
@@ -16,8 +13,17 @@
                            id="name"
                            name="name"
                            required
-                           [(ngModel)]="response.course.name"
-                    >
+                           minlength="5"
+                           maxlength="50"
+                           formControlName="name"
+                           [ngClass]="{'is-invalid': submitted && f.name.errors}">
+
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Name is required</div>
+                        <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
+                        <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
+                        <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -26,19 +32,38 @@
                            class="form-control"
                            id="category"
                            name="category"
-                           [(ngModel)]="response.course.category"
-                    >
-                </div>
+                           required
+                           minlength="5"
+                           maxlength="50"
+                           formControlName="category"
+                           [ngClass]="{'is-invalid': submitted && f.category.errors}">
 
+                    <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                        <div *ngIf="f.category.errors.required">Category is required</div>
+                        <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
+                        <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
+                        <div *ngIf="f.category.errors.pattern">Please, remove the unnecessary space symbol</div>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label for="description">description</label>
-                    <input type="text"
-                           class="form-control"
-                           id="description"
-                           name="description"
-                           [(ngModel)]="response.course.description"
-                    >
+                    <textarea class="form-control"
+                              id="description"
+                              name="description"
+                              required
+                              minlength="5"
+                              maxlength="250"
+                              formControlName="description"
+                              [ngClass]="{'is-invalid': submitted && f.description.errors}">
+
+                    </textarea>
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                        <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
+                        <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
+                        <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -47,28 +72,32 @@
                            class="form-control"
                            id="hours"
                            name="hours"
-                           [(ngModel)]="response.course.hours"
+                           formControlName="hours"
+                           required
+                           min="10"
+                           max="1000"
+                           [ngClass]="{'is-invalid': submitted && f.hours.errors}"
                     >
+                    <div *ngIf="submitted && f.hours.errors" class="invalid-feedback">
+                        <div *ngIf="f.hours.errors.required">Hours are required</div>
+                        <div *ngIf="f.hours.errors.min">Min value is 10</div>
+                        <div *ngIf="f.hours.errors.max">Max value is 1000</div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="startDate">startDate</label>
-                    <input type="date"
-                           class="form-control"
-                           id="startDate"
-                           name="startDate"
-                           [(ngModel)]="response.course.startDate"
-                    >
-                </div>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                            <input matStartDate formControlName="startDate" placeholder="Start date">
+                            <input matEndDate formControlName="endDate" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
 
-                <div class="form-group">
-                    <label for="endDate">endDate</label>
-                    <input type="date"
-                           class="form-control"
-                           id="endDate"
-                           name="endDate"
-                           [(ngModel)]="response.course.endDate"
-                    >
+                        <mat-error *ngIf="f.startDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                        <mat-error *ngIf="f.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                    </mat-form-field>
                 </div>
 
                 <div class="form-group">
@@ -77,21 +106,34 @@
                            class="form-control"
                            id="price"
                            name="price"
-                           [(ngModel)]="response.course.price"
-                    >
+                           formControlName="price"
+                           required
+                           min="0"
+                           max="1000000"
+                           [ngClass]="{'is-invalid': submitted && f.price.errors}">
+
+                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                        <div *ngIf="f.price.errors.required">Price is required</div>
+                        <div *ngIf="f.price.errors.min">Min value is 0</div>
+                        <div *ngIf="f.price.errors.max">Max value is 1000000</div>
+                    </div>
                 </div>
 
+
+                <!-- buttons start -->
+                <div class="form-buttons">
+
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+
+                    <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
+                </div>
+                <!-- buttons end -->
+
             </form>
-
-            <button type="submit"
-                    class="btn btn-primary">Update
-            </button>
-
-            <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
-
-            <p>{{ message }}</p>
+            <!-- form end -->
         </div>
-
 
     </div>
     <div class="col-md-6">
@@ -107,8 +149,7 @@
                 <mat-select>
                     <mat-option
                             *ngFor="let i of response.instructors; let j = index"
-                            (click)="setActiveInstructor(i)"
-                    >
+                            (click)="setActiveInstructor(i)">
                         {{i.lastName}}
                     </mat-option>
                 </mat-select>
@@ -124,4 +165,8 @@
         <br/>
         <p>Cannot access this Tutorial...</p>
     </div>
+</div>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
