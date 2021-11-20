@@ -22,7 +22,7 @@ const routes: Routes = [
     {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
     {path: 'courses', component: CoursesListComponent, canActivate: [AuthGuardService]},
     {path: 'courses/:id', component: CourseDetailsComponent, canActivate: [AuthGuardService]},
-    {path: 'courses/add', component: AddCourseComponent, canActivate: [AuthGuardService]},
+    {path: 'courses/add', component: CourseDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'companies', component: CompaniesListComponent, canActivate: [AuthGuardService]},
     // {path: 'companies/:id', component: , canActivate: [AuthGuardService]},
     // {path: 'companies/add', component: , canActivate: [AuthGuardService]},
@@ -39,6 +39,8 @@ const routes: Routes = [
     // {path: 'instructors/:id', component: , canActivate: [AuthGuardService]},
     // {path: 'instructors/add', component: , canActivate: [AuthGuardService]},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '404', redirectTo: 'home'},
+    {path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({
