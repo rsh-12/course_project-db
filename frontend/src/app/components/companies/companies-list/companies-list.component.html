@@ -1,23 +1,74 @@
-<h1>Companies</h1>
+<div class="list row">
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search by name">
 
-<div *ngIf="companies">
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Updated at</th>
-        </tr>
-        </thead>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <tbody>
-        <tr *ngFor="let company of companies">
-            <td>{{company.name | titlecase}}</td>
-            <td>{{company.description | slice:0:15}}...</td>
-            <td>{{company.updatedAt | date}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="col-md-6">
+        <h4>Companies ({{companies?.length}})</h4>
+        <ul class="list-group">
+            <li
+                    class="list-group-item"
+                    *ngFor="let company of companies; let i = index"
+                    [class.active]="i == currentIndex"
+                    (click)="setActiveCourse(company, i)">
+                {{company.name}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+        <div *ngIf="currentCompany.id">
+            <h4>Company</h4>
+            <div>
+                <label>
+                    <strong>Name: </strong>
+                </label>
+                {{currentCompany.name}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Description: </strong>
+                </label>
+                {{currentCompany.description}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Updated at: </strong>
+                </label>
+                {{currentCompany.updatedAt | date}}
+            </div>
+
+            <div>
+                <label>
+                    <strong>Created at: </strong>
+                </label>
+                {{currentCompany.createdAt | date}}
+            </div>
+
+
+            <div class="action-buttons">
+                <a class="btn btn-warning btn-custom">Edit</a>
+                <button class="btn btn-danger btn-custom">Delete</button>
+            </div>
+        </div>
+        <div *ngIf="!currentCompany.name">
+            <br>
+            <p>Please click on a company</p>
+        </div>
+    </div>
+
 </div>
 
 <div *ngIf="loading">

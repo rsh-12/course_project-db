@@ -8,7 +8,10 @@ import {Company} from "../../../common/company";
     styleUrls: ['./companies-list.component.css']
 })
 export class CompaniesListComponent implements OnInit {
+
     companies?: Company[];
+    currentCompany: Company = {};
+    currentIndex = -1;
     loading = false;
 
     constructor(private companyService: CompanyService) {
@@ -29,6 +32,11 @@ export class CompaniesListComponent implements OnInit {
             },
             () => this.loading = false
         );
+    }
+
+    setActiveCourse(company: Company, i: number) {
+        this.currentCompany = company;
+        this.currentIndex = i;
     }
 
 }
