@@ -82,6 +82,9 @@ exports.add = async (req, res) => {
 
 exports.update = async (req, res) => {
     const {id} = req.params;
+    if (id == null) {
+        return res.status(404).send({message: 'Course not found'})
+    }
 
     const {
         name, category, description,
