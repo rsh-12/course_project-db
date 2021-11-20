@@ -26,8 +26,16 @@ export class CourseService {
         return this.http.get<CourseById>(API_URL + id);
     }
 
-
     update(id: number, data: any): Observable<any> {
         return this.http.put(API_URL + id, data);
     }
+
+    delete(id: number): Observable<any> {
+        return this.http.delete(API_URL + id);
+    }
+
+    add(data: any): Observable<any> {
+        return this.http.post(API_URL, data);
+    }
+
 }
