@@ -18,7 +18,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
-import {MatLineModule, MatOptionModule} from "@angular/material/core";
+import {MatLineModule, MatNativeDateModule, MatOptionModule} from "@angular/material/core";
 import {AddCourseComponent} from './components/courses/add-course/add-course.component';
 import {CourseDetailsComponent} from './components/courses/course-details/course-details.component';
 import {CoursesListComponent} from './components/courses/courses-list/courses-list.component';
@@ -31,6 +31,10 @@ import {InstructorsListComponent} from './components/instructors/instructors-lis
 import {NavbarComponent} from "./components/navbar/navbar.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -47,7 +51,8 @@ import {MatInputModule} from "@angular/material/input";
         ContractsListComponent,
         CertificatesListComponent,
         InstructorsListComponent,
-        NavbarComponent
+        NavbarComponent,
+        ConfirmDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -66,7 +71,11 @@ import {MatInputModule} from "@angular/material/input";
         MatOptionModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        MatInputModule
+        MatInputModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatDialogModule,
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
