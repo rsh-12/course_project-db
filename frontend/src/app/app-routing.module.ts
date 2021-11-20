@@ -8,7 +8,6 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {CoursesListComponent} from "./components/courses/courses-list/courses-list.component";
 import {CourseDetailsComponent} from "./components/courses/course-details/course-details.component";
-import {AddCourseComponent} from "./components/courses/add-course/add-course.component";
 import {CompaniesListComponent} from "./components/companies/companies-list/companies-list.component";
 import {StudentsListComponent} from "./components/students/students-list/students-list.component";
 import {ContractsListComponent} from "./components/contracts/contracts-list/contracts-list.component";
