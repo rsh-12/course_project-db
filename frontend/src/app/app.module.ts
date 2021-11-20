@@ -34,6 +34,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatBadgeModule} from "@angular/material/badge";
 
 @NgModule({
     declarations: [
@@ -74,6 +75,7 @@ import {MatDialogModule} from "@angular/material/dialog";
         MatDatepickerModule,
         MatNativeDateModule,
         MatDialogModule,
+        MatBadgeModule,
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
