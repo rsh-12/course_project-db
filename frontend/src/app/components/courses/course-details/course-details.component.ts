@@ -166,4 +166,7 @@ export class CourseDetailsComponent implements OnInit {
         ];
     }
 
+    back() {
+        this.router.navigate(['/courses'])
+    }
 }
