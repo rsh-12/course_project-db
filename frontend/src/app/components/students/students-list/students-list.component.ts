@@ -11,6 +11,8 @@ export class StudentsListComponent implements OnInit {
 
     students: Student[] = [];
     loading = false;
+    currentIndex = -1;
+    currentStudent: Student = {};
 
     constructor(private studentService: StudentService) {
     }
@@ -32,4 +34,12 @@ export class StudentsListComponent implements OnInit {
         );
     }
 
+    setActiveStudent(student: Student, i: number) {
+        this.currentIndex = i;
+        this.currentStudent = student;
+    }
+
+    confirmDeletion() {
+
+    }
 }
