@@ -1,20 +1,29 @@
-<div class="list row">
-    <div class="col-md-8">
-        <div class="input-group mb-3">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Search by name">
+<div class="col-md-6">
+    <div class="input-group search">
+        <input type="text"
+               class="form-control"
+               placeholder="Search by name">
 
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">
-                    Search
-                </button>
-            </div>
+        <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="button">
+                Search
+            </button>
         </div>
     </div>
+</div>
 
+<div class="list row">
     <div class="col-md-6">
-        <h4>Companies ({{companies?.length}})</h4>
+
+        <div class="d-flex justify-content-between subheader">
+            <h4 matBadge="{{companies?.length}}" matBadgeOverlap="false">Companies</h4>
+
+            <div>
+                <a class="btn btn-circle btn-outline-primary" [routerLink]="['/companies/add']"><i
+                        class="fas fa-plus"></i></a>
+            </div>
+        </div>
+
         <ul class="list-group">
             <li
                     class="list-group-item"
