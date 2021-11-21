@@ -39,4 +39,7 @@ export class CompaniesListComponent implements OnInit {
         this.currentIndex = i;
     }
 
+    confirmDeletion() {
+
+    }
 }
