@@ -9,8 +9,6 @@ exports.getAll = async (req, res) => {
         const courses = await CourseRepo.findByInstructor(instructorId);
         console.log(`Courses by instructorId=${instructorId}`);
 
-        console.log(courses)
-
         return res.send(courses);
     }
 
