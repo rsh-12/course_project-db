@@ -51,8 +51,6 @@ export class CoursesListComponent implements OnInit {
         this.currentCourse = {};
         this.currentIndex = -1;
 
-        console.log('this.name: ' + this.name);
-
         this.courseService.findByName(this.name).subscribe(
             data => {
                 this.totalCourses = data.length

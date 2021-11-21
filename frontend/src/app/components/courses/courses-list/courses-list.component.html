@@ -1,42 +1,66 @@
-<div class="list row">
-    <div class="col-md-8">
-        <div class="input-group mb-3">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Search by name"
-                   [(ngModel)]="name">
+<div class="col-md-6">
+    <div class="input-group search">
+        <input type="text"
+               class="form-control"
+               placeholder="Search by name"
+               [(ngModel)]="name">
 
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button"
-                        (click)="searchByName()">
-                    Search
-                </button>
-            </div>
+        <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="button"
+                    (click)="searchByName()">
+                Search
+            </button>
         </div>
     </div>
+</div>
 
+<div class="list row">
     <div class="col-md-6">
-        <h4>Courses list ({{totalCourses}})</h4>
-        <ul class="list-group">
-            <li
-                    class="list-group-item"
-                    *ngFor="let course of courses; let i = index"
-                    [class.active]="i == currentIndex"
-                    (click)="setActiveCourse(course, i)">
-                {{course.name}}
-            </li>
-        </ul>
+
+        <!-- title and add icon -->
+        <div class="d-flex justify-content-between subheader">
+            <h4 matBadge="{{totalCourses}}" matBadgeOverlap="false">Courses</h4>
+
+            <div>
+                <a class="btn btn-circle btn-outline-primary" [routerLink]="['/courses/add']"><i
+                        class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <!-- title and add icon -->
+
+        <!-- list of items -->
+        <mat-nav-list class="block-left" *ngIf="courses">
+            <mat-list-item *ngFor="let course of courses; let i = index"
+                           [class.active]="i == currentIndex"
+                           (click)="setActiveCourse(course, i)"
+                           [ngClass]="{'active': course.name===currentCourse.name}">
+                <span class="text-black-50">{{course.name}}</span>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-nav-list>
+        <!-- list of items -->
+
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 meta-info">
+
+        <div *ngIf="!currentCourse.name" class="text-center m-0 subheader">
+            <p>Please click on a course</p>
+        </div>
+
         <div *ngIf="currentCourse.id">
-            <h4>Course</h4>
-            <div>
-                <label>
-                    <strong>Name: </strong>
-                </label>
-                {{currentCourse.name}}
+            <div class="action-buttons">
+                <a routerLink="/courses/{{currentCourse.id}}" class="btn btn-outline-dark btn-circle"><i
+                        class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                <button (click)="confirmDeletion()" class="btn btn-outline-danger btn-circle"><i
+                        class="fas fa-trash-alt"></i>
+                </button>
             </div>
+
+            <div class="subheader">
+                <h4>{{currentCourse.name}}</h4>
+            </div>
+
 
             <div>
                 <label>
@@ -66,14 +90,14 @@
                 {{currentCourse.updatedAt | date}}
             </div>
 
-            <div>
+            <div *ngIf="currentCourse.firstName">
                 <label>
                     <strong>First name: </strong>
                 </label>
                 {{currentCourse.firstName}}
             </div>
 
-            <div>
+            <div *ngIf="currentCourse.lastName">
                 <label>
                     <strong>Last name: </strong>
                 </label>
@@ -86,15 +110,6 @@
                 </label>
                 {{currentCourse.studentsCount}}
             </div>
-
-            <div class="action-buttons">
-                <a routerLink="/courses/{{currentCourse.id}}" class="btn btn-warning btn-custom">Edit</a>
-                <button (click)="confirmDeletion()" class="btn btn-danger btn-custom">Delete</button>
-            </div>
-        </div>
-        <div *ngIf="!currentCourse.name">
-            <br>
-            <p>Please click on a course</p>
         </div>
     </div>
 
