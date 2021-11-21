@@ -4,7 +4,15 @@ const StudentRepo = require('../repository/student.repo');
 const cache = require('../config/cache.config');
 
 exports.getAll = async (req, res) => {
-    let courses = cache.get('courses');
+    const instructorId = req.query.instructorId;
+    if (!!instructorId) {
+        const courses = await CourseRepo.findByInstructor(instructorId);
+        console.log(`Courses by instructorId=${instructorId}`);
+
+        console.log(courses)
+
+        return res.send(courses);
+    }
 
     const {name} = req.query;
     if (name) {
@@ -12,6 +20,7 @@ exports.getAll = async (req, res) => {
         return res.send(courses);
     }
 
+    let courses = cache.get('courses');
     if (!!courses) {
         console.debug('courses from cache');
         return res.send(courses);
@@ -19,7 +28,6 @@ exports.getAll = async (req, res) => {
 
     console.debug('courses from DB')
     courses = await CourseRepo.find();
-
     if (courses) {
         cache.set('courses', courses, 12 * 60 * 60);
         return res.send(courses);
