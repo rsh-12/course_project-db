@@ -9,4 +9,6 @@ export class Course {
     createdAt?: Date;
     updatedAt?: Date;
     price?: number;
+    instructorsCount?: number;
+    studentsCount?: number;
 }
