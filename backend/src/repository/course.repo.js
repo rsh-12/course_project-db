@@ -3,7 +3,7 @@ const toCamelCase = require('./utils/toCamelCase');
 
 class CourseRepo {
     static async find() {
-        const {rows} = await pool.query('SELECT * FROM courses_info;');
+        const {rows} = await pool.query('SELECT * FROM courses;');
         console.log('> CourseRepo.find(): ' + rows.length)
 
         return toCamelCase(rows);
@@ -14,6 +14,18 @@ class CourseRepo {
         console.log(`> CourseRepo.findById(${id}): ${rows.length}`)
 
         return toCamelCase(rows)[0];
+    }
+
+    static async findByInstructor(id) {
+        const {rows} = await pool.query(`
+            SELECT c.id AS id, c.name AS name
+            FROM courses c
+                     JOIN courses_instructors ci ON c.id = ci.course_id
+            WHERE ci.instructor_id = $1;`, [id]);
+
+        console.log(`> CourseRepo.findByInstructor(${id}): ${rows.length}`)
+
+        return toCamelCase(rows);
     }
 
     static async delete(id) {
@@ -77,7 +89,7 @@ class CourseRepo {
     static async findByName(name) {
         const {rows} = await pool.query(`
             SELECT *
-            FROM courses_info
+            FROM courses
             WHERE name ILIKE $1;`, [`%${name}%`]);
 
         console.log(`> CourseRepo.findByName(${name}): ${rows.length}`)
