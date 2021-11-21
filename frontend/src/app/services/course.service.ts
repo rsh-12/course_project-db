@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CourseInfo} from "../common/courseInfo";
 import {CourseById} from "../common/courseById";
@@ -14,7 +14,11 @@ export class CourseService {
     constructor(private http: HttpClient) {
     }
 
-    findAll(): Observable<CourseInfo[]> {
+    findAll(instructorId?: number): Observable<CourseInfo[]> {
+        if (!!instructorId) {
+            return this.http.get<CourseInfo[]>(`${API_URL}?instructorId=${instructorId}`);
+        }
+
         return this.http.get<CourseInfo[]>(API_URL);
     }
 
