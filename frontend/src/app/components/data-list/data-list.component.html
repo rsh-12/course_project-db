@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <button (click)="loadRelatedData()" mat-raised-button color="primary">Related {{entityName}}</button>
+    </div>
+
+    <div>
+        <button (click)="loadUnrelatedData()" mat-raised-button color="primary">Unrelated {{entityName}}</button>
+    </div>
+</div>
+
+<hr>
+
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
+
+<div *ngIf="showData && !loading">
+    <div class="mb-4">
+        <div *ngIf="isDataRelated && data">
+            <button (click)="removeFromCourse()" class="btn btn-outline-secondary">Remove from course</button>
+        </div>
+        <div *ngIf="!isDataRelated && data">
+            <button (click)="addToCourse()" class="btn btn-outline-secondary">Add to course</button>
+        </div>
+    </div>
+
+    <ul>
+        <li *ngFor="let d of data; let i = index">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <mat-checkbox [(ngModel)]="d.checked">
+                        {{d.name}} ({{d.checked}})
+                    </mat-checkbox>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+</div>
