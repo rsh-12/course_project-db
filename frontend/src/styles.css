@@ -15,6 +15,22 @@
     padding: 50px 0;
 }
 
+.spacer-pt-40 {
+    padding: 40px 0;
+}
+
+.spacer-pt-30 {
+    padding: 30px 0;
+}
+
+.spacer-pt-20 {
+    padding: 20px 0;
+}
+
+.spacer-pt-10 {
+    padding: 10px 0;
+}
+
 .list {
     text-align: left;
     margin: auto;
@@ -55,6 +71,6 @@
     cursor: pointer;
 }
 
-.clickable{
+.clickable {
     color: darkblue;
 }
