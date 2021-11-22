@@ -96,6 +96,30 @@ class CourseRepo {
 
         return toCamelCase(rows);
     }
+
+    static async countOfInstructors(id) {
+        const {rows} = await pool.query(`
+            SELECT COUNT(ci.instructor_id) instructors_count
+            FROM courses_instructors ci
+            WHERE course_id = $1;
+        `, [id]);
+
+        console.log(`> CourseRepo.countOfInstructors(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+    static async countOfStudents(id) {
+        const {rows} = await pool.query(`
+            SELECT COUNT(cs.student_id) students_count
+            FROM courses_students cs
+            WHERE course_id = $1;
+        `, [id]);
+
+        console.log(`> CourseRepo.countOfStudents(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
 }
 
 module.exports = CourseRepo
