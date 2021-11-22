@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonService} from "../../../services/common.service";
-import {CourseInfo} from "../../../common/courseInfo";
 import {CertificateInfo} from "../../../common/certificateInfo";
 
 @Component({
