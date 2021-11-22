@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CourseInfo} from "../common/courseInfo";
 import {CourseById} from "../common/courseById";
+import {Course} from "../common/course";
 
 const API_URL = 'http://localhost:8080/api/courses/';
 
@@ -14,16 +14,16 @@ export class CourseService {
     constructor(private http: HttpClient) {
     }
 
-    findAll(instructorId?: number): Observable<CourseInfo[]> {
+    findAll(instructorId?: number): Observable<Course[]> {
         if (!!instructorId) {
-            return this.http.get<CourseInfo[]>(`${API_URL}?instructorId=${instructorId}`);
+            return this.http.get<Course[]>(`${API_URL}?instructorId=${instructorId}`);
         }
 
-        return this.http.get<CourseInfo[]>(API_URL);
+        return this.http.get<Course[]>(API_URL);
     }
 
-    findByName(name: string): Observable<CourseInfo[]> {
-        return this.http.get<CourseInfo[]>(API_URL + '?name=' + name);
+    findByName(name: string): Observable<Course[]> {
+        return this.http.get<Course[]>(API_URL + '?name=' + name);
     }
 
     findById(id: string): Observable<CourseById> {
