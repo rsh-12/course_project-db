@@ -1,92 +1,119 @@
 <div class="row">
+    <div class="spacer-pt-30"></div>
     <div class="col-md-6">
 
         <div *ngIf="currentCourse" class="edit-form">
-            <h4>Course</h4>
+            <h3 class="text-center">Course</h3>
 
             <!-- form start-->
             <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text"
-                           class="form-control"
-                           id="name"
-                           name="name"
-                           required
-                           minlength="5"
-                           maxlength="50"
-                           formControlName="name"
-                           [ngClass]="{'is-invalid': submitted && f.name.errors}">
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
+                        <mat-label>Name</mat-label>
+                        <input matInput #name
+                               minlength="5"
+                               maxlength="50"
+                               required
+                               formControlName="name"
+                               [ngClass]="{'is-invalid': submitted && f.name.errors}">
 
-                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                        <div *ngIf="f.name.errors.required">Name is required</div>
-                        <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
-                        <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
-                        <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
-                    </div>
+                        <mat-hint align="end">{{name.value?.length || 0}}/50</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Name is required</div>
+                            <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
+                            <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
+                            <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
 
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text"
-                           class="form-control"
-                           id="category"
-                           name="category"
-                           required
-                           minlength="5"
-                           maxlength="50"
-                           formControlName="category"
-                           [ngClass]="{'is-invalid': submitted && f.category.errors}">
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
+                        <mat-label>Category</mat-label>
+                        <input matInput #category
+                               minlength="5"
+                               maxlength="50"
+                               required
+                               formControlName="category"
+                               [ngClass]="{'is-invalid': submitted && f.category.errors}">
 
-                    <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
-                        <div *ngIf="f.category.errors.required">Category is required</div>
-                        <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
-                        <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
-                        <div *ngIf="f.category.errors.pattern">Please, remove the unnecessary space symbol</div>
-                    </div>
+                        <mat-hint align="end">{{category.value?.length || 0}}/50</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                            <div *ngIf="f.category.errors.required">Category is required</div>
+                            <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
+                            <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
+                            <div *ngIf="f.category.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
 
-                <div class="form-group">
-                    <label for="description">description</label>
-                    <textarea class="form-control"
-                              id="description"
-                              name="description"
-                              required
-                              minlength="5"
-                              maxlength="250"
-                              formControlName="description"
-                              [ngClass]="{'is-invalid': submitted && f.description.errors}">
+                <div class="form-group mb-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput #description
+                                  required
+                                  minlength="5"
+                                  maxlength="250"
+                                  formControlName="description"
+                                  [ngClass]="{'is-invalid': submitted && f.description.errors}">
+                        </textarea>
 
-                    </textarea>
-                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                        <div *ngIf="f.description.errors.required">Description is required</div>
-                        <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
-                        <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
-                        <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
-                    </div>
+                        <mat-hint align="end">{{description.value?.length || 0}}/250</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                            <div *ngIf="f.description.errors.required">Description is required</div>
+                            <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
+                            <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
+                            <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
 
-                <div class="form-group">
-                    <label for="hours">hours</label>
-                    <input type="number"
-                           class="form-control"
-                           id="hours"
-                           name="hours"
-                           formControlName="hours"
-                           required
-                           min="10"
-                           max="1000"
-                           [ngClass]="{'is-invalid': submitted && f.hours.errors}"
-                    >
-                    <div *ngIf="submitted && f.hours.errors" class="invalid-feedback">
-                        <div *ngIf="f.hours.errors.required">Hours are required</div>
-                        <div *ngIf="f.hours.errors.min">Min value is 10</div>
-                        <div *ngIf="f.hours.errors.max">Max value is 1000</div>
-                    </div>
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max value is 1000" appearance="outline">
+                        <mat-label>Hours</mat-label>
+                        <input matInput
+                               type="number"
+                               required
+                               min="10"
+                               max="1000"
+                               formControlName="hours"
+                               [ngClass]="{'is-invalid': submitted && f.hours.errors}">
+
+                        <mat-error *ngIf="submitted && f.hours.errors" class="invalid-feedback">
+                            <div *ngIf="f.hours.errors.required">Hours are required</div>
+                            <div *ngIf="f.hours.errors.min">Min value is 10</div>
+                            <div *ngIf="f.hours.errors.max">Max value is 1000</div>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
 
-                <div class="form-group">
-                    <mat-form-field appearance="outline" style="width: 100%;">
+
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max value is 1000000" appearance="outline">
+                        <mat-label>Price</mat-label>
+                        <input matInput
+                               type="number"
+                               required
+                               min="10"
+                               max="1000000"
+                               formControlName="price"
+                               [ngClass]="{'is-invalid': submitted && f.price.errors}">
+
+                        <mat-error *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                            <div *ngIf="f.price.errors.required">Price is required</div>
+                            <div *ngIf="f.price.errors.min">Min value is 0</div>
+                            <div *ngIf="f.price.errors.max">Max value is 1000000</div>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+
+                <!-- price -->
+                <div class="form-group mb-4">
+                    <mat-form-field appearance="outline" style="min-width: 50%">
                         <mat-label>Enter a date range</mat-label>
                         <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
                             <input matStartDate formControlName="startDate" placeholder="Start date">
@@ -99,45 +126,43 @@
                         <mat-error *ngIf="f.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
                     </mat-form-field>
                 </div>
+                <!-- price -->
 
-                <div class="form-group">
-                    <label for="price">price</label>
-                    <input type="number"
-                           class="form-control"
-                           id="price"
-                           name="price"
-                           formControlName="price"
-                           required
-                           min="0"
-                           max="1000000"
-                           [ngClass]="{'is-invalid': submitted && f.price.errors}">
 
-                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
-                        <div *ngIf="f.price.errors.required">Price is required</div>
-                        <div *ngIf="f.price.errors.min">Min value is 0</div>
-                        <div *ngIf="f.price.errors.max">Max value is 1000000</div>
+                <!-- buttons -->
+                <div class="form-buttons">
+                    <div>
+                        <button type="submit" class="btn btn-outline-primary btn-circle">
+                            <i class="far fa-save"></i>
+                        </button>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
+                            <i class="fas fa-broom"></i>
+                        </button>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
+                            <i class="fas fa-undo"></i>
+                        </button>
                     </div>
                 </div>
+                <!-- buttons -->
 
-
-                <!-- buttons start -->
-                <div class="form-buttons">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
-                    <button class="btn btn-secondary" type="button" (click)="back()">Back</button>
-                </div>
-                <!-- buttons end -->
 
             </form>
             <!-- form end -->
         </div>
 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 meta-info">
+
         <div>
-            Students: <span>{{response.totalStudents}}</span>
-        </div>
-        <div>
+            <div>
+                Students: <span>{{response.totalStudents}}</span>
+            </div>
             <div>
                 Instructors: {{response.instructors.length}}
             </div>
