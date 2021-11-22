@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CourseInfo} from "../../../common/courseInfo";
 import {CourseService} from "../../../services/course.service";
 import {NotificationService} from "../../../services/notification.service";
+import {Course} from "../../../common/course";
 
 @Component({
     selector: 'app-courses-list',
@@ -10,9 +10,9 @@ import {NotificationService} from "../../../services/notification.service";
 })
 export class CoursesListComponent implements OnInit {
 
-    courses?: CourseInfo[];
+    courses?: Course[];
     totalCourses = 0;
-    currentCourse: CourseInfo = {};
+    currentCourse: Course = {};
     currentIndex = -1;
     public name = '';
     loading = false;
@@ -63,7 +63,7 @@ export class CoursesListComponent implements OnInit {
         );
     }
 
-    setActiveCourse(course: CourseInfo, i: number) {
+    setActiveCourse(course: Course, i: number) {
         this.currentCourse = course;
         this.currentIndex = i;
     }

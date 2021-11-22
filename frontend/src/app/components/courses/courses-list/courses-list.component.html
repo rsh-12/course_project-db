@@ -101,26 +101,18 @@
                 {{currentCourse.updatedAt | date}}
             </div>
 
-            <div *ngIf="currentCourse.firstName">
+            <div>
                 <label>
-                    <strong>First name: </strong>
+                    <strong class="clickable">Students</strong>
                 </label>
-                {{currentCourse.firstName}}
-            </div>
-
-            <div *ngIf="currentCourse.lastName">
-                <label>
-                    <strong>Last name: </strong>
-                </label>
-                {{currentCourse.lastName}}
             </div>
 
             <div>
                 <label>
-                    <strong>Total students: </strong>
+                    <strong class="clickable">Instructors</strong>
                 </label>
-                {{currentCourse.studentsCount}}
             </div>
+            <hr>
         </div>
     </div>
     <!-- right side -->
