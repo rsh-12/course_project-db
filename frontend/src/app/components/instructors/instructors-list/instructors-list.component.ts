@@ -22,6 +22,7 @@ export class InstructorsListComponent implements OnInit {
     loading = false;
     loadingCourses = false;
     currentIndex = -1;
+    instructorName = '';
 
     constructor(private instructorService: InstructorService,
                 private courseService: CourseService,
@@ -69,6 +70,10 @@ export class InstructorsListComponent implements OnInit {
             },
             () => this.loadingCourses = false
         );
+
+    }
+
+    searchByName() {
 
     }
 }
