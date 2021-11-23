@@ -167,7 +167,7 @@
         <div *ngIf="isEditMode && currentCourse.id">
             <mat-tab-group>
                 <mat-tab label="Instructors">
-                    <app-data-list (eventEmitter)="collectIds($event)" [entityId]="currentCourse.id"
+                    <app-data-list [entityId]="currentCourse.id"
                                    [entityName]="'instructors'"></app-data-list>
                 </mat-tab>
 
