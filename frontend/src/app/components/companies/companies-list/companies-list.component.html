@@ -2,10 +2,12 @@
     <div class="input-group search">
         <input type="text"
                class="form-control"
-               placeholder="Search by name">
+               placeholder="Search by name"
+               [(ngModel)]="companyName">
 
         <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="button">
+            <button class="btn btn-outline-primary" type="button"
+                    (click)="searchByName()">
                 Search
             </button>
         </div>

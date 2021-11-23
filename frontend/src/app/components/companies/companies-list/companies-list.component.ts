@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../../../services/company.service";
 import {Company} from "../../../common/company";
+import {NotificationService} from "../../../services/notification.service";
 
 @Component({
     selector: 'app-companies-list',
@@ -13,8 +14,10 @@ export class CompaniesListComponent implements OnInit {
     currentCompany: Company = {};
     currentIndex = -1;
     loading = false;
+    companyName: string = '';
 
-    constructor(private companyService: CompanyService) {
+    constructor(private companyService: CompanyService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit(): void {
@@ -42,4 +45,23 @@ export class CompaniesListComponent implements OnInit {
     confirmDeletion() {
 
     }
+
+    searchByName() {
+        this.loading = true;
+        this.currentCompany = {};
+        this.currentIndex = -1;
+
+        this.companyService.findByName(this.companyName).subscribe(
+            data => {
+                this.companies = data;
+                this.companyName = '';
+                this.notificationService.openSnackBar(`${data.length} objects found`);
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar('Something went wrong');
+            },
+            () => this.loading = false
+        );
+    }
+
 }
