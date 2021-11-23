@@ -2,8 +2,13 @@ const cache = require('../config/cache.config');
 const StudentRepo = require("../repository/student.repo");
 
 exports.getAll = async (req, res) => {
-    let students = cache.get('students');
+    const {name} = req.query;
+    if (!!name) {
+        const studentsByName = await StudentRepo.findByName(name);
+        return res.send(studentsByName);
+    }
 
+    let students = cache.get('students');
     if (!!students) {
         console.log('students from cache');
         return res.send(students);
