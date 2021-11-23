@@ -12,4 +12,19 @@ module.exports = app => {
         controller.getAll
     );
 
+    app.get("/api/students/course/:id",
+        [authJwt.verifyToken],
+        controller.getByCourse
+    );
+
+    app.post("/api/students/course/:id",
+        [authJwt.verifyToken],
+        controller.moveStudents
+    );
+
+    app.get("/api/students/without/contracts",
+        [authJwt.verifyToken],
+        controller.getStudentsWithoutContracts
+    );
+
 }
