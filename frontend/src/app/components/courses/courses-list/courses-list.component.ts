@@ -14,7 +14,7 @@ export class CoursesListComponent implements OnInit {
     totalCourses = 0;
     currentCourse: Course = {};
     currentIndex = -1;
-    public name = '';
+    courseName = '';
     loading = false;
 
     constructor(private courseService: CourseService,
@@ -51,11 +51,11 @@ export class CoursesListComponent implements OnInit {
         this.currentCourse = {};
         this.currentIndex = -1;
 
-        this.courseService.findByName(this.name).subscribe(
+        this.courseService.findByName(this.courseName).subscribe(
             data => {
                 this.totalCourses = data.length
                 this.courses = data;
-                this.name = ''
+                this.courseName = '';
                 this.notificationService.openSnackBar(`${this.totalCourses} objects found`);
             }, error => {
                 console.log(error);
