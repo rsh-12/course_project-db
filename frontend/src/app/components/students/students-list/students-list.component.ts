@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StudentService} from "../../../services/student.service";
 import {Student} from "../../../common/student";
+import {NotificationService} from "../../../services/notification.service";
 
 @Component({
     selector: 'app-students-list',
@@ -13,8 +14,10 @@ export class StudentsListComponent implements OnInit {
     loading = false;
     currentIndex = -1;
     currentStudent: Student = {};
+    studentName = '';
 
-    constructor(private studentService: StudentService) {
+    constructor(private studentService: StudentService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit(): void {
@@ -41,5 +44,23 @@ export class StudentsListComponent implements OnInit {
 
     confirmDeletion() {
 
+    }
+
+    searchByName() {
+        this.currentStudent = {};
+        this.currentIndex = -1;
+        this.loading = true;
+
+        this.studentService.findByName(this.studentName).subscribe(
+            data => {
+                this.students = data;
+                this.studentName = ''
+                this.notificationService.openSnackBar(`${data.length} objects found`);
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar('Something went wrong');
+            },
+            () => this.loading = false
+        );
     }
 }
