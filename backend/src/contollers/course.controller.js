@@ -4,7 +4,7 @@ const StudentRepo = require('../repository/student.repo');
 const cache = require('../config/cache.config');
 
 exports.getAll = async (req, res) => {
-    const instructorId = req.query.instructorId;
+    const {instructorId} = req.query;
     if (!!instructorId) {
         const courses = await CourseRepo.findByInstructor(instructorId);
         console.log(`Courses by instructorId=${instructorId}`);
@@ -13,7 +13,7 @@ exports.getAll = async (req, res) => {
     }
 
     const {name} = req.query;
-    if (name) {
+    if (!!name) {
         const courses = await CourseRepo.findByName(name);
         return res.send(courses);
     }
