@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-3 mb-4">
-                    <div class="card shadow border-start-warning py-2">
+                    <div class="card shadow border-start-warning py-2" (click)="showStudentsWithoutContracts()">
                         <div class="card-body">
                             <div class="row align-items-center no-gutters">
                                 <div class="col me-2">
@@ -85,6 +85,40 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- FAQ -->
+            <div>
+                <div class="spacer"></div>
+                <h3 class="text-center">FAQ</h3>
+                <div class="col-md-8 m-0">
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Where can I find the data?
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p>Click <span class="text-black-50">LINKS</span> and select the link</p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    How can I add some students or instructors to the course?
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p>
+                                Go to the <a [routerLink]="['/courses']">courses</a>, choose the course and click
+                                <i class="fas fa-edit btn btn-outline-dark btn-circle"></i>
+                            </p>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+            <!-- FAQ -->
 
         </div>
     </div>
