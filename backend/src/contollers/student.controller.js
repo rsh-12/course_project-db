@@ -19,3 +19,69 @@ exports.getAll = async (req, res) => {
 
     return res.status(404).send({message: 'Students not found'});
 }
+
+exports.getByCourse = async (req, res) => {
+    if (req.query.except) {
+        if (sendFromCache(res, 'courseUnrelatedStudents')) return;
+
+        const courseUnrelatedStudents = await StudentRepo.findNameAndIdExceptCourse(req.params.id);
+        console.log('courseUnrelatedStudents from DB');
+        cache.set('courseUnrelatedStudents', courseUnrelatedStudents);
+
+        return res.send(courseUnrelatedStudents);
+    }
+
+    if (sendFromCache(res, 'courseRelatedStudents')) return;
+
+    const courseRelatedStudents = await StudentRepo.findNameAndIdByCourse(req.params.id);
+    console.log('courseRelatedStudents from DB');
+    cache.set('courseRelatedStudents', courseRelatedStudents);
+
+    return res.send(courseRelatedStudents);
+}
+
+exports.moveStudents = async (req, res) => {
+    const {ids} = req.body;
+    const {id} = req.params;
+
+    let data;
+    if (req.query.add) {
+        data = await StudentRepo.addToCourse(id, ids);
+        console.log(`${data.length} students added to course(id=${id})`);
+
+        cache.flushAll();
+        return res.sendStatus(200);
+    }
+
+    data = await StudentRepo.removeFromCourse(id, ids);
+    console.log(`${data.length} students removed from course(id=${id})`);
+
+    cache.flushAll();
+    return res.sendStatus(200);
+}
+
+exports.getStudentsWithoutContracts = async (req, res) => {
+    if (sendFromCache(res, 'studentsWithoutContracts')) return;
+
+    const studentsWithoutContracts = await StudentRepo.findWithoutContracts();
+    if (studentsWithoutContracts) {
+        console.log('studentsWithoutContracts from DB');
+        cache.set('studentsWithoutContracts', studentsWithoutContracts);
+
+        return res.send(studentsWithoutContracts);
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+}
+
+function sendFromCache(res, key) {
+    const data = cache.get(key);
+
+    if (!!data) {
+        console.log(`${key} from cache`);
+        res.send(data);
+        return true;
+    }
+
+    return false;
+}
