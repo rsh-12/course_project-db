@@ -105,7 +105,7 @@
             </div>
 
             <hr>
-            <div *ngIf="courses && courses.has(currentIndex)">
+            <div *ngIf="courses && courses.has(currentIndex) && !loadingCourses">
                 <ul>
                     <li *ngFor="let course of courses.get(currentIndex)">
                         <div>

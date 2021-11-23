@@ -18,7 +18,7 @@
 
         <!-- title and add icon -->
         <div class="d-flex justify-content-between subheader">
-            <h4 matBadge="{{students.length}}" matBadgeOverlap="false">Courses</h4>
+            <h4 matBadge="{{students.length}}" matBadgeOverlap="false">Students</h4>
 
             <div>
                 <a class="btn btn-circle btn-outline-primary" [routerLink]="['/courses/add']"><i
@@ -45,7 +45,7 @@
     <div class="col-md-6 meta-info">
 
         <div *ngIf="!currentStudent.id" class="text-center m-0 subheader">
-            <p>Please click on a course</p>
+            <p>Please click on a student</p>
         </div>
 
         <div *ngIf="currentStudent.id">
