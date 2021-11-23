@@ -9,6 +9,18 @@ class CompanyRepo {
         return toCamelCase(rows);
     }
 
+    static async findByName(companyName) {
+        const {rows} = await pool.query(`
+            SELECT *
+            FROM companies
+            WHERE name ILIKE $1;`, [`%${companyName}%`]);
+
+        console.log(`> CompanyRepo.findByName(${companyName}): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
+
+
 }
 
 module.exports = CompanyRepo;
