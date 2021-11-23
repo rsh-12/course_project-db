@@ -11,4 +11,14 @@ module.exports = app => {
         [authJwt.verifyToken],
         controller.getAll
     );
+
+    app.get("/api/instructors/course/:id",
+        [authJwt.verifyToken],
+        controller.getByCourse
+    );
+
+    app.post("/api/instructors/course/:id",
+        [authJwt.verifyToken],
+        controller.moveInstructors
+    );
 }
