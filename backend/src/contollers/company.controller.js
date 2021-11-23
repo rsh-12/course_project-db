@@ -2,8 +2,13 @@ const CompanyRepo = require('../repository/company.repo');
 const cache = require('../config/cache.config');
 
 exports.getAll = async (req, res) => {
-    let companies = cache.get('companies');
+    const {name} = req.query;
+    if (!!name) {
+        const companiesByName = await CompanyRepo.findByName(name);
+        return res.send(companiesByName);
+    }
 
+    let companies = cache.get('companies');
     if (!!companies) {
         console.log('companies from cache');
         return res.send(companies);
