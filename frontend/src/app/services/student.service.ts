@@ -38,4 +38,8 @@ export class StudentService {
         return this.http.post(`${API_URL}course/${id}`, data, {responseType: 'text'});
     }
 
+    findByName(studentName: string): Observable<Student[]> {
+        return this.http.get<Student[]>(API_URL + '?name=' + studentName);
+    }
+
 }
