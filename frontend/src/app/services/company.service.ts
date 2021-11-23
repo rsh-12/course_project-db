@@ -17,5 +17,8 @@ export class CompanyService {
         return this.http.get<Company[]>(API_URL);
     }
 
+    findByName(companyName: string): Observable<Company[]> {
+        return this.http.get<Company[]>(API_URL + '?name=' + companyName);
+    }
 
 }
