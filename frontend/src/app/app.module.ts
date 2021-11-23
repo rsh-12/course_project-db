@@ -35,6 +35,11 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatBadgeModule} from "@angular/material/badge";
+import {DataListComponent} from './components/data-list/data-list.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {DialogDataComponent} from './components/dialog-data/dialog-data.component';
 
 @NgModule({
     declarations: [
@@ -51,7 +56,9 @@ import {MatBadgeModule} from "@angular/material/badge";
         CertificatesListComponent,
         InstructorsListComponent,
         NavbarComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        DataListComponent,
+        DialogDataComponent
     ],
     imports: [
         BrowserModule,
@@ -76,6 +83,9 @@ import {MatBadgeModule} from "@angular/material/badge";
         MatNativeDateModule,
         MatDialogModule,
         MatBadgeModule,
+        MatTabsModule,
+        MatCheckboxModule,
+        MatExpansionModule,
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
