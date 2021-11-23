@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-between">
     <div>
-        <button (click)="loadRelatedData()" mat-raised-button color="primary">Related {{entityName}}</button>
+        <button (click)="loadRelatedData(true)" mat-raised-button color="primary">Related {{entityName}}</button>
     </div>
 
     <div>
-        <button (click)="loadUnrelatedData()" mat-raised-button color="primary">Unrelated {{entityName}}</button>
+        <button (click)="loadRelatedData(false)" mat-raised-button color="primary">Unrelated {{entityName}}</button>
     </div>
 </div>
 
@@ -17,10 +17,10 @@
 <div *ngIf="showData && !loading">
     <div class="mb-4">
         <div *ngIf="isDataRelated && data">
-            <button (click)="removeFromCourse()" class="btn btn-outline-secondary">Remove from course</button>
+            <button (click)="moveData(false)" class="btn btn-outline-danger">Remove from course</button>
         </div>
         <div *ngIf="!isDataRelated && data">
-            <button (click)="addToCourse()" class="btn btn-outline-secondary">Add to course</button>
+            <button (click)="moveData(true)" class="btn btn-outline-primary">Add to course</button>
         </div>
     </div>
 
@@ -29,7 +29,9 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <mat-checkbox [(ngModel)]="d.checked">
-                        {{d.name}} ({{d.checked}})
+                        <a [routerLink]="entityName==='instructors'?['/instructors', d.id]:['/students', d.id]">
+                            {{d.name}}
+                        </a>
                     </mat-checkbox>
                 </div>
 

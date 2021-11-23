@@ -1,4 +1,8 @@
-<div class="row">
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
+
+<div class="row" *ngIf="!loading">
     <div class="spacer-pt-30"></div>
     <div class="col-md-6">
 
@@ -159,36 +163,21 @@
     </div>
     <div class="col-md-6 meta-info">
 
-        <div>
-            <div>
-                Students: <span>{{response.totalStudents}}</span>
-            </div>
-            <div>
-                Instructors: {{response.instructors.length}}
-            </div>
-            <mat-form-field appearance="fill">
-                <mat-label>Instructor</mat-label>
-                <mat-select>
-                    <mat-option
-                            *ngFor="let i of response.instructors; let j = index"
-                            (click)="setActiveInstructor(i)">
-                        {{i.lastName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+        <!-- tabs -->
+        <div *ngIf="isEditMode && currentCourse.id">
+            <mat-tab-group>
+                <mat-tab label="Instructors">
+                    <app-data-list (eventEmitter)="collectIds($event)" [entityId]="currentCourse.id"
+                                   [entityName]="'instructors'"></app-data-list>
+                </mat-tab>
 
-        <div *ngIf="currentInstructor.id">
-            <div><b>Last name: </b>{{currentInstructor.lastName}}</div>
+                <mat-tab label="Students">
+                    <app-data-list [entityId]="currentCourse.id" [entityName]="'students'"></app-data-list>
+                </mat-tab>
+            </mat-tab-group>
         </div>
+        <!-- tabs -->
+
     </div>
 
-    <div *ngIf="!response">
-        <br/>
-        <p>Cannot access this Tutorial...</p>
-    </div>
-</div>
-
-<div *ngIf="loading">
-    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
