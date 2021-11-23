@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InstructorService} from "../../services/instructor.service";
 import {NotificationService} from "../../services/notification.service";
 import {CommonData} from "../../common/commonData";
+import {Observable} from "rxjs";
+import {CommonService} from "../../services/common.service";
 
 @Component({
     selector: 'app-data-list',
@@ -20,98 +21,64 @@ export class DataListComponent implements OnInit {
     loading = false;
 
     constructor(private notificationService: NotificationService,
-                private instructorService: InstructorService) {
+                private commonService: CommonService) {
     }
 
     ngOnInit(): void {
     }
 
-    loadRelatedData() {
+    loadRelatedData(isRelated: boolean) {
+        this.loading = this.showData = true;
+        this.isDataRelated = isRelated;
+
+        let serviceMethod: Observable<any>;
+        serviceMethod = this.commonService.defineLoadingMethod(isRelated, this.entityId, this.entityName);
+
+        serviceMethod.subscribe(
+            res => {
+                this.data = res;
+                this.notificationService.openSnackBar(res.length + ' objects found');
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar(err.error.message);
+            },
+            () => this.loading = false
+        );
+    }
+
+    moveData(isAdding: boolean) {
+        const entityIds = this.collectDataIds();
+        if (!entityIds.length) {
+            this.notificationService.openSnackBar('First choose something');
+            return;
+        }
+
         this.loading = true;
+        let message = isAdding ? 'Successfully added to course' : 'Successfully removed from course';
 
-        if (this.entityName === 'instructors') {
-            this.instructorService.findByCourse(this.entityId).subscribe(
-                res => {
-                    this.data = res;
-                    this.showData = this.isDataRelated = true;
-                    this.notificationService.openSnackBar(res.length + ' objects found');
-                }, err => {
-                    console.log(err);
-                    this.notificationService.openSnackBar(err.error.message);
-                },
-                () => this.loading = false
-            );
-        }
-    }
+        let serviceMethod: Observable<any>;
+        serviceMethod = this.commonService
+            .defineModifyingMethod(isAdding, this.entityId, this.entityName, {ids: entityIds});
 
-    loadUnrelatedData() {
-        this.loading = true;
-
-        if (this.entityName === 'instructors') {
-            this.instructorService.findExceptCourse(this.entityId).subscribe(
-                res => {
-                    this.data = res;
-                    this.showData = true;
-                    this.isDataRelated = false;
-                    this.notificationService.openSnackBar(res.length + ' objects found');
-                }, err => {
-                    console.log(err);
-                    this.notificationService.openSnackBar(err.error.message);
-                },
-                () => this.loading = false
-            );
-        }
-    }
-
-    removeFromCourse() {
-        const instructorIds = this.collectDataIds();
-
-        if (instructorIds.length) {
-            this.loading = true;
-
-            this.instructorService.removeFromCourse(this.entityId, {ids: instructorIds}).subscribe(
-                res => {
-                    console.log(res);
-                    this.notificationService.openSnackBar('Successfully removed from course');
-                    this.showData = false;
-                }, err => {
-                    console.log(err);
-                    this.notificationService.openSnackBar(err.error.message);
-                    this.loading = false;
-                },
-                () => this.loading = false
-            );
-        } else {
-            this.notificationService.openSnackBar('Nothing to remove')
-        }
-    }
-
-    addToCourse() {
-        const instructorIds = this.collectDataIds();
-
-        if (instructorIds.length) {
-            this.loading = true;
-
-            this.instructorService.addToCourse(this.entityId, {ids: instructorIds}).subscribe(
-                res => {
-                    console.log(res);
-                    this.notificationService.openSnackBar('Successfully added to course');
-                    this.showData = false;
-                }, err => {
-                    console.log(err);
-                    this.notificationService.openSnackBar(err.error.message);
-                    this.loading = false;
-                },
-                () => this.loading = false
-            );
-        } else {
-            this.notificationService.openSnackBar('Nothing to add');
-        }
+        serviceMethod.subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.openSnackBar(message);
+                this.showData = false;
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar(err.error.message);
+                this.loading = false;
+            },
+            () => {
+                this.loadRelatedData(this.isDataRelated);
+                return this.loading = false;
+            }
+        );
     }
 
     private collectDataIds() {
-        return this.data
-            .filter(d => d.checked)
-            .map(value => value.id);
+        return this.data.filter(d => d.checked).map(value => value.id);
     }
+
 }
