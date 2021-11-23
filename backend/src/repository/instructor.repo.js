@@ -70,8 +70,6 @@ class InstructorRepo {
         let values = [];
         for (let i of instructorIds) values.push([+courseId, +i]);
 
-        console.log(values)
-
         const {rows} = await pool.query(format(
             'INSERT INTO courses_instructors (course_id, instructor_id) VALUES %L', values));
 
