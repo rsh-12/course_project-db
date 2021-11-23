@@ -19,8 +19,7 @@ export class CourseDetailsComponent implements OnInit {
     nonWhitespaceRegExp: RegExp = new RegExp("^\\S");
 
     submitted = false;
-    currentCourse: Course = {}
-    instructors: Instructor[] = [];
+    currentCourse: Course = {id: 0}
     currentInstructor: Instructor = {};
     totalStudents = 0;
 
