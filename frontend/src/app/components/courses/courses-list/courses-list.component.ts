@@ -56,6 +56,7 @@ export class CoursesListComponent implements OnInit {
                 this.totalCourses = data.length
                 this.courses = data;
                 this.name = ''
+                this.notificationService.openSnackBar(`${this.totalCourses} objects found`);
             }, error => {
                 console.log(error);
             },
