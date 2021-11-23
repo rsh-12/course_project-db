@@ -94,6 +94,18 @@ class StudentRepo {
         return toCamelCase(rows);
     }
 
+    static async findByName(studentName) {
+        const {rows} = await pool.query(`
+            SELECT *
+            FROM students
+            WHERE first_name ILIKE $1
+               OR last_name ILIKE $1;`, [`%${studentName}%`]);
+
+        console.log(`> StudentRepo.findByName(${studentName}): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
+
 
 }
 
