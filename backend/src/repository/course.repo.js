@@ -1,4 +1,4 @@
-const pool = require('../config/pool.confg');
+const pool = require('../config/pool.config');
 const toCamelCase = require('./utils/toCamelCase');
 
 class CourseRepo {
@@ -101,8 +101,7 @@ class CourseRepo {
         const {rows} = await pool.query(`
             SELECT COUNT(ci.instructor_id) instructors_count
             FROM courses_instructors ci
-            WHERE course_id = $1;
-        `, [id]);
+            WHERE course_id = $1;`, [id]);
 
         console.log(`> CourseRepo.countOfInstructors(${id}): ${rows.length}`);
 
@@ -113,8 +112,7 @@ class CourseRepo {
         const {rows} = await pool.query(`
             SELECT COUNT(cs.student_id) students_count
             FROM courses_students cs
-            WHERE course_id = $1;
-        `, [id]);
+            WHERE course_id = $1;`, [id]);
 
         console.log(`> CourseRepo.countOfStudents(${id}): ${rows.length}`);
 

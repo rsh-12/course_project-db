@@ -1,4 +1,4 @@
-const pool = require('../config/pool.confg');
+const pool = require('../config/pool.config');
 const toCamelCase = require('./utils/toCamelCase');
 
 class UserRepo {
