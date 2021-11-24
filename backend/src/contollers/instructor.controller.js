@@ -68,6 +68,19 @@ exports.moveInstructors = async (req, res) => {
     return res.sendStatus(200);
 }
 
+exports.delete = async (req, res) => {
+    const {id} = req.params;
+    const instructor = await InstructorRepo.delete(id);
+
+    if (!instructor) {
+        return res.status(404).send({message: `Instructor(id=${id}) not found`});
+    }
+    cache.flushAll();
+
+    return res.send(instructor);
+}
+
+
 function sendFromCache(res, key) {
     const data = cache.get(key);
 
