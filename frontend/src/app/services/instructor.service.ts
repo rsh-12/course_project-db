@@ -38,4 +38,7 @@ export class InstructorService {
         return this.http.post(`${API_URL}course/${id}?add=true`, data, {responseType: 'text'});
     }
 
+    delete(id: number): Observable<any> {
+        return this.http.delete(API_URL + id);
+    }
 }
