@@ -41,6 +41,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {DialogDataComponent} from './components/dialog-data/dialog-data.component';
 import {MatCardModule} from "@angular/material/card";
+import { CompanyDetailsComponent } from './components/companies/company-details/company-details.component';
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import {MatCardModule} from "@angular/material/card";
         NavbarComponent,
         ConfirmDialogComponent,
         DataListComponent,
-        DialogDataComponent
+        DialogDataComponent,
+        CompanyDetailsComponent
     ],
     imports: [
         BrowserModule,
