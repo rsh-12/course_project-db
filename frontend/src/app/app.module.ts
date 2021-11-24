@@ -40,6 +40,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {DialogDataComponent} from './components/dialog-data/dialog-data.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
     declarations: [
@@ -86,6 +87,7 @@ import {DialogDataComponent} from './components/dialog-data/dialog-data.componen
         MatTabsModule,
         MatCheckboxModule,
         MatExpansionModule,
+        MatCardModule,
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
