@@ -18,12 +18,11 @@
                                minlength="5"
                                maxlength="50"
                                required
-                               formControlName="name"
-                               [ngClass]="{'is-invalid': submitted && f.name.errors}">
+                               formControlName="name">
 
                         <mat-hint align="end">{{name.value?.length || 0}}/50</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <mat-error *ngIf="submitted && f.name.errors">
                             <div *ngIf="f.name.errors.required">Name is required</div>
                             <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
                             <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
@@ -39,12 +38,11 @@
                                minlength="5"
                                maxlength="50"
                                required
-                               formControlName="category"
-                               [ngClass]="{'is-invalid': submitted && f.category.errors}">
+                               formControlName="category">
 
                         <mat-hint align="end">{{category.value?.length || 0}}/50</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                        <mat-error *ngIf="submitted && f.category.errors">
                             <div *ngIf="f.category.errors.required">Category is required</div>
                             <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
                             <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
@@ -60,13 +58,12 @@
                                   required
                                   minlength="5"
                                   maxlength="250"
-                                  formControlName="description"
-                                  [ngClass]="{'is-invalid': submitted && f.description.errors}">
+                                  formControlName="description">
                         </textarea>
 
                         <mat-hint align="end">{{description.value?.length || 0}}/250</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <mat-error *ngIf="submitted && f.description.errors">
                             <div *ngIf="f.description.errors.required">Description is required</div>
                             <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
                             <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
@@ -83,10 +80,9 @@
                                required
                                min="10"
                                max="1000"
-                               formControlName="hours"
-                               [ngClass]="{'is-invalid': submitted && f.hours.errors}">
+                               formControlName="hours">
 
-                        <mat-error *ngIf="submitted && f.hours.errors" class="invalid-feedback">
+                        <mat-error *ngIf="submitted && f.hours.errors">
                             <div *ngIf="f.hours.errors.required">Hours are required</div>
                             <div *ngIf="f.hours.errors.min">Min value is 10</div>
                             <div *ngIf="f.hours.errors.max">Max value is 1000</div>
@@ -103,10 +99,9 @@
                                required
                                min="10"
                                max="1000000"
-                               formControlName="price"
-                               [ngClass]="{'is-invalid': submitted && f.price.errors}">
+                               formControlName="price">
 
-                        <mat-error *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                        <mat-error *ngIf="submitted && f.price.errors">
                             <div *ngIf="f.price.errors.required">Price is required</div>
                             <div *ngIf="f.price.errors.min">Min value is 0</div>
                             <div *ngIf="f.price.errors.max">Max value is 1000000</div>

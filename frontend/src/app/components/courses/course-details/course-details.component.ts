@@ -6,6 +6,7 @@ import {Instructor} from "../../../common/instructor";
 import {CourseById} from "../../../common/courseById";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../services/notification.service";
+import {CommonService} from "../../../services/common.service";
 
 @Component({
     selector: 'app-course-details',
@@ -16,7 +17,6 @@ export class CourseDetailsComponent implements OnInit {
 
     loading = false;
     isEditMode = true;
-    nonWhitespaceRegExp: RegExp = new RegExp("^\\S");
 
     submitted = false;
     currentCourse: Course = {id: 0}
@@ -128,13 +128,13 @@ export class CourseDetailsComponent implements OnInit {
         this.courseService.add(JSON.stringify(this.form.value)).subscribe(
             res => {
                 this.currentCourse = res;
-                this.notificationService.openSnackBar('The course created successfully')
+                this.notificationService.openSnackBar('Course created successfully')
             }, error => {
                 console.log(error);
                 this.notificationService.openSnackBar(error.error.message);
             },
             () => {
-                this.router.navigate(['/courses']);
+                this.back();
                 return this.loading = false;
             }
         );
@@ -144,9 +144,9 @@ export class CourseDetailsComponent implements OnInit {
     private initFormGroup() {
         this.form = this.formBuilder.group({
             id: [this.currentCourse.id],
-            name: [this.currentCourse.name, this.commonValidators()],
-            category: [this.currentCourse.category, this.commonValidators()],
-            description: [this.currentCourse.description, this.commonValidators(5, 250)],
+            name: [this.currentCourse.name?.trim(), CommonService.commonValidators()],
+            category: [this.currentCourse.category?.trim(), CommonService.commonValidators()],
+            description: [this.currentCourse.description, CommonService.commonValidators(5, 250)],
             hours: [this.currentCourse.hours,
                 [Validators.required, Validators.min(10), Validators.max(1000)]],
             price: [this.currentCourse.price,
@@ -154,15 +154,6 @@ export class CourseDetailsComponent implements OnInit {
             startDate: [this.currentCourse.startDate, Validators.required],
             endDate: [this.currentCourse.endDate, Validators.required]
         });
-    }
-
-    private commonValidators(min = 5, max = 50) {
-        return [
-            Validators.required,
-            Validators.pattern(this.nonWhitespaceRegExp),
-            Validators.minLength(min),
-            Validators.maxLength(max),
-        ];
     }
 
     back() {
