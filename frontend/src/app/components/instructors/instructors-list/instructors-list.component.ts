@@ -74,6 +74,20 @@ export class InstructorsListComponent implements OnInit {
     }
 
     searchByName() {
+        this.loading = true;
+        this.currentInstructor = {};
+        this.currentIndex = -1
 
+        this.instructorService.findByName(this.instructorName).subscribe(
+            data => {
+                this.instructors = data;
+                this.instructorName = '';
+                this.notificationService.openSnackBar(`${data.length} objects found`, 2000);
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar('Something went wrong');
+            },
+            () => this.loading = false
+        );
     }
 }
