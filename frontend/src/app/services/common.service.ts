@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TotalRecords} from "../common/totalRecords";
 import {CurrentUser} from "../common/currentUser";
@@ -8,7 +8,7 @@ import {Contract} from "../common/contract";
 import {CertificateInfo} from "../common/certificateInfo";
 import {InstructorService} from "./instructor.service";
 import {StudentService} from "./student.service";
-import {timeout} from "rxjs/operators";
+import {Validators} from "@angular/forms";
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -17,10 +17,22 @@ const API_URL = 'http://localhost:8080/api/';
 })
 export class CommonService {
 
+    static nonWhitespaceRegExp: RegExp = new RegExp("^\\S");
+
     constructor(private http: HttpClient,
                 private instructorService: InstructorService,
                 private studentService: StudentService) {
     }
+
+    static commonValidators(min = 5, max = 50) {
+        return [
+            Validators.required,
+            Validators.pattern(this.nonWhitespaceRegExp),
+            Validators.minLength(min),
+            Validators.maxLength(max),
+        ];
+    }
+
 
     getStatistics(): Observable<TotalRecords> {
         return this.http.get<TotalRecords>(API_URL + 'statistics');
@@ -63,5 +75,4 @@ export class CommonService {
     private defineServiceClass(entityName: string) {
         return entityName === 'instructors' ? this.instructorService : this.studentService;
     }
-
 }
