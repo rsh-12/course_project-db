@@ -13,6 +13,7 @@ import {StudentsListComponent} from "./components/students/students-list/student
 import {ContractsListComponent} from "./components/contracts/contracts-list/contracts-list.component";
 import {CertificatesListComponent} from "./components/certificates/certificates-list/certificates-list.component";
 import {InstructorsListComponent} from "./components/instructors/instructors-list/instructors-list.component";
+import {CompanyDetailsComponent} from "./components/companies/company-details/company-details.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
@@ -23,7 +24,7 @@ const routes: Routes = [
     {path: 'courses/:id', component: CourseDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'courses/add', component: CourseDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'companies', component: CompaniesListComponent, canActivate: [AuthGuardService]},
-    // {path: 'companies/:id', component: , canActivate: [AuthGuardService]},
+    {path: 'companies/:id', component: CompanyDetailsComponent, canActivate: [AuthGuardService]},
     // {path: 'companies/add', component: , canActivate: [AuthGuardService]},
     {path: 'students', component: StudentsListComponent, canActivate: [AuthGuardService]},
     // {path: 'students/:id', component: , canActivate: [AuthGuardService]},
