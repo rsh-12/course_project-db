@@ -43,7 +43,27 @@ export class CompaniesListComponent implements OnInit {
     }
 
     confirmDeletion() {
+        this.notificationService.openDialog().afterClosed()
+            .subscribe(result => {
+                if (result) this.deleteCompany();
+            });
+    }
 
+    private deleteCompany() {
+        if (!this.currentCompany.id) return;
+        this.loading = true;
+
+        this.companyService.delete(this.currentCompany.id).subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.openSnackBar('The company deleted successfully');
+                this.refreshList();
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar('Something went wrong');
+            },
+            () => this.loading = false
+        );
     }
 
     searchByName() {
@@ -64,4 +84,9 @@ export class CompaniesListComponent implements OnInit {
         );
     }
 
+    private refreshList() {
+        this.currentCompany = {};
+        this.currentIndex = -1;
+        this.retrieveCompanies();
+    }
 }
