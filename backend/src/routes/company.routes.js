@@ -12,6 +12,11 @@ module.exports = app => {
         controller.getAll
     );
 
+    app.post("/api/companies",
+        [authJwt.verifyToken],
+        controller.add
+    );
+
     app.delete("/api/companies/:id",
         [authJwt.verifyToken],
         controller.delete

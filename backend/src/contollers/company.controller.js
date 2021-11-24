@@ -36,3 +36,19 @@ exports.delete = async (req, res) => {
 
     return res.status(500).send({message: 'Something went wrong'});
 }
+
+exports.add = async (req, res) => {
+    const {name, description} = req.body;
+    if (!name || !description) {
+        return res.sendStatus(400).send({message: 'Name and description are required'})
+    }
+
+    const company = await CompanyRepo.insert(name, description);
+    if (company) {
+        cache.flushAll();
+
+        return res.send(company);
+    }
+
+    return res.sendStatus(500).send({message: 'Something went wrong'});
+}

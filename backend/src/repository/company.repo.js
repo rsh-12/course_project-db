@@ -32,6 +32,18 @@ class CompanyRepo {
 
         return toCamelCase(rows)[0];
     }
+
+    static async insert(name, description) {
+        const {rows} = await pool.query(`INSERT INTO companies(name, description)
+                                         VALUES ($1, $2)
+                                         RETURNING *;`, [name, description]);
+
+        console.log(`> CompanyRepo.insert(name, description): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+
 }
 
 module.exports = CompanyRepo;
