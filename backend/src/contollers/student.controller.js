@@ -79,6 +79,19 @@ exports.getStudentsWithoutContracts = async (req, res) => {
     return res.status(500).send({message: 'Something went wrong'});
 }
 
+exports.delete = async (req, res) => {
+    const {id} = req.params;
+    const student = await StudentRepo.delete(id);
+
+    if (!student) {
+        return res.status(404).send({message: `Student(id=${id}) not found`});
+    }
+    cache.flushAll();
+
+    return res.send(student);
+}
+
+
 function sendFromCache(res, key) {
     const data = cache.get(key);
 

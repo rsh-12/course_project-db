@@ -12,6 +12,11 @@ module.exports = app => {
         controller.getAll
     );
 
+    app.delete("/api/students/:id",
+        [authJwt.verifyToken],
+        controller.delete
+    );
+
     app.get("/api/students/course/:id",
         [authJwt.verifyToken],
         controller.getByCourse

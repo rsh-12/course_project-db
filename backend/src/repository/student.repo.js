@@ -106,6 +106,17 @@ class StudentRepo {
         return toCamelCase(rows);
     }
 
+    static async delete(id) {
+        const {rows} = await pool.query(`DELETE
+                                         FROM students
+                                         WHERE id = $1
+                                         RETURNING *;`, [id]);
+
+        console.log(`> StudentRepo.delete(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
 
 }
 
