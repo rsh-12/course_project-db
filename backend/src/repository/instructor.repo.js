@@ -93,6 +93,16 @@ class InstructorRepo {
         return toCamelCase(rows);
     }
 
+    static async delete(id) {
+        const {rows} = await pool.query(`DELETE
+                                         FROM instructors
+                                         WHERE id = $1
+                                         RETURNING *;`, [id]);
+
+        console.log(`> InstructorRepo.delete(${id}): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
 }
 
 module.exports = InstructorRepo
