@@ -18,6 +18,10 @@ export class InstructorService {
         return this.http.get<Instructor[]>(API_URL);
     }
 
+    findByName(instructorName: string): Observable<Instructor[]> {
+        return this.http.get<Instructor[]>(API_URL + '?name=' + instructorName);
+    }
+
     findByCourse(id: number): Observable<CommonData[]> {
         return this.http.get<CommonData[]>(`${API_URL}course/${id}`);
     }
