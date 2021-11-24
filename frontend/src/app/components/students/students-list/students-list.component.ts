@@ -43,7 +43,10 @@ export class StudentsListComponent implements OnInit {
     }
 
     confirmDeletion() {
-
+        this.notificationService.openDialog().afterClosed()
+            .subscribe(result => {
+                if (result) this.deleteStudent();
+            });
     }
 
     searchByName() {
@@ -62,5 +65,30 @@ export class StudentsListComponent implements OnInit {
             },
             () => this.loading = false
         );
+    }
+
+    private deleteStudent() {
+        if (!this.currentStudent.id) return;
+        this.loading = true;
+
+        this.studentService.delete(this.currentStudent.id).subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.successfullyDeleted();
+            }, err => {
+                console.log(err);
+                this.notificationService.unknownError();
+            },
+            () => {
+                this.loading = false;
+                this.refreshList();
+            }
+        );
+    }
+
+    private refreshList() {
+        this.currentStudent = {};
+        this.currentIndex = -1;
+        this.retrieveStudents();
     }
 }
