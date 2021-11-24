@@ -1,23 +1,37 @@
 <div class="" *ngIf="currentUser; else loggedOut">
-    <header class="jumbotron m-0">
-        <h3>
-            <strong>{{currentUser.username}}</strong>
-        </h3>
-    </header>
-    <div class="m-0">
-        <div>
-            <span>Joined at: {{currentUser.createdAt | date}}</span>
-        </div>
-        <div>
-            <span>Updated at: {{currentUser.updatedAt | date}}</span>
-        </div>
+
+    <div class="spacer "></div>
+
+    <h2 class="text-center">Profile page</h2>
+    <div class="col-md-6 m-0">
+        <mat-card>
+            <mat-card-title>{{currentUser.username}}</mat-card-title>
+            <mat-card-content>
+                <div>
+                    <span>Created at: {{currentUser.createdAt | date}}</span>
+                </div>
+                <div>
+                    <span>Updated at: {{currentUser.createdAt | date}}</span>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="d-flex justify-content-between">
+                    <button (click)="confirmDeletion()" class="btn btn-outline-danger">Delete account</button>
+                    <button (click)="logout()" class="btn btn-outline-dark">Log out</button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
     </div>
+
 </div>
 
 <div *ngIf="!currentUser">
-    <mat-spinner class="spinner" [diameter]="100"></mat-spinner>
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
 
 <ng-template #loggedOut>
-    Please login
+    <div class="spacer"></div>
+    <div>
+        <p class="text-center">Please login</p>
+    </div>
 </ng-template>
