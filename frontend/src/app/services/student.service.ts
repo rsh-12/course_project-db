@@ -42,4 +42,7 @@ export class StudentService {
         return this.http.get<Student[]>(API_URL + '?name=' + studentName);
     }
 
+    delete(id: number) {
+        return this.http.delete(API_URL + id);
+    }
 }
