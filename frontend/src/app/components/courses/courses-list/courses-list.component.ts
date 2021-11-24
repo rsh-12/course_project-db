@@ -84,11 +84,11 @@ export class CoursesListComponent implements OnInit {
                 res => {
                     console.log(res);
                     this.refreshList();
-                    this.notificationService.openSnackBar('The course deleted successfully')
+                    this.notificationService.successfullyDeleted();
                 },
                 error => {
                     console.log(error);
-                    this.notificationService.openSnackBar(error.error.message);
+                    this.notificationService.unknownError();
                 },
                 () => this.loading = false
             );
