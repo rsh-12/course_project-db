@@ -78,6 +78,21 @@ class InstructorRepo {
         return toCamelCase(rows);
     }
 
+    static async findByName(name) {
+        const {rows} = await pool.query(`
+            SELECT i.*, COUNT(ci.*) courses
+            FROM instructors i
+                     LEFT JOIN courses_instructors ci ON i.id = ci.instructor_id
+            WHERE last_name ILIKE $1
+               OR last_name ILIKE $1
+            GROUP BY i.id, first_name, last_name, education, degree, i.created_at, updated_at;
+        `, [`%${name}%`]);
+
+        console.log(`> InstructorRepo.findByName(${name}): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
+
 }
 
 module.exports = InstructorRepo
