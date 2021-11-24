@@ -21,4 +21,9 @@ module.exports = app => {
         [authJwt.verifyToken],
         controller.moveInstructors
     );
+
+    app.delete("/api/instructors/:id",
+        [authJwt.verifyToken],
+        controller.delete
+    );
 }
