@@ -20,7 +20,18 @@ class CompanyRepo {
         return toCamelCase(rows);
     }
 
+    static async delete(id) {
+        const {rows} = await pool.query(`
+            DELETE
+            FROM companies
+            WHERE id = $1
+            RETURNING *;
+        `, [id]);
 
+        console.log(`> CompanyRepo.delete(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
 }
 
 module.exports = CompanyRepo;
