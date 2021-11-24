@@ -21,4 +21,8 @@ export class CompanyService {
         return this.http.get<Company[]>(API_URL + '?name=' + companyName);
     }
 
+    delete(id: number) {
+        return this.http.delete(API_URL + id);
+    }
+
 }
