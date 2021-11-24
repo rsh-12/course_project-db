@@ -2,9 +2,14 @@ const InstructorRepo = require("../repository/instructor.repo");
 const cache = require("../config/cache.config");
 
 exports.getAll = async (req, res) => {
-    if (sendFromCache(res, 'instructors')) {
-        return;
+    const {name} = req.query;
+    if (!!name) {
+        const instructorsByName = await InstructorRepo.findByName(name);
+
+        return res.send(instructorsByName);
     }
+
+    if (sendFromCache(res, 'instructors')) return;
 
     const instructors = await InstructorRepo.find();
     console.log('instructors from DB');
