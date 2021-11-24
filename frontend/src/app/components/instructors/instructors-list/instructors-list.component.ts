@@ -51,7 +51,27 @@ export class InstructorsListComponent implements OnInit {
     }
 
     confirmDeletion() {
+        this.notificationService.openDialog().afterClosed()
+            .subscribe(result => {
+                if (result) this.deleteInstructor();
+            });
+    }
 
+    deleteInstructor() {
+        this.loading = true;
+        if (!this.currentInstructor.id) return;
+
+        this.instructorService.delete(this.currentInstructor.id).subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.openSnackBar('The instructor deleted successfully');
+                this.refreshList();
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar('Something went wrong');
+            },
+            () => this.loading = false
+        );
     }
 
     loadRelatedCourses() {
@@ -89,5 +109,11 @@ export class InstructorsListComponent implements OnInit {
             },
             () => this.loading = false
         );
+    }
+
+    private refreshList() {
+        this.currentInstructor = {};
+        this.currentIndex = -1
+        this.retrieveInstructors();
     }
 }
