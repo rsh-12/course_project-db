@@ -21,8 +21,16 @@ export class CompanyService {
         return this.http.get<Company[]>(API_URL + '?name=' + companyName);
     }
 
-    delete(id: number) {
+    delete(id: number): Observable<Object> {
         return this.http.delete(API_URL + id);
+    }
+
+    findById(id: string): Observable<Company> {
+        return this.http.get<Company>(API_URL + id);
+    }
+
+    add(data: any): Observable<Object> {
+        return this.http.post(API_URL, data);
     }
 
 }
