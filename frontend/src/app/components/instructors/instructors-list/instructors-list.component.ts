@@ -58,8 +58,8 @@ export class InstructorsListComponent implements OnInit {
     }
 
     deleteInstructor() {
-        this.loading = true;
         if (!this.currentInstructor.id) return;
+        this.loading = true;
 
         this.instructorService.delete(this.currentInstructor.id).subscribe(
             res => {
