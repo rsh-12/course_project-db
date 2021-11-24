@@ -10,11 +10,7 @@
 
 <hr>
 
-<div *ngIf="loading">
-    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
-</div>
-
-<div *ngIf="showData && !loading">
+<div *ngIf="showData">
     <div class="mb-4">
         <div *ngIf="isDataRelated && data">
             <button (click)="moveData(false)" class="btn btn-outline-danger">Remove from course</button>
@@ -24,18 +20,27 @@
         </div>
     </div>
 
-    <ul>
-        <li *ngFor="let d of data; let i = index">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <mat-checkbox [(ngModel)]="d.checked">
-                        <a [routerLink]="entityName==='instructors'?['/instructors', d.id]:['/students', d.id]">
-                            {{d.name}}
-                        </a>
-                    </mat-checkbox>
-                </div>
+    <div>
+        <div *ngIf="loading">
+            <mat-spinner class="spinner m-0" [diameter]="50"></mat-spinner>
+        </div>
 
-            </div>
-        </li>
-    </ul>
+        <div *ngIf="!loading">
+            <ul>
+                <li *ngFor="let d of data; let i = index">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <mat-checkbox [(ngModel)]="d.checked">
+                                <a [routerLink]="entityName==='instructors'?['/instructors', d.id]:['/students', d.id]">
+                                    {{d.name}}
+                                </a>
+                            </mat-checkbox>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </div>

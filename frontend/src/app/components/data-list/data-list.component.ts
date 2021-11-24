@@ -71,8 +71,8 @@ export class DataListComponent implements OnInit {
                 this.loading = false;
             },
             () => {
+                this.loading = false;
                 this.loadRelatedData(this.isDataRelated);
-                return this.loading = false;
             }
         );
     }
