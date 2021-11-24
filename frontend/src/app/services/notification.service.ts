@@ -24,4 +24,12 @@ export class NotificationService {
         this.dialog.open(DialogDataComponent, {data, closeOnNavigation: true});
     }
 
+    unknownError() {
+        this.openSnackBar('Something went wrong');
+    }
+
+    successfullyDeleted() {
+        this.openSnackBar('Record deleted successfully');
+    }
+
 }
