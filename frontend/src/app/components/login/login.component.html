@@ -77,6 +77,6 @@
     </div>
 </div>
 
-<div class="alert alert-success" *ngIf="isLoggedIn">
-    Successfully logged in as {{getUsername()}}!
+<div *ngIf="isLoggedIn">
+    <p class="text-center">Successfully logged in as {{getUsername()}}!</p>
 </div>
