@@ -24,3 +24,15 @@ exports.getAll = async (req, res) => {
 
     return res.status(404).send({message: 'Companies not found'});
 }
+
+exports.delete = async (req, res) => {
+    const {id} = req.params;
+    const company = await CompanyRepo.delete(id);
+    if (company) {
+        cache.flushAll();
+
+        return res.sendStatus(204);
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+}
