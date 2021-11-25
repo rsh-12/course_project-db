@@ -117,6 +117,15 @@ class StudentRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async findByCompany(companyId) {
+        const {rows} = await pool.query(`SELECT *
+                                         FROM students
+                                         WHERE company_id = $1;`, [companyId]);
+
+        console.log(`> StudentRepo.findByCompany(${companyId}): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
 
 }
 
