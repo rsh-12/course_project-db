@@ -52,3 +52,30 @@ exports.add = async (req, res) => {
 
     return res.sendStatus(500).send({message: 'Something went wrong'});
 }
+
+exports.getOne = async (req, res) => {
+    const {id} = req.params;
+    const company = await CompanyRepo.findById(id);
+    if (!company) {
+        return res.sendStatus(404).send({message: 'Company not found'});
+    }
+
+    return res.send(company);
+}
+
+exports.update = async (req, res) => {
+    const {id} = req.params;
+    const {name, description} = req.body;
+    if (!name || !description || !id) {
+        return res.sendStatus(400).send({message: 'Name and description are required'})
+    }
+
+    const company = await CompanyRepo.update(id, name, description);
+    if (company) {
+        cache.flushAll();
+
+        return res.send(company);
+    }
+
+    return res.status(500).send({message: 'Internal server error'});
+}
