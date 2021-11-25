@@ -17,6 +17,16 @@ module.exports = app => {
         controller.add
     );
 
+    app.get("/api/companies/:id",
+        [authJwt.verifyToken],
+        controller.getOne
+    );
+
+    app.put("/api/companies/:id",
+        [authJwt.verifyToken],
+        controller.update
+    );
+
     app.delete("/api/companies/:id",
         [authJwt.verifyToken],
         controller.delete
