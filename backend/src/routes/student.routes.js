@@ -22,6 +22,11 @@ module.exports = app => {
         controller.getByCourse
     );
 
+    app.get("/api/students/company/:id",
+        [authJwt.verifyToken],
+        controller.getByCompany
+    );
+
     app.post("/api/students/course/:id",
         [authJwt.verifyToken],
         controller.moveStudents
