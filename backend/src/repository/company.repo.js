@@ -43,6 +43,27 @@ class CompanyRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async findById(id) {
+        const {rows} = await pool.query(`SELECT *
+                                         FROM companies
+                                         WHERE id = $1;`, [id]);
+
+        console.log(`> CompanyRepo.findById(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+    static async update(id, name, description) {
+        const {rows} = await pool.query(`UPDATE companies
+                                         SET name=$1,
+                                             description=$2
+                                         WHERE id = $3
+                                         RETURNING *;`, [name, description, id]);
+
+        console.log(`> CompanyRepo.update(${id}, name, description): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
 
 }
 
