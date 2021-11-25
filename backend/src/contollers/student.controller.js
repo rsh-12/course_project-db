@@ -26,21 +26,14 @@ exports.getAll = async (req, res) => {
 }
 
 exports.getByCourse = async (req, res) => {
-    if (req.query.except) {
-        if (sendFromCache(res, 'courseUnrelatedStudents')) return;
-
+    const {except} = req.query;
+    if (except) {
         const courseUnrelatedStudents = await StudentRepo.findNameAndIdExceptCourse(req.params.id);
-        console.log('courseUnrelatedStudents from DB');
-        cache.set('courseUnrelatedStudents', courseUnrelatedStudents);
 
         return res.send(courseUnrelatedStudents);
     }
 
-    if (sendFromCache(res, 'courseRelatedStudents')) return;
-
     const courseRelatedStudents = await StudentRepo.findNameAndIdByCourse(req.params.id);
-    console.log('courseRelatedStudents from DB');
-    cache.set('courseRelatedStudents', courseRelatedStudents);
 
     return res.send(courseRelatedStudents);
 }
@@ -91,6 +84,16 @@ exports.delete = async (req, res) => {
     return res.send(student);
 }
 
+exports.getByCompany = async (req, res) => {
+    const {id} = req.params;
+    const students = await StudentRepo.findByCompany(id);
+
+    if (students) {
+        return res.send(students);
+    }
+
+    return res.status(500).send({message: 'Internal server error'});
+}
 
 function sendFromCache(res, key) {
     const data = cache.get(key);
