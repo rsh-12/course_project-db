@@ -55,15 +55,25 @@ export class CompanyDetailsComponent implements OnInit {
         this.submitted = true;
         if (this.form.invalid) return;
 
-        this.loading = true;
-
         this.isEditMode
             ? this.update()
             : this.add();
     }
 
     private update() {
+        if (!this.currentCompany.id) return;
 
+        this.loading = true;
+        this.companyService.update(this.currentCompany.id, JSON.stringify(this.form.value)).subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.openSnackBar('Company updated successfully');
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar(err.error.message);
+            },
+            () => this.loading = false
+        );
     }
 
     private add() {
@@ -96,7 +106,10 @@ export class CompanyDetailsComponent implements OnInit {
                 console.log(err);
                 this.notificationService.unknownError();
             },
-            () => this.loading = false
+            () => {
+                this.initFormGroup();
+                return this.loading = false;
+            }
         );
     }
 
