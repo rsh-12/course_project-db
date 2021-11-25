@@ -6,7 +6,7 @@ import {Student} from "../../common/student";
     selector: 'app-dialog-data',
     template: `
         <div>
-            <h1 mat-dialog-title>{{data.title}}</h1>
+            <h1 class="text-center" mat-dialog-title>{{data.title}}</h1>
             <div mat-dialog-content class="card-block">
                 <ul>
                     <li *ngFor="let d of data.students">
@@ -36,6 +36,5 @@ export class DialogDataComponent implements OnInit {
 
     ngOnInit(): void {
     }
-
 
 }
