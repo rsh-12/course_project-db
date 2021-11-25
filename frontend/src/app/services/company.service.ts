@@ -33,4 +33,7 @@ export class CompanyService {
         return this.http.post(API_URL, data);
     }
 
+    update(id: number, data: any) {
+        return this.http.put(API_URL + id, data);
+    }
 }
