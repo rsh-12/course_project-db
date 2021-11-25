@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../../../services/company.service";
 import {Company} from "../../../common/company";
 import {NotificationService} from "../../../services/notification.service";
+import {StudentService} from "../../../services/student.service";
 
 @Component({
     selector: 'app-companies-list',
@@ -17,7 +18,8 @@ export class CompaniesListComponent implements OnInit {
     companyName: string = '';
 
     constructor(private companyService: CompanyService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private studentService: StudentService) {
     }
 
     ngOnInit(): void {
@@ -89,4 +91,22 @@ export class CompaniesListComponent implements OnInit {
         this.currentIndex = -1;
         this.retrieveCompanies();
     }
+
+    loadRelatedStudents() {
+        if (!this.currentCompany.id) return;
+
+        this.studentService.findByCompany(this.currentCompany.id).subscribe(
+            data => {
+                console.log(data);
+                this.notificationService.openDialogWithData({
+                    students: data,
+                    title: 'Students'
+                });
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar(err.error.message);
+            }
+        );
+    }
+
 }

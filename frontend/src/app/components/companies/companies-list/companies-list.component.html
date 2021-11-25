@@ -85,6 +85,12 @@
                 </label>
                 {{currentCompany.createdAt | date}}
             </div>
+
+            <div class="clickable">
+                <label>
+                    <strong (click)="loadRelatedStudents()">Students</strong>
+                </label>
+            </div>
         </div>
     </div>
     <!-- right side -->
