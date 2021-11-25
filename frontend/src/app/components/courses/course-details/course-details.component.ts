@@ -114,7 +114,7 @@ export class CourseDetailsComponent implements OnInit {
             this.courseService.update(this.currentCourse.id, JSON.stringify(this.form.value)).subscribe(
                 res => {
                     console.log(res);
-                    this.notificationService.openSnackBar('The course was updated successfully');
+                    this.notificationService.openSnackBar('Course updated successfully');
                 }, error => {
                     console.log(error);
                     this.notificationService.openSnackBar(error.error.message);
