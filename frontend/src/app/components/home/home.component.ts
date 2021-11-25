@@ -54,7 +54,10 @@ export class HomeComponent implements OnInit {
         this.studentService.findWithoutContracts().subscribe(
             data => {
                 console.log(data);
-                this.notificationService.openDialogWithData(data);
+                this.notificationService.openDialogWithData({
+                    students: data,
+                    title: 'Students without contracts'
+                });
             }, err => {
                 console.log(err);
                 this.notificationService.openSnackBar(err.error.message);
