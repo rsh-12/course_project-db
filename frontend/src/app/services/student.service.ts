@@ -26,6 +26,10 @@ export class StudentService {
         return this.http.get<CommonData[]>(`${API_URL}course/${id}`);
     }
 
+    findByCompany(id: number): Observable<Student[]> {
+        return this.http.get<Student[]>(`${API_URL}company/${id}`);
+    }
+
     findExceptCourse(id: number) {
         return this.http.get<CommonData[]>(`${API_URL}course/${id}?except=true`);
     }
