@@ -6,6 +6,8 @@ import {FormControl} from "@angular/forms";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
     selector: 'app-navbar',
@@ -27,6 +29,8 @@ export class NavbarComponent implements OnInit {
 
     constructor(private tokenStorageService: TokenStorageService,
                 private commonService: CommonService,
+                private authService: AuthService,
+                private notificationService: NotificationService,
                 private router: Router) {
     }
 
@@ -68,8 +72,16 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
-        this.tokenStorageService.signOut();
-        window.location.reload();
+        this.authService.logout().subscribe(
+            res => {
+                console.log(res);
+            }, error => {
+                console.log(error);
+            }, () => {
+                this.tokenStorageService.signOut();
+                window.location.reload();
+            }
+        );
     }
 
     navigateTo() {
