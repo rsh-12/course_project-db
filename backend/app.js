@@ -10,10 +10,6 @@ app.use(cors())
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 
-// src.get("/", (req, res) => {
-//     res.json({message: "OK"});
-// });
-
 require('./src/routes/common.routes')(app);
 require('./src/routes/auth.routes')(app);
 require('./src/routes/course.routes')(app);
