@@ -49,4 +49,13 @@ export class StudentService {
     delete(id: number) {
         return this.http.delete(API_URL + id);
     }
+
+    findById(id: string): Observable<Student> {
+        return this.http.get<Student>(API_URL + id);
+    }
+
+    update(id: number, data: any): Observable<Object> {
+        return this.http.put(API_URL + id, data, {responseType: 'text'});
+    }
+
 }
