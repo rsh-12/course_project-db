@@ -127,6 +127,17 @@ class StudentRepo {
         return toCamelCase(rows);
     }
 
+    static async findById(id) {
+        const {rows} = await pool.query(`SELECT *
+                                         FROM students
+                                         WHERE id = $1;`, [id]);
+
+        console.log(`> StudentRepo.findById(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+
 }
 
 module.exports = StudentRepo;
