@@ -14,6 +14,7 @@ import {ContractsListComponent} from "./components/contracts/contracts-list/cont
 import {CertificatesListComponent} from "./components/certificates/certificates-list/certificates-list.component";
 import {InstructorsListComponent} from "./components/instructors/instructors-list/instructors-list.component";
 import {CompanyDetailsComponent} from "./components/companies/company-details/company-details.component";
+import {StudentDetailsComponent} from "./components/students/student-details/student-details.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
@@ -27,8 +28,8 @@ const routes: Routes = [
     {path: 'companies/:id', component: CompanyDetailsComponent, canActivate: [AuthGuardService]},
     // {path: 'companies/add', component: , canActivate: [AuthGuardService]},
     {path: 'students', component: StudentsListComponent, canActivate: [AuthGuardService]},
-    // {path: 'students/:id', component: , canActivate: [AuthGuardService]},
-    // {path: 'students/add', component: , canActivate: [AuthGuardService]},
+    {path: 'students/:id', component: StudentDetailsComponent, canActivate: [AuthGuardService]},
+    {path: 'students/add', component: StudentDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'contracts', component: ContractsListComponent, canActivate: [AuthGuardService]},
     // {path: 'contracts/:id', component: , canActivate: [AuthGuardService]},
     // {path: 'contracts/add', component: , canActivate: [AuthGuardService]},
