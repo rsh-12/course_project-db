@@ -1,1 +1,157 @@
-<p>student-details works!</p>
+<!-- spinner -->
+<div *ngIf="loading">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
+<!-- spinner -->
+
+
+<div class="row" *ngIf="!loading">
+    <div class="spacer-pt-30"></div>
+
+
+    <!-- left side -->
+    <div class="col-md-6">
+        <h3 class="text-center">Student</h3>
+
+        <!-- form -->
+        <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+            <!-- student's lastName -->
+            <div class="form-group mb-4">
+                <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                    <mat-label>Last name</mat-label>
+                    <input matInput #lastName
+                           required
+                           minlength="2"
+                           maxlength="30"
+                           formControlName="lastName">
+
+                    <mat-hint align="end">{{lastName.value?.length || 0}}/30</mat-hint>
+
+                    <mat-error *ngIf="submitted && f.lastName.errors">
+                        <div *ngIf="f.lastName.errors.minlength">Min length is 2 characters</div>
+                        <div *ngIf="f.lastName.errors.maxlength">Max length is 30 characters</div>
+                        <div *ngIf="f.lastName.errors.pattern">Please, remove the unnecessary space symbol</div>
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+            <!-- student's lastName -->
+
+
+            <!-- student's firstName -->
+            <div class="form-group mb-4">
+                <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                    <mat-label>Last name</mat-label>
+                    <input matInput #firstName
+                           required
+                           minlength="2"
+                           maxlength="30"
+                           formControlName="firstName">
+
+                    <mat-hint align="end">{{firstName.value?.length || 0}}/30</mat-hint>
+
+                    <mat-error *ngIf="submitted && f.firstName.errors">
+                        <div *ngIf="f.firstName.errors.minlength">Min length is 2 characters</div>
+                        <div *ngIf="f.firstName.errors.maxlength">Max length is 30 characters</div>
+                        <div *ngIf="f.firstName.errors.pattern">Please, remove the unnecessary space symbol</div>
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+            <!-- student's firstName -->
+
+
+            <!-- date of birth -->
+            <div class="form-group mb-1">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of birth</mat-label>
+
+                    <input required matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+                </mat-form-field>
+            </div>
+            <!-- date of birth -->
+
+
+            <!-- phone -->
+            <div class="form-group mb-4">
+                <mat-form-field appearance="outline" hintLabel="Max 15 characters">
+                    <mat-label>Phone</mat-label>
+                    <input matInput #phone
+                           required
+                           minlength="8"
+                           maxlength="15"
+                           formControlName="phone">
+
+                    <mat-hint align="end">{{phone.value?.length || 0}}/15</mat-hint>
+
+                    <mat-error *ngIf="submitted && f.phone.errors">
+                        <div *ngIf="f.phone.errors.minlength">Min length is 8 characters</div>
+                        <div *ngIf="f.phone.errors.maxlength">Max length is 15 characters</div>
+                        <div *ngIf="f.phone.errors.pattern">Invalid format</div>
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+            <!-- phone -->
+
+
+            <!-- email -->
+            <div class="form-group mb-4">
+                <mat-form-field appearance="outline" hintLabel="Max 20 characters">
+                    <mat-label>Email</mat-label>
+                    <input matInput
+                           required
+                           formControlName="email">
+
+                    <mat-hint align="end">{{phone.value?.length || 0}}/20</mat-hint>
+
+                    <mat-error *ngIf="submitted && f.email.errors">
+                        <div *ngIf="f.email.errors.email">Invalid email address</div>
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+            <!-- email -->
+
+            <!-- buttons -->
+            <div class="form-buttons">
+                <div>
+                    <!-- submit -->
+                    <button type="submit" class="btn btn-outline-primary btn-circle">
+                        <i class="far fa-save"></i>
+                    </button>
+                    <!-- submit -->
+                </div>
+
+                <div>
+                    <!-- reset -->
+                    <button class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
+                        <i class="fas fa-broom"></i>
+                    </button>
+                    <!-- reset -->
+                </div>
+
+                <div>
+                    <!-- go to students -->
+                    <button class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                    <!-- go to students -->
+                </div>
+            </div>
+            <!-- buttons -->
+
+        </form>
+        <!-- form -->
+
+
+    </div>
+    <!-- left side -->
+
+
+</div>
