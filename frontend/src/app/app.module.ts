@@ -42,6 +42,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {DialogDataComponent} from './components/dialog-data/dialog-data.component';
 import {MatCardModule} from "@angular/material/card";
 import { CompanyDetailsComponent } from './components/companies/company-details/company-details.component';
+import { StudentDetailsComponent } from './components/students/student-details/student-details.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import { CompanyDetailsComponent } from './components/companies/company-details/
         ConfirmDialogComponent,
         DataListComponent,
         DialogDataComponent,
-        CompanyDetailsComponent
+        CompanyDetailsComponent,
+        StudentDetailsComponent
     ],
     imports: [
         BrowserModule,
