@@ -33,6 +33,9 @@ export class CommonService {
         ];
     }
 
+    static isNumeric(val: string): boolean {
+        return /^\d+$/.test(val);
+    }
 
     getStatistics(): Observable<TotalRecords> {
         return this.http.get<TotalRecords>(API_URL + 'statistics');
