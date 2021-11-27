@@ -34,7 +34,7 @@ export class CompanyDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.params.id;
-        this.isEditMode = /^\d+$/.test(id);
+        this.isEditMode = CommonService.isNumeric(id);
 
         if (this.isEditMode) {
             this.getCompanyById(id);
