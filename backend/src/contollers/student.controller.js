@@ -25,6 +25,17 @@ exports.getAll = async (req, res) => {
     return res.status(404).send({message: 'Students not found'});
 }
 
+exports.getOne = async (req, res) => {
+    const {id} = req.params;
+    if (!id) {
+        return res.status(400).send({message: 'ID not provided'});
+    }
+
+    const student = await StudentRepo.findById(id);
+
+    return res.send(student);
+}
+
 exports.getByCourse = async (req, res) => {
     const {except} = req.query;
     if (except) {
