@@ -2,6 +2,7 @@ const config = require('../config/auth.config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const UserRepo = require('../repository/user.repo');
+const {redisClient} = require('../config/redis.config');
 
 exports.signUp = async (req, res) => {
     // Save User to Database
@@ -36,10 +37,39 @@ exports.signIn = async (req, res) => {
 
     const token = jwt.sign({id: user.id}, config.secret, {expiresIn: 86400});
 
-    return res.status(200).send({
-        id: user.id,
-        username: user.username,
-        expires: 86400,
-        accessToken: token
-    });
+    redisClient.setEx(String(user.id), 86400, token)
+        .then(result => {
+            if (result) {
+                console.log('The token has been saved');
+
+                return res.status(200).send({
+                    id: user.id,
+                    username: user.username,
+                    expires: 86400,
+                    accessToken: token
+                });
+            }
+        }).catch(err => {
+            console.log(err.message);
+            return res.sendStatus(500).send({
+                message: 'An error occurred while working with Redis'
+            });
+        }
+    );
+
 }
+
+exports.signOut = async (req, res) => {
+    console.log('req.userId ' + req.userId);
+
+    await redisClient.del(String(req.userId))
+        .then(token => {
+            if (token) {
+                console.log('The token has been deleted');
+                return res.sendStatus(200);
+            }
+        }).catch(err => {
+            console.log(err.message);
+            return res.sendStatus(500).send({message: 'An error occurred while working with Redis'});
+        });
+};
