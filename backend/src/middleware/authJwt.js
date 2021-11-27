@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/auth.config.js');
+const {redisClient} = require('../config/redis.config');
 
 verifyToken = (req, res, next) => {
     const token = req.headers["x-access-token"];
@@ -12,8 +13,17 @@ verifyToken = (req, res, next) => {
         if (err) return res.status(401).send({
             message: "Unauthorized!"
         });
+
         req.userId = decoded.id;
-        next();
+
+        redisClient.get(String(decoded.id)).then(token => {
+            if (token) next(); else {
+                return res.status(401).send({message: 'Invalid token'})
+            }
+        }).catch(error => {
+            console.log(error.message);
+        });
+
     });
 };
 
