@@ -25,7 +25,7 @@ export class CompanyService {
         return this.http.delete(API_URL + id);
     }
 
-    findById(id: string): Observable<Company> {
+    findById(id: number): Observable<Company> {
         return this.http.get<Company>(API_URL + id);
     }
 
