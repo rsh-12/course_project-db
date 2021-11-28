@@ -6,6 +6,7 @@ import {NotificationService} from "../../../services/notification.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CompanyService} from "../../../services/company.service";
 import {CommonService} from "../../../services/common.service";
+import {Company} from "../../../common/company";
 
 @Component({
     selector: 'app-student-details',
@@ -15,10 +16,12 @@ import {CommonService} from "../../../services/common.service";
 export class StudentDetailsComponent implements OnInit {
 
     loading: boolean = false;
+    loadingCompany: boolean = false;
     submitted: boolean = false;
     isEditMode: boolean = false;
 
     currentStudent: Student = {};
+    company: Company = {};
 
     form!: FormGroup;
 
@@ -128,4 +131,21 @@ export class StudentDetailsComponent implements OnInit {
         this.form.reset();
     }
 
+    loadRelatedCompany() {
+        if (!this.currentStudent.companyId) return;
+
+        this.loadingCompany = true;
+        this.companyService.findById(this.currentStudent.companyId).subscribe(
+            data => {
+                console.log(data)
+                this.company = data;
+            },
+            err => {
+                this.loadingCompany = false;
+                console.log(err);
+                this.notificationService.unknownError();
+            },
+            () => this.loadingCompany = false
+        );
+    }
 }
