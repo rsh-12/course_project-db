@@ -122,7 +122,8 @@
             <div class="form-buttons">
                 <div>
                     <!-- submit -->
-                    <button type="submit" class="btn btn-outline-primary btn-circle">
+                    <button matTooltip="Submit"
+                            type="submit" class="btn btn-outline-primary btn-circle">
                         <i class="far fa-save"></i>
                     </button>
                     <!-- submit -->
@@ -130,7 +131,8 @@
 
                 <div>
                     <!-- reset -->
-                    <button class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
+                    <button matTooltip="Reset"
+                            class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
                         <i class="fas fa-broom"></i>
                     </button>
                     <!-- reset -->
@@ -138,7 +140,8 @@
 
                 <div>
                     <!-- go to students -->
-                    <button class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
+                    <button matTooltip="Go to students"
+                            class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
                         <i class="fas fa-undo"></i>
                     </button>
                     <!-- go to students -->
@@ -152,6 +155,35 @@
 
     </div>
     <!-- left side -->
+
+
+    <!-- right side -->
+    <div class="col-md-6 meta-info">
+        <div>
+            <h3 matTooltip="Click to load company"
+                    (click)="loadRelatedCompany()" class="text-center clickable cursor-pointer"><i class="fas fa-spinner"></i> company</h3>
+        </div>
+
+        <div class="spacer-pt-10"></div>
+
+        <!-- company -->
+        <div>
+            <div *ngIf="loadingCompany">
+                <mat-spinner class="spinner m-0" [diameter]="30"></mat-spinner>
+            </div>
+
+            <div *ngIf="!loadingCompany">
+                <h4>{{company.name}}</h4>
+                <p>{{company.description}}</p>
+                <p>{{company.createdAt | date}}</p>
+                <p>{{company.updatedAt | date}}</p>
+            </div>
+        </div>
+        <!-- company -->
+
+
+    </div>
+    <!-- right side -->
 
 
 </div>

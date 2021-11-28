@@ -23,7 +23,8 @@
             <h4 matBadge="{{totalCourses}}" matBadgeOverlap="false">Courses</h4>
 
             <div>
-                <a class="btn btn-circle btn-outline-primary" [routerLink]="['/courses/add']"><i
+                <a matTooltip="Add new course"
+                        class="btn btn-circle btn-outline-primary" [routerLink]="['/courses/add']"><i
                         class="fas fa-plus"></i></a>
             </div>
         </div>
@@ -54,9 +55,9 @@
 
             <!-- edit and delete buttons -->
             <div class="action-buttons">
-                <a routerLink="/courses/{{currentCourse.id}}" class="btn btn-outline-dark btn-circle"><i
+                <a matTooltip="Edit current course" routerLink="/courses/{{currentCourse.id}}" class="btn btn-outline-dark btn-circle"><i
                         class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                <button (click)="confirmDeletion()" class="btn btn-outline-danger btn-circle"><i
+                <button matTooltip="Delete current course" (click)="confirmDeletion()" class="btn btn-outline-danger btn-circle"><i
                         class="fas fa-trash-alt"></i>
                 </button>
             </div>
