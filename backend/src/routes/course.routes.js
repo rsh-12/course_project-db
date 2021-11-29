@@ -26,14 +26,13 @@ module.exports = app => {
     app.post("/api/courses",
         [
             authJwt.verifyToken,
-            validateRequest.courseRequestBody,
             validateRequest.courseUniqueName
         ],
         controller.add
     );
 
     app.put("/api/courses/:id",
-        [authJwt.verifyToken, validateRequest.courseRequestBody],
+        [authJwt.verifyToken],
         controller.update
     );
 
