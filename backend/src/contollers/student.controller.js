@@ -1,5 +1,6 @@
 const cache = require('../config/cache.config');
 const StudentRepo = require("../repository/student.repo");
+const {validateRequest} = require("../middleware");
 
 exports.getAll = async (req, res) => {
     const {name} = req.query;
@@ -104,6 +105,24 @@ exports.getByCompany = async (req, res) => {
     }
 
     return res.status(500).send({message: 'Internal server error'});
+}
+
+exports.add = async (req, res) => {
+    const {
+        firstName, lastName, dateOfBirth,
+        phone, email, companyId
+    } = req.body;
+
+    validateRequest.allArgsProvided(firstName, lastName, dateOfBirth, phone, email, companyId);
+
+    const student = await StudentRepo.insert(firstName, lastName, dateOfBirth, phone, email, companyId);
+    if (!student) {
+        return res.status(500).send({message: 'An error occurred while inserting data into the students table'});
+    }
+
+    cache.flushAll();
+
+    return res.send(student);
 }
 
 function sendFromCache(res, key) {
