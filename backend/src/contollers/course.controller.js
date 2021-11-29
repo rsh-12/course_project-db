@@ -2,6 +2,7 @@ const CourseRepo = require('../repository/course.repo');
 const InstructorRepo = require('../repository/instructor.repo');
 const StudentRepo = require('../repository/student.repo');
 const cache = require('../config/cache.config');
+const {validateRequest} = require("../middleware");
 
 exports.getAll = async (req, res) => {
     const {instructorId} = req.query;
@@ -75,6 +76,8 @@ exports.add = async (req, res) => {
         hours, startDate, endDate, price
     } = req.body;
 
+    validateRequest.areAllArgsProvided(res, name, category, description, hours, startDate, endDate, price);
+
     const course = await CourseRepo.insert(name, category, description, hours, startDate, endDate, price);
 
     if (!course) {
@@ -96,6 +99,8 @@ exports.update = async (req, res) => {
         name, category, description,
         hours, startDate, endDate, price
     } = req.body;
+
+    validateRequest.areAllArgsProvided(res, name, category, description, hours, startDate, endDate, price);
 
     const course = await CourseRepo.update(id, name, category, description, hours, startDate, endDate, price);
 
