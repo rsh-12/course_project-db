@@ -1,0 +1,6 @@
+.companies-list {
+    border: 1px solid #cecdcd;
+    padding: 5px;
+    max-height: 300px;
+    overflow: auto;
+}
