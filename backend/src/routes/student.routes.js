@@ -1,5 +1,6 @@
 const authJwt = require('../middleware/authJwt');
 const controller = require('../contollers/student.controller');
+const {validateRequest} = require("../middleware");
 
 module.exports = app => {
     app.use((req, res, next) => {
@@ -10,6 +11,14 @@ module.exports = app => {
     app.get("/api/students",
         [authJwt.verifyToken],
         controller.getAll
+    );
+
+    app.post("/api/students",
+        [
+            authJwt.verifyToken,
+            validateRequest.studentUniquePhoneAndEmail
+        ],
+        controller.add
     );
 
     app.get("/api/students/:id",
