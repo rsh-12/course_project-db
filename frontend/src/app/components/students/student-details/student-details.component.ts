@@ -21,9 +21,13 @@ export class StudentDetailsComponent implements OnInit {
     isEditMode: boolean = false;
 
     currentStudent: Student = {};
-    company: Company = {};
+    currentCompany: Company = {};
+    companies: Company[] = [];
 
     form!: FormGroup;
+    currentIndex: number = -1;
+    maxDate: Date = new Date(new Date().getFullYear() - 18, new Date().getMonth() + 1);
+    minDate: Date = new Date(new Date().getFullYear() - 70, new Date().getMonth() + 1);
 
     constructor(private studentService: StudentService,
                 private companyService: CompanyService,
@@ -43,6 +47,9 @@ export class StudentDetailsComponent implements OnInit {
         }
 
         this.router.navigate(['students/add']);
+
+        this.currentCompany = {};
+        this.currentIndex = -1;
 
         const currentDate = new Date();
         this.currentStudent = {
@@ -72,13 +79,18 @@ export class StudentDetailsComponent implements OnInit {
             email: [this.currentStudent.email,
                 [Validators.required, Validators.email,
                     Validators.minLength(5), Validators.maxLength(20)]],
-            companyId: [this.currentStudent.companyId, [Validators.required]]
+            companyId: [this.currentStudent.companyId]
         });
     }
 
     onSubmit() {
         this.submitted = true;
         if (this.form.invalid) return;
+
+        if (!this.f['companyId'].value) {
+            this.notificationService.openSnackBar('Please choose a company');
+            return;
+        }
 
         this.isEditMode ? this.update() : this.add();
     }
@@ -138,7 +150,7 @@ export class StudentDetailsComponent implements OnInit {
         this.companyService.findById(this.currentStudent.companyId).subscribe(
             data => {
                 console.log(data)
-                this.company = data;
+                this.currentCompany = data;
             },
             err => {
                 this.loadingCompany = false;
@@ -148,4 +160,31 @@ export class StudentDetailsComponent implements OnInit {
             () => this.loadingCompany = false
         );
     }
+
+    loadCompanies() {
+        this.loadingCompany = true;
+        this.currentIndex = -1;
+
+        this.companyService.findAll().subscribe(
+            data => {
+                console.log(data);
+                this.companies = data;
+            }, err => {
+                console.log(err);
+                this.notificationService.unknownError();
+                this.loadingCompany = false;
+            },
+            () => this.loadingCompany = false
+        );
+    }
+
+    setActiveCompany(company: Company, i: number) {
+        this.currentIndex = i;
+        this.currentCompany = company;
+        this.currentStudent.companyId = company.id;
+        this.form.controls['companyId'].setValue(company.id);
+
+        console.log(this.form.value)
+    }
+
 }

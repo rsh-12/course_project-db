@@ -68,7 +68,9 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Date of birth</mat-label>
 
-                    <input required matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                    <input required matInput [matDatepicker]="picker" formControlName="dateOfBirth"
+                           [min]="minDate"
+                           [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
 
@@ -159,24 +161,49 @@
 
     <!-- right side -->
     <div class="col-md-6 meta-info">
-        <div>
+        <div *ngIf="isEditMode">
             <h3 matTooltip="Click to load company"
-                    (click)="loadRelatedCompany()" class="text-center clickable cursor-pointer"><i class="fas fa-spinner"></i> company</h3>
+                (click)="loadRelatedCompany()" class="text-center clickable cursor-pointer"><i
+                    class="fas fa-spinner"></i>
+                company</h3>
+        </div>
+
+        <div *ngIf="!isEditMode">
+            <h3 matTooltip="Click to load company"
+                (click)="loadCompanies()" class="text-center clickable cursor-pointer"><i class="fas fa-spinner"></i>
+                company</h3>
+
+            <div class="text-center">
+                <span>please choose a company</span>
+            </div>
+
+            <div class="spacer-pt-10"></div>
+
+            <div *ngIf="companies.length" class="m-0 companies-list list-group">
+                <ul class="list-group">
+                    <li class="list-group-item cursor-pointer"
+                        *ngFor="let company of companies; let i = index"
+                        [class.active]="i == currentIndex"
+                        (click)="setActiveCompany(company, i)">
+                        {{company.name}}
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="spacer-pt-10"></div>
 
         <!-- company -->
-        <div>
+        <div *ngIf="currentCompany.id">
             <div *ngIf="loadingCompany">
                 <mat-spinner class="spinner m-0" [diameter]="30"></mat-spinner>
             </div>
 
             <div *ngIf="!loadingCompany">
-                <h4>{{company.name}}</h4>
-                <p>{{company.description}}</p>
-                <p>{{company.createdAt | date}}</p>
-                <p>{{company.updatedAt | date}}</p>
+                <h4>{{currentCompany.name}}</h4>
+                <p>{{currentCompany.description}}</p>
+                <p><b>Created at: </b>{{currentCompany.createdAt | date}}</p>
+                <p><b>Updated at: </b>{{currentCompany.updatedAt | date}}</p>
             </div>
         </div>
         <!-- company -->
