@@ -137,6 +137,25 @@ class StudentRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async insert(firstName, lastName, dateOfBirth, phone, email, companyId) {
+        const {rows} = await pool.query(`
+                    INSERT INTO students(first_name, last_name, date_of_birth, phone, email, company_id)
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                    RETURNING *;`,
+            [firstName, lastName, dateOfBirth, phone, email, companyId]);
+
+        console.log(`> StudentRepo.insert(...args): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+    static async existsByPhoneOrEmail(phone, email) {
+        const {rows} = await pool.query(`
+            SELECT EXISTS(SELECT * FROM students WHERE phone = $1 OR email = $2);
+        `, [phone, email]);
+
+        return rows[0].exists;
+    }
 
 }
 
