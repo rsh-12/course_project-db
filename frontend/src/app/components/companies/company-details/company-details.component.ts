@@ -99,7 +99,7 @@ export class CompanyDetailsComponent implements OnInit {
     private getCompanyById(id: string) {
         this.loading = true;
 
-        this.companyService.findById(Number(id)).subscribe(
+        this.companyService.findById(id).subscribe(
             data => {
                 this.currentCompany = data;
             }, err => {
