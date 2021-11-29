@@ -58,4 +58,8 @@ export class StudentService {
         return this.http.put(API_URL + id, data, {responseType: 'text'});
     }
 
+    add(data: any): Observable<Student> {
+        return this.http.post<Student>(API_URL, data);
+    }
+
 }
