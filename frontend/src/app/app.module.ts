@@ -41,8 +41,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {DialogDataComponent} from './components/dialog-data/dialog-data.component';
 import {MatCardModule} from "@angular/material/card";
-import { CompanyDetailsComponent } from './components/companies/company-details/company-details.component';
-import { StudentDetailsComponent } from './components/students/student-details/student-details.component';
+import {CompanyDetailsComponent} from './components/companies/company-details/company-details.component';
+import {StudentDetailsComponent} from './components/students/student-details/student-details.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
