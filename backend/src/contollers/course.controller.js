@@ -76,7 +76,7 @@ exports.add = async (req, res) => {
         hours, startDate, endDate, price
     } = req.body;
 
-    validateRequest.areAllArgsProvided(res, name, category, description, hours, startDate, endDate, price);
+    validateRequest.allArgsProvided(res, name, category, description, hours, startDate, endDate, price);
 
     const course = await CourseRepo.insert(name, category, description, hours, startDate, endDate, price);
 
@@ -100,7 +100,7 @@ exports.update = async (req, res) => {
         hours, startDate, endDate, price
     } = req.body;
 
-    validateRequest.areAllArgsProvided(res, name, category, description, hours, startDate, endDate, price);
+    validateRequest.allArgsProvided(res, name, category, description, hours, startDate, endDate, price);
 
     const course = await CourseRepo.update(id, name, category, description, hours, startDate, endDate, price);
 

@@ -1,17 +1,11 @@
 const CourseRepo = require("../repository/course.repo");
 
-courseRequestBody = (req, res, next) => {
-    const {
-        name, category, description,
-        hours, startDate, endDate, price
-    } = req.body;
+allArgsProvided = (res, ...args) => {
+    const allArgsProvided = args.filter(value => value !== undefined).length === args.length;
 
-    if (!name || !category || !description || !hours || !startDate || !endDate || !price) {
-        return res.status(400)
-            .send({message: 'Name, category, description, hours, start and end dates are required'})
+    if (!allArgsProvided) {
+        return res.status(400).send({message: 'Not all arguments are passed'})
     }
-
-    next();
 }
 
 courseUniqueName = async (req, res, next) => {
@@ -24,7 +18,7 @@ courseUniqueName = async (req, res, next) => {
 }
 
 const validateRequest = {
-    courseRequestBody,
+    allArgsProvided,
     courseUniqueName
 }
 
