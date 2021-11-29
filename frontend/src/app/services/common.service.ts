@@ -8,7 +8,7 @@ import {Contract} from "../common/contract";
 import {CertificateInfo} from "../common/certificateInfo";
 import {InstructorService} from "./instructor.service";
 import {StudentService} from "./student.service";
-import {Validators} from "@angular/forms";
+import {FormGroup, Validators} from "@angular/forms";
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -35,6 +35,14 @@ export class CommonService {
 
     static isNumeric(val: string): boolean {
         return /^\d+$/.test(val);
+    }
+
+    getStudentAge(form: FormGroup) {
+        const dateOfBirth = form.controls['dateOfBirth'].value;
+        if (!!dateOfBirth) {
+            return Math.floor((+new Date() - new Date(dateOfBirth).getTime()) / 3.15576e+10);
+        }
+        return 0;
     }
 
     getStatistics(): Observable<TotalRecords> {
