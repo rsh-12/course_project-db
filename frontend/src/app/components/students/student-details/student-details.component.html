@@ -64,7 +64,7 @@
 
 
             <!-- date of birth -->
-            <div class="form-group mb-1">
+            <div class="form-group mb-4">
                 <mat-form-field appearance="outline">
                     <mat-label>Date of birth</mat-label>
 
@@ -73,6 +73,8 @@
                            [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
+
+                    <mat-hint align="end">age {{commonService.getStudentAge(form)}}</mat-hint>
 
                 </mat-form-field>
             </div>

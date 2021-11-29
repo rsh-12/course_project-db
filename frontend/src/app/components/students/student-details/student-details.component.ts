@@ -31,6 +31,7 @@ export class StudentDetailsComponent implements OnInit {
 
     constructor(private studentService: StudentService,
                 private companyService: CompanyService,
+                public commonService: CommonService,
                 private notificationService: NotificationService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
@@ -96,7 +97,21 @@ export class StudentDetailsComponent implements OnInit {
     }
 
     private add() {
+        this.loading = true;
 
+        this.studentService.add(JSON.stringify(this.form.value)).subscribe(
+            data => {
+                console.log(data);
+                this.currentStudent = data;
+                this.notificationService.openSnackBar('Student created successfully');
+                this.back();
+            }, err => {
+                console.log(err);
+                this.notificationService.openSnackBar(err.error.message);
+                this.loading = false
+            },
+            () => this.loading = false
+        );
     }
 
     private update() {
