@@ -16,7 +16,6 @@ exports.getAll = async (req, res) => {
     }
 
     students = await StudentRepo.find();
-
     if (students) {
         cache.set('students', students, 12 * 60 * 60);
         console.log('students from DB');
@@ -24,7 +23,7 @@ exports.getAll = async (req, res) => {
     }
 
     return res.status(404).send({message: 'Students not found'});
-}
+};
 
 exports.getOne = async (req, res) => {
     const {id} = req.params;
@@ -35,7 +34,7 @@ exports.getOne = async (req, res) => {
     const student = await StudentRepo.findById(id);
 
     return res.send(student);
-}
+};
 
 exports.getByCourse = async (req, res) => {
     const {except} = req.query;
@@ -48,7 +47,7 @@ exports.getByCourse = async (req, res) => {
     const courseRelatedStudents = await StudentRepo.findNameAndIdByCourse(req.params.id);
 
     return res.send(courseRelatedStudents);
-}
+};
 
 exports.moveStudents = async (req, res) => {
     const {ids} = req.body;
@@ -68,7 +67,7 @@ exports.moveStudents = async (req, res) => {
 
     cache.flushAll();
     return res.sendStatus(200);
-}
+};
 
 exports.getStudentsWithoutContracts = async (req, res) => {
     if (sendFromCache(res, 'studentsWithoutContracts')) return;
@@ -82,7 +81,7 @@ exports.getStudentsWithoutContracts = async (req, res) => {
     }
 
     return res.status(500).send({message: 'Something went wrong'});
-}
+};
 
 exports.delete = async (req, res) => {
     const {id} = req.params;
@@ -94,7 +93,7 @@ exports.delete = async (req, res) => {
     cache.flushAll();
 
     return res.send(student);
-}
+};
 
 exports.getByCompany = async (req, res) => {
     const {id} = req.params;
@@ -105,7 +104,7 @@ exports.getByCompany = async (req, res) => {
     }
 
     return res.status(500).send({message: 'Internal server error'});
-}
+};
 
 exports.add = async (req, res) => {
     const {
@@ -123,7 +122,26 @@ exports.add = async (req, res) => {
     cache.flushAll();
 
     return res.send(student);
-}
+};
+
+exports.update = async (req, res) => {
+    const {id} = req.params;
+    const {
+        firstName, lastName, dateOfBirth,
+        phone, email, companyId
+    } = req.body;
+
+    validateRequest.allArgsProvided(id, firstName, lastName, dateOfBirth, phone, email, companyId);
+
+    const student = await StudentRepo.update(id, firstName, lastName, dateOfBirth, phone, email, companyId);
+    if (!student) {
+        return res.status(500).send({message: 'An error occurred while inserting data into the students table'});
+    }
+
+    cache.flushAll();
+
+    return res.send(student);
+};
 
 function sendFromCache(res, key) {
     const data = cache.get(key);

@@ -26,6 +26,11 @@ module.exports = app => {
         controller.getOne
     );
 
+    app.put("/api/students/:id",
+        [authJwt.verifyToken],
+        controller.update
+    );
+
     app.delete("/api/students/:id",
         [authJwt.verifyToken],
         controller.delete
