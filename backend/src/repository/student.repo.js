@@ -157,6 +157,25 @@ class StudentRepo {
         return rows[0].exists;
     }
 
+    static async update(id, firstName, lastName, dateOfBirth, phone, email, companyId) {
+        const {rows} = await pool.query(`
+                    UPDATE students
+                    SET first_name    = $1,
+                        last_name     = $2,
+                        date_of_birth = $3,
+                        phone         = $4,
+                        email         = $5,
+                        company_id    = $6
+                    WHERE id = $7
+                    RETURNING *;`,
+            [firstName, lastName, dateOfBirth, phone, email, companyId, id]);
+
+        console.log(`> StudentRepo.update(...args): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+
 }
 
 module.exports = StudentRepo;
