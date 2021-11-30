@@ -71,7 +71,7 @@ export class StudentDetailsComponent implements OnInit {
     private initFormGroup() {
         this.form = this.formBuilder.group({
             id: [this.currentStudent.id],
-            lastName: [this.currentStudent.firstName, CommonService.commonValidators(2, 30)],
+            lastName: [this.currentStudent.lastName, CommonService.commonValidators(2, 30)],
             firstName: [this.currentStudent.firstName, CommonService.commonValidators(2, 30)],
             dateOfBirth: [this.currentStudent.dateOfBirth, [Validators.required]],
             phone: [this.currentStudent.phone,
@@ -123,6 +123,7 @@ export class StudentDetailsComponent implements OnInit {
                 console.log(res);
                 this.notificationService.openSnackBar('Student updated successfully');
             }, err => {
+                this.loading = false;
                 console.log(err);
                 this.notificationService.openSnackBar(err.error.message);
             },
