@@ -1,5 +1,6 @@
 const {authJwt} = require('../middleware');
 const controller = require('../contollers/common.controller');
+const {deleteImage} = require("../middleware/deleteImage");
 
 module.exports = function (app) {
     app.use(function (req, res, next) {
@@ -33,6 +34,11 @@ module.exports = function (app) {
     app.get("/api/certificates",
         [authJwt.verifyToken],
         controller.getCertificates
+    );
+
+    app.get("/api/certificates/download/:id",
+        [deleteImage],
+        controller.getCertificateForUser
     );
 
 }
