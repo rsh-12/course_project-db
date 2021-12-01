@@ -7,6 +7,7 @@
             <th scope="col">Last name</th>
             <th scope="col">Course</th>
             <th scope="col">Date of issue</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
 
@@ -15,6 +16,13 @@
             <td>{{certificate.studentLastName | titlecase}}</td>
             <td>{{certificate.course}}</td>
             <td>{{certificate.dateOfIssue | date}}</td>
+            <td>
+                <button
+                        (click)="downloadCertificate(certificate.id)"
+                        class="btn btn-outline-dark btn-circle">
+                    <i class="fas fa-file-download"></i>
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
