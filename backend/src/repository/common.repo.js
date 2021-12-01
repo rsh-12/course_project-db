@@ -30,6 +30,22 @@ class CommonRepo {
         return toCamelCase(rows);
     }
 
+    static async findCertificate(id) {
+        const {rows} = await pool.query(`
+            SELECT certificates.id, s.last_name, s.first_name, c.name course, date_of_issue
+            FROM certificates
+                     JOIN courses_students cs ON certificates.courses_students_id = cs.id
+                     JOIN students s ON cs.student_id = s.id
+                     JOIN courses c ON cs.course_id = c.id
+            WHERE certificates.id = $1;
+        `, [id]);
+
+        console.log(`> CommonRepo.findCertificate(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+
     static async findContractConclusionInfoAndIncome() {
         const {rows} = await pool.query(`
             SELECT 'month' AS type, SUM(c2.price) AS value
