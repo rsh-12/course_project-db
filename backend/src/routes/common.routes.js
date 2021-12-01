@@ -38,7 +38,7 @@ module.exports = function (app) {
 
     app.get("/api/certificates/download/:id",
         [deleteImage],
-        controller.getCertificateForUser
+        controller.downloadCertificate
     );
 
 }
