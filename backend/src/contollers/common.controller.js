@@ -1,6 +1,7 @@
 const UserRepo = require('../repository/user.repo');
 const CommonRepo = require("../repository/common.repo");
 const cache = require('../config/cache.config');
+const {createCertificate} = require("../service/cerfificate.creator");
 
 exports.statistics = async (req, res) => {
     let totalRecords = cache.get('statistics');
@@ -77,4 +78,18 @@ exports.getCertificates = async (req, res) => {
     cache.set('certificates', certificates);
 
     return res.send(certificates);
+}
+
+exports.downloadCertificate = async (req, res) => {
+    const {id} = req.params;
+    const certificate = await CommonRepo.findCertificate(id);
+    if (!certificate) {
+        return res.status(404).send({message: 'Certificate not found'});
+    }
+
+    const text = `${certificate.lastName} ${certificate.firstName} ` +
+        `for completing the ${certificate.course} course on ${certificate.dateOfIssue.toDateString()}`;
+    const file = await createCertificate(text);
+
+    await res.download(file);
 }
