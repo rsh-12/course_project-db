@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config/auth.config.js');
 const {redisClient} = require('../config/redis.config');
+const keys = require('../keys');
 
 verifyToken = (req, res, next) => {
     const token = req.headers["x-access-token"];
@@ -9,7 +9,7 @@ verifyToken = (req, res, next) => {
         message: "No token provided!"
     });
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, keys.SECRET_KEY, (err, decoded) => {
         if (err) return res.status(401).send({
             message: "Unauthorized!"
         });
