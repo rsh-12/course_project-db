@@ -44,6 +44,8 @@ import {MatCardModule} from "@angular/material/card";
 import {CompanyDetailsComponent} from './components/companies/company-details/company-details.component';
 import {StudentDetailsComponent} from './components/students/student-details/student-details.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     declarations: [
@@ -94,6 +96,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatExpansionModule,
         MatCardModule,
         MatTooltipModule,
+        MatTableModule,
+        MatPaginatorModule,
     ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
