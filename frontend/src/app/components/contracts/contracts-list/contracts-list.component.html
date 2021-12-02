@@ -1,28 +1,76 @@
-<h1>Contracts</h1>
+<div class="spacer-pt-10"></div>
+<h1 class="text-center">Contracts</h1>
 
-<div *ngIf="contracts">
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Company</th>
-            <th scope="col">Student</th>
-            <th scope="col">Course</th>
-            <th scope="col">Instructor</th>
-            <th scope="col">Conclusion</th>
-        </tr>
-        </thead>
+<div style="float: right;" class="mb-3" matTooltip="Sign a new contract">
+    <button class="btn btn-outline-primary btn-circle">
+        <i class="fas fa-plus"></i>
+    </button>
+</div>
 
-        <tbody>
-        <tr *ngFor="let contract of contracts">
-            <td>{{contract.company}}</td>
-            <td>{{contract.studentFirstName | slice:0:1}}. {{contract.studentLastName}}</td>
-            <td>{{contract.course | slice:0:20}}<span *ngIf="contract.course && contract.course.length > 20">...</span>
+<div *ngIf="contracts && !loading">
+
+    <table *ngIf="dataSource" mat-table [dataSource]="dataSource"
+           matSort
+           class="mat-elevation-z8 custom-table">
+
+        <!-- Company Column -->
+        <ng-container matColumnDef="company">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by company">
+                Company
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.company}}</td>
+        </ng-container>
+
+        <!-- student -->
+        <ng-container matColumnDef="studentLastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by student">
+                Student
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.studentLastName}}.
+                {{element.studentFirstName | slice:0:1}}</td>
+        </ng-container>
+
+        <!-- Course column -->
+        <ng-container matColumnDef="course">
+            <th mat-header-cell *matHeaderCellDef
+                mat-sort-header sortActionDescription="Sort by course">
+                Course
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.course}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="instructorLastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by instructor">
+                Instructor
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.instructorLastName}}.
+                {{element.instructorFirstName | slice:0:1}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="conclusion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by conclusion date">
+                Conclusion at
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.conclusionDate | date}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+                <button (click)="confirmDeletion(element.id)" class="btn btn-outline-danger btn-circle">
+                    <i class="fas fa-trash"></i>
+                </button>
             </td>
-            <td>{{contract.instructorFirstName | slice:0:1}}. {{contract.instructorLastName}}</td>
-            <td>{{contract.conclusionDate | date}}</td>
-        </tr>
-        </tbody>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
 </div>
 
 <div *ngIf="loading">
