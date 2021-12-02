@@ -91,4 +91,8 @@ export class CommonService {
         return this.http.delete(API_URL + '/certificates/' + id, {responseType: 'text'});
     }
 
+    deleteContract(id: number | string) {
+        return this.http.delete(API_URL + '/contracts/' + id, {responseType: 'text'});
+    }
+
 }
