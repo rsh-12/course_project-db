@@ -35,7 +35,6 @@ export class CertificatesListComponent implements OnInit {
         }
     }
 
-
     ngOnInit(): void {
         this.retrieveCertificates();
     }
