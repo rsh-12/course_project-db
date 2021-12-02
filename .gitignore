@@ -13,7 +13,7 @@ database/env.sh
 
 # backend
 backend/package-lock.json
-backend/src/config/db.config.js
+backend/src/keys/keys.dev.js
 
 # frontend
 # See http://help.github.com/ignore-files/ for more about ignoring files.
