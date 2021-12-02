@@ -54,4 +54,28 @@ export class CertificatesListComponent implements OnInit {
 
         window.open('http://localhost:8080/api/certificates/download/' + id);
     }
+
+    confirmDeletion(id: number | string) {
+        this.notificationService.openDialog().afterClosed()
+            .subscribe(result => {
+                if (result) this.deleteCertificate(id);
+            });
+    }
+
+    private deleteCertificate(id: number | string) {
+        this.loading = true;
+
+        this.commonService.deleteCertificate(id).subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.successfullyDeleted();
+            }, err => {
+                console.log(err);
+                this.notificationService.unknownError();
+                this.loading = false;
+            },
+            () => this.loading = false
+        );
+    }
+
 }
