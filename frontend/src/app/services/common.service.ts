@@ -86,4 +86,9 @@ export class CommonService {
     private defineServiceClass(entityName: string) {
         return entityName === 'instructors' ? this.instructorService : this.studentService;
     }
+
+    deleteCertificate(id: number | string) {
+        return this.http.delete(API_URL + '/certificates/' + id, {responseType: 'text'});
+    }
+
 }
