@@ -1,33 +1,79 @@
 <h1>Certificates</h1>
 
-<div *ngIf="certificates">
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Last name</th>
-            <th scope="col">Course</th>
-            <th scope="col">Date of issue</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
+<div>
+    <div *ngIf="!loading">
+        <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
 
-        <tbody>
-        <tr *ngFor="let certificate of certificates">
-            <td>{{certificate.studentLastName | titlecase}}</td>
-            <td>{{certificate.course}}</td>
-            <td>{{certificate.dateOfIssue | date}}</td>
-            <td>
-                <button
-                        (click)="downloadCertificate(certificate.id)"
-                        class="btn btn-outline-dark btn-circle">
-                    <i class="fas fa-file-download"></i>
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            <!-- Last Name Column -->
+            <ng-container matColumnDef="studentLastName">
+                <th mat-header-cell *matHeaderCellDef>Last name</th>
+                <td mat-cell *matCellDef="let element"> {{element.studentLastName}} </td>
+            </ng-container>
+
+            <!-- Course Column -->
+            <ng-container matColumnDef="course">
+                <th mat-header-cell *matHeaderCellDef>Course</th>
+                <td mat-cell *matCellDef="let element"> {{element.course}} </td>
+            </ng-container>
+
+            <!-- Date of Issue Column -->
+            <ng-container matColumnDef="dateOfIssue">
+                <th mat-header-cell *matHeaderCellDef>Date of Issue</th>
+                <td mat-cell *matCellDef="let element"> {{element.dateOfIssue | date}} </td>
+            </ng-container>
+
+            Symbol Column
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                    <button
+                            (click)="downloadCertificate(element.id)"
+                            class="btn btn-outline-dark btn-circle">
+                        <i class="fas fa-file-download"></i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                       showFirstLastButtons
+                       aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+
 </div>
 
+
+<!--<div *ngIf="certificates">-->
+<!--    <table class="table table-bordered table-hover">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">Last name</th>-->
+<!--            <th scope="col">Course</th>-->
+<!--            <th scope="col">Date of issue</th>-->
+<!--            <th scope="col">Action</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+
+<!--        <tbody>-->
+<!--        <tr *ngFor="let certificate of certificates">-->
+<!--            <td>{{certificate.studentLastName | titlecase}}</td>-->
+<!--            <td>{{certificate.course}}</td>-->
+<!--            <td>{{certificate.dateOfIssue | date}}</td>-->
+<!--            <td>-->
+<!--                <button-->
+<!--                        (click)="downloadCertificate(certificate.id)"-->
+<!--                        class="btn btn-outline-dark btn-circle">-->
+<!--                    <i class="fas fa-file-download"></i>-->
+<!--                </button>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
 <div *ngIf="loading">
     <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>

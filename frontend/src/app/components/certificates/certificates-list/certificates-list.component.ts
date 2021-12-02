@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CommonService} from "../../../services/common.service";
 import {CertificateInfo} from "../../../common/certificateInfo";
 import {NotificationService} from "../../../services/notification.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
     selector: 'app-certificates-list',
@@ -10,27 +12,38 @@ import {NotificationService} from "../../../services/notification.service";
 })
 export class CertificatesListComponent implements OnInit {
 
-    certificates: CertificateInfo[] = [];
     loading = false;
+    displayedColumns: string[] = ['studentLastName', 'course', 'dateOfIssue', 'action'];
+    dataSource!: MatTableDataSource<CertificateInfo>;
 
     constructor(private commonService: CommonService,
                 private notificationService: NotificationService) {
     }
 
+    @ViewChild(MatPaginator, {static: false})
+    set paginator(value: MatPaginator) {
+        if (this.dataSource) {
+            this.dataSource.paginator = value;
+        }
+    }
+
     ngOnInit(): void {
-        this.loading = true;
         this.retrieveCertificates();
     }
 
     private retrieveCertificates() {
+        this.loading = true;
+
         this.commonService.getCertificates().subscribe(
             data => {
                 console.log(data)
-                this.certificates = data;
+                this.dataSource = new MatTableDataSource<CertificateInfo>(data)
             }, error => {
                 console.log(error);
+                this.loading = false;
             },
-            () => this.loading = false);
+            () => this.loading = false
+        );
     }
 
     downloadCertificate(id: any) {
