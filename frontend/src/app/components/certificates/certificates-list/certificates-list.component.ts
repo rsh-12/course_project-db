@@ -4,6 +4,7 @@ import {CertificateInfo} from "../../../common/certificateInfo";
 import {NotificationService} from "../../../services/notification.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
     selector: 'app-certificates-list',
@@ -26,6 +27,14 @@ export class CertificatesListComponent implements OnInit {
             this.dataSource.paginator = value;
         }
     }
+
+    @ViewChild(MatSort, {static: false})
+    set sort(value: MatSort) {
+        if (this.dataSource) {
+            this.dataSource.sort = value;
+        }
+    }
+
 
     ngOnInit(): void {
         this.retrieveCertificates();

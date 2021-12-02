@@ -4,23 +4,29 @@
 
 <div>
     <div *ngIf="!loading">
-        <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+        <table *ngIf="dataSource" mat-table [dataSource]="dataSource"
+               matSort
+               class="mat-elevation-z8 custom-table">
 
             <!-- Last Name Column -->
             <ng-container matColumnDef="studentLastName">
-                <th mat-header-cell *matHeaderCellDef>Last name</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by last name">Last name</th>
                 <td mat-cell *matCellDef="let element"> {{element.studentLastName}} </td>
             </ng-container>
 
             <!-- Course Column -->
             <ng-container matColumnDef="course">
-                <th mat-header-cell *matHeaderCellDef>Course</th>
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header sortActionDescription="Sort by course"
+                >Course</th>
                 <td mat-cell *matCellDef="let element"> {{element.course}} </td>
             </ng-container>
 
             <!-- Date of Issue Column -->
             <ng-container matColumnDef="dateOfIssue">
-                <th mat-header-cell *matHeaderCellDef>Date of Issue</th>
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header sortActionDescription="Sort by date of issue"
+                >Date of Issue</th>
                 <td mat-cell *matCellDef="let element"> {{element.dateOfIssue | date}} </td>
             </ng-container>
 
@@ -29,12 +35,12 @@
                 <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
                 <td mat-cell *matCellDef="let element">
                     <div class="d-flex justify-content-evenly">
-                        <div>
+                        <div matTooltip="Download this certificate">
                             <button (click)="downloadCertificate(element.id)" class="btn btn-outline-dark btn-circle">
                                 <i class="fas fa-file-download"></i>
                             </button>
                         </div>
-                        <div>
+                        <div matTooltip="Delete this certificate">
                             <button (click)="confirmDeletion(element.id)" class="btn btn-outline-danger btn-circle">
                                 <i class="fas fa-trash"></i>
                             </button>
