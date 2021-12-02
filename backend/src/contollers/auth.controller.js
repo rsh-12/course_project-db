@@ -1,8 +1,8 @@
-const config = require('../config/auth.config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const UserRepo = require('../repository/user.repo');
 const {redisClient} = require('../config/redis.config');
+const keys = require("../keys");
 
 exports.signUp = async (req, res) => {
     // Save User to Database
@@ -35,7 +35,7 @@ exports.signIn = async (req, res) => {
         });
     }
 
-    const token = jwt.sign({id: user.id}, config.secret, {expiresIn: 86400});
+    const token = jwt.sign({id: user.id}, keys.SECRET_KEY, {expiresIn: 86400});
 
     redisClient.setEx(String(user.id), 86400, token)
         .then(result => {
