@@ -15,22 +15,28 @@
 
         <!-- Company Column -->
         <ng-container matColumnDef="company">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by company">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by last name">
                 Company
             </th>
             <td mat-cell *matCellDef="let element">{{element.company}}</td>
         </ng-container>
 
         <!-- student -->
-        <ng-container matColumnDef="studentLastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by student">
-                Student
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by last name">
+                Last name
             </th>
-            <td mat-cell *matCellDef="let element">{{element.studentLastName}}.
-                {{element.studentFirstName | slice:0:1}}</td>
+            <td mat-cell *matCellDef="let element">{{element.lastName}}
         </ng-container>
 
-        <!-- Course column -->
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by first name">
+                First name
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.firstName}}
+        </ng-container>
+
+        <!--         Course column -->
         <ng-container matColumnDef="course">
             <th mat-header-cell *matHeaderCellDef
                 mat-sort-header sortActionDescription="Sort by course">
@@ -39,20 +45,12 @@
             <td mat-cell *matCellDef="let element"> {{element.course}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="instructorLastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by instructor">
-                Instructor
-            </th>
-            <td mat-cell *matCellDef="let element">{{element.instructorLastName}}.
-                {{element.instructorFirstName | slice:0:1}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="conclusion">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by conclusion date">
-                Conclusion at
-            </th>
-            <td mat-cell *matCellDef="let element">{{element.conclusionDate | date}}</td>
-        </ng-container>
+                <ng-container matColumnDef="conclusion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by conclusion date">
+                        Conclusion at
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{element.conclusionDate | date}}</td>
+                </ng-container>
 
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action</th>

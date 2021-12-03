@@ -4,7 +4,6 @@ import {Contract} from "../../../common/contract";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {CertificateInfo} from "../../../common/certificateInfo";
 import {NotificationService} from "../../../services/notification.service";
 
 @Component({
@@ -17,7 +16,7 @@ export class ContractsListComponent implements OnInit {
     contracts: Contract[] = [];
     loading = false;
     dataSource!: MatTableDataSource<Contract>;
-    displayedColumns: string[] = ['company', 'studentLastName', 'course', 'instructorLastName', 'conclusion', 'action'];
+    displayedColumns: string[] = ['company', 'lastName', 'firstName', 'course', 'conclusion', 'action'];
 
     constructor(private commonService: CommonService,
                 private notificationService: NotificationService) {
@@ -45,6 +44,7 @@ export class ContractsListComponent implements OnInit {
     private retrieveContracts() {
         this.commonService.getContracts().subscribe(
             data => {
+                console.log(data)
                 this.contracts = data;
                 this.dataSource = new MatTableDataSource<Contract>(data)
             }, error => {
