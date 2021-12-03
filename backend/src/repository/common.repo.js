@@ -10,7 +10,14 @@ class CommonRepo {
     }
 
     static async findContracts() {
-        const {rows} = await pool.query('SELECT * FROM show_contracts();');
+        const {rows} = await pool.query(`
+            SELECT contracts.*, companies.name company, s.last_name, s.first_name, c.name course
+            FROM contracts
+                     JOIN courses_students cs ON cs.id = contracts.course_student_id
+                     JOIN courses c ON c.id = cs.course_id
+                     JOIN students s ON cs.student_id = s.id
+                     JOIN companies ON s.company_id = companies.id;
+        `);
         console.log(`> CommonRepo.findContracts(): ${rows.length}`);
 
         return toCamelCase(rows);
