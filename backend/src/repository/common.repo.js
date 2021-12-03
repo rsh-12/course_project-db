@@ -50,26 +50,40 @@ class CommonRepo {
         const {rows} = await pool.query(`
             SELECT 'month' AS type, SUM(c2.price) AS value
             FROM contracts c
-                     JOIN courses_instructors ci ON ci.id = c.course_instructor_id
-                     JOIN courses c2 ON c2.id = ci.course_id
+                     JOIN courses_students cs ON cs.id = c.course_student_id
+                     JOIN courses c2 ON c2.id = cs.course_id
             WHERE c2.start_date BETWEEN CURRENT_DATE - INTERVAL '1 mon' AND CURRENT_DATE
+
             UNION ALL
+
             SELECT 'year', SUM(c2.price)
             FROM contracts c
-                     JOIN courses_instructors ci ON ci.id = c.course_instructor_id
-                     JOIN courses c2 ON c2.id = ci.course_id
+                     JOIN courses_students cs ON cs.id = c.course_student_id
+                     JOIN courses c2 ON c2.id = cs.course_id
             WHERE c2.start_date BETWEEN CURRENT_DATE - INTERVAL '1 year' AND CURRENT_DATE
+
             UNION ALL
+
             SELECT 'percentage',
                    (SELECT COUNT(*)
                     FROM students
-                    WHERE NOT EXISTS(SELECT 1 FROM contracts WHERE student_id = students.id)) * 100
+                    WHERE EXISTS(SELECT 1
+                                 FROM contracts c
+                                          JOIN courses_students cs ON cs.id = c.course_student_id
+                                          JOIN students s ON cs.student_id = s.id
+                                 WHERE cs.student_id = students.id)) * 100
                        /
                    (SELECT COUNT(*) FROM students) AS percentages
+
             UNION ALL
+
             SELECT 'withoutContracts', COUNT(*)
             FROM students
-            WHERE NOT EXISTS(SELECT 1 FROM contracts WHERE student_id = students.id);
+            WHERE NOT EXISTS(SELECT 1
+                             FROM contracts c
+                                      JOIN courses_students cs ON cs.id = c.course_student_id
+                                      JOIN students s ON cs.student_id = s.id
+                             WHERE cs.student_id = students.id);
         `);
 
         console.log(`> CommonRepo.findContractConclusionInfoAndIncome(): ${rows.length}`);
