@@ -1,12 +1,11 @@
 export class Contract {
     id?: number;
-    company?: string;
-    studentFirstName?: string;
-    studentLastName?: string;
-    course?: string;
-    category?: string;
-    instructorFirstName?: string;
-    instructorLastName?: string;
     conclusionDate?: Date;
     completionDate?: Date;
+    createdAt?: Date;
+    courseStudentId?: number;
+    company?: string;
+    lastName?: string;
+    firstName?: string;
+    course?: string;
 }
