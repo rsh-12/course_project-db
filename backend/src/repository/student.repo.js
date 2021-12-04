@@ -174,6 +174,24 @@ class StudentRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async findWithCoursesWithoutContracts() {
+        const {rows} = await pool.query(`
+            SELECT cs.id  AS id,
+                   s.id   AS student_id,
+                   s.last_name,
+                   s.first_name,
+                   c.id   AS course_id,
+                   c.name AS course
+            FROM courses_students cs
+                     JOIN courses c ON c.id = cs.course_id
+                     JOIN students s ON s.id = cs.student_id
+            WHERE NOT EXISTS(SELECT courses_students_id FROM contracts WHERE contracts.courses_students_id = cs.id);
+        `);
+
+        console.log(`> StudentRepo.findWithCoursesWithoutContracts(): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
 
 }
 
