@@ -1,6 +1,7 @@
 module.exports = {
     // JWT
     SECRET_KEY: process.env.SECRET_KEY,
+    EXPIRES_IN: 86400, // 24(h) * 60(m) * 60(s)
 
     // DATABASE
     DB_HOST: process.env.DB_HOST,
