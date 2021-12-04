@@ -14,92 +14,94 @@
     </div>
 </div>
 
-<div class="list row">
-    <div class="col-md-6">
-
-        <!-- title and add icon -->
-        <div class="d-flex justify-content-between subheader">
-            <h4 matBadge="{{companies?.length}}" matBadgeOverlap="false">Companies</h4>
-
-            <div>
-                <a matTooltip="Add new company"
-                        class="btn btn-circle btn-outline-primary" [routerLink]="['/companies/add']"><i
-                        class="fas fa-plus"></i></a>
-            </div>
-        </div>
-        <!-- title and add icon -->
-
-        <!-- list of items -->
-        <ul class="list-group">
-            <li class="list-group-item cursor-pointer"
-                *ngFor="let company of companies; let i = index"
-                [class.active]="i == currentIndex"
-                (click)="setActiveCourse(company, i)">
-                {{company.name}}
-            </li>
-        </ul>
-        <!-- list of items -->
-
-    </div>
-
-    <!-- right side -->
-    <div class="col-md-6 meta-info">
-
-        <div *ngIf="!currentCompany.name" class="text-center m-0 subheader">
-            <p>Please click on a company</p>
-        </div>
-
-        <div *ngIf="currentCompany.id">
-
-            <!-- edit and delete buttons -->
-            <div class="action-buttons">
-                <a matTooltip="Edit current company"
-                        routerLink="/companies/{{currentCompany.id}}" class="btn btn-outline-dark btn-circle"><i
-                        class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                <button matTooltip="Delete current company"
-                        (click)="confirmDeletion()" class="btn btn-outline-danger btn-circle"><i
-                        class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-            <!-- edit and delete buttons -->
-
-            <div class="subheader">
-                <h4>{{currentCompany.name}}</h4>
-            </div>
-
-
-            <div>
-                <label>
-                    <strong>Description: </strong>
-                </label>
-                {{currentCompany.description}}
-            </div>
-
-            <div>
-                <label>
-                    <strong>Updated at: </strong>
-                </label>
-                {{currentCompany.updatedAt | date}}
-            </div>
-
-            <div>
-                <label>
-                    <strong>Created at: </strong>
-                </label>
-                {{currentCompany.createdAt | date}}
-            </div>
-
-            <div class="clickable">
-                <label>
-                    <strong (click)="loadRelatedStudents()">Students</strong>
-                </label>
-            </div>
-        </div>
-    </div>
-    <!-- right side -->
-
-</div>
-
-<div *ngIf="loading">
+<div *ngIf="loading; else content">
     <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
+
+<ng-template #content>
+    <div class="list row">
+        <div class="col-md-6">
+
+            <!-- title and add icon -->
+            <div class="d-flex justify-content-between subheader">
+                <h4 matBadge="{{companies?.length}}" matBadgeOverlap="false">Companies</h4>
+
+                <div>
+                    <a matTooltip="Add new company"
+                       class="btn btn-circle btn-outline-primary" [routerLink]="['/companies/add']"><i
+                            class="fas fa-plus"></i></a>
+                </div>
+            </div>
+            <!-- title and add icon -->
+
+            <!-- list of items -->
+            <ul class="list-group">
+                <li class="list-group-item cursor-pointer"
+                    *ngFor="let company of companies; let i = index"
+                    [class.active]="i == currentIndex"
+                    (click)="setActiveCourse(company, i)">
+                    {{company.name}}
+                </li>
+            </ul>
+            <!-- list of items -->
+
+        </div>
+
+        <!-- right side -->
+        <div class="col-md-6 meta-info">
+
+            <div *ngIf="!currentCompany.name" class="text-center m-0 subheader">
+                <p>Please click on a company</p>
+            </div>
+
+            <div *ngIf="currentCompany.id">
+
+                <!-- edit and delete buttons -->
+                <div class="action-buttons">
+                    <a matTooltip="Edit current company"
+                       routerLink="/companies/{{currentCompany.id}}" class="btn btn-outline-dark btn-circle"><i
+                            class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                    <button matTooltip="Delete current company"
+                            (click)="confirmDeletion()" class="btn btn-outline-danger btn-circle"><i
+                            class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <!-- edit and delete buttons -->
+
+                <div class="subheader">
+                    <h4>{{currentCompany.name}}</h4>
+                </div>
+
+
+                <div>
+                    <label>
+                        <strong>Description: </strong>
+                    </label>
+                    {{currentCompany.description}}
+                </div>
+
+                <div>
+                    <label>
+                        <strong>Updated at: </strong>
+                    </label>
+                    {{currentCompany.updatedAt | date}}
+                </div>
+
+                <div>
+                    <label>
+                        <strong>Created at: </strong>
+                    </label>
+                    {{currentCompany.createdAt | date}}
+                </div>
+
+                <div class="clickable">
+                    <label>
+                        <strong (click)="loadRelatedStudents()">Students</strong>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- right side -->
+
+    </div>
+</ng-template>
