@@ -35,9 +35,9 @@ exports.signIn = async (req, res) => {
         });
     }
 
-    const token = jwt.sign({id: user.id}, keys.SECRET_KEY, {expiresIn: 86400});
+    const token = jwt.sign({id: user.id}, keys.SECRET_KEY, {expiresIn: keys.EXPIRES_IN});
 
-    redisClient.setEx(String(user.id), 86400, token)
+    redisClient.setEx(String(user.id), keys.EXPIRES_IN, token)
         .then(result => {
             if (result) {
                 console.log('The token has been saved');
@@ -45,7 +45,7 @@ exports.signIn = async (req, res) => {
                 return res.status(200).send({
                     id: user.id,
                     username: user.username,
-                    expires: 86400,
+                    expires: keys.EXPIRES_IN,
                     accessToken: token
                 });
             }
