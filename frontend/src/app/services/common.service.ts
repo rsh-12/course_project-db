@@ -9,6 +9,7 @@ import {CertificateInfo} from "../common/certificateInfo";
 import {InstructorService} from "./instructor.service";
 import {StudentService} from "./student.service";
 import {FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -21,7 +22,8 @@ export class CommonService {
 
     constructor(private http: HttpClient,
                 private instructorService: InstructorService,
-                private studentService: StudentService) {
+                private studentService: StudentService,
+                private router: Router) {
     }
 
     static commonValidators(min = 5, max = 50) {
@@ -93,6 +95,10 @@ export class CommonService {
 
     deleteContract(id: number | string) {
         return this.http.delete(API_URL + '/contracts/' + id, {responseType: 'text'});
+    }
+
+    public goToPage(url: string): void {
+        this.router.navigate([url]);
     }
 
 }
