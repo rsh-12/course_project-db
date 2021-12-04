@@ -9,7 +9,10 @@ import {CommonService} from "../../../services/common.service";
 @Component({
     selector: 'app-company-details',
     templateUrl: './company-details.component.html',
-    styleUrls: ['./company-details.component.css']
+    styleUrls: ['./company-details.component.css'],
+    host: {
+        '(keyup.escape)': 'commonService.goToPage("/companies")'
+    }
 })
 export class CompanyDetailsComponent implements OnInit {
 
@@ -23,6 +26,7 @@ export class CompanyDetailsComponent implements OnInit {
 
     constructor(private companyService: CompanyService,
                 private notificationService: NotificationService,
+                public commonService: CommonService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private router: Router) {
@@ -122,7 +126,7 @@ export class CompanyDetailsComponent implements OnInit {
     }
 
     back() {
-        this.router.navigate(['/companies']);
+        this.commonService.goToPage('/companies')
     }
 
     onReset() {

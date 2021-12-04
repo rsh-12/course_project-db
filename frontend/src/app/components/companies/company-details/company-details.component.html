@@ -1,103 +1,107 @@
-<div *ngIf="loading">
+<div *ngIf="loading; else content">
     <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
 
-<div class="row" *ngIf="!loading">
-    <div class="spacer-pt-30"></div>
+<ng-template #content>
+    <div class="row" *ngIf="!loading">
+        <div class="spacer-pt-30"></div>
 
 
-    <!-- left side -->
-    <div class="col-md-6">
-        <h3 class="text-center">Company</h3>
+        <!-- left side -->
+        <div class="col-md-6">
+            <h3 class="text-center">Company</h3>
 
-        <!-- form -->
-        <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-
-
-            <!-- company's name -->
-            <div class="form-group mb-4">
-                <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
-                    <mat-label>Name</mat-label>
-                    <input matInput #name
-                           required
-                           minlength="3"
-                           maxlength="30"
-                           formControlName="name">
-
-                    <mat-hint align="end">{{name.value?.length || 0}}/30</mat-hint>
-
-                    <mat-error *ngIf="submitted && f.name.errors">
-                        <div *ngIf="f.name.errors.minlength">Min length is 3 characters</div>
-                        <div *ngIf="f.name.errors.maxlength">Max length is 30 characters</div>
-                        <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
-                    </mat-error>
-
-                </mat-form-field>
-            </div>
-            <!-- company's name -->
+            <!-- form -->
+            <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 
 
-            <!-- company's description -->
-            <div class="form-group mb-4">
-                <mat-form-field class="w-100" appearance="outline">
-                    <mat-label>Description</mat-label>
+                <!-- company's name -->
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                        <mat-label>Name</mat-label>
+                        <input matInput #name
+                               required
+                               minlength="3"
+                               maxlength="30"
+                               formControlName="name">
 
-                    <textarea matInput #description
-                              required
-                              minlength="5"
-                              maxlength="120"
-                              formControlName="description">
+                        <mat-hint align="end">{{name.value?.length || 0}}/30</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.name.errors">
+                            <div *ngIf="f.name.errors.minlength">Min length is 3 characters</div>
+                            <div *ngIf="f.name.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                <!-- company's name -->
+
+
+                <!-- company's description -->
+                <div class="form-group mb-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Description</mat-label>
+
+                        <textarea matInput #description
+                                  required
+                                  minlength="5"
+                                  maxlength="120"
+                                  formControlName="description">
                         </textarea>
 
-                    <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>
+                        <mat-hint align="end">{{description.value?.length || 0}}/120</mat-hint>
 
-                    <mat-error *ngIf="submitted && f.description.errors">
-                        <div *ngIf="f.description.errors.required">Description is required</div>
-                        <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
-                        <div *ngIf="f.description.errors.maxlength">Max length is 120 characters</div>
-                        <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
-                    </mat-error>
+                        <mat-error *ngIf="submitted && f.description.errors">
+                            <div *ngIf="f.description.errors.required">Description is required</div>
+                            <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
+                            <div *ngIf="f.description.errors.maxlength">Max length is 120 characters</div>
+                            <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
 
-                </mat-form-field>
-            </div>
-            <!-- company's description -->
-
-
-            <!-- buttons -->
-            <div class="form-buttons">
-                <div>
-                    <button matTooltip="Submit" type="submit" class="btn btn-outline-primary btn-circle">
-                        <i class="far fa-save"></i>
-                    </button>
+                    </mat-form-field>
                 </div>
+                <!-- company's description -->
 
-                <div>
-                    <button matTooltip="Reset" class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
-                        <i class="fas fa-broom"></i>
-                    </button>
+
+                <!-- buttons -->
+                <div class="form-buttons">
+                    <div>
+                        <button matTooltip="Submit" type="submit" class="btn btn-outline-primary btn-circle">
+                            <i class="far fa-save"></i>
+                        </button>
+                    </div>
+
+                    <div>
+                        <button matTooltip="Reset" class="btn btn-outline-danger btn-circle" type="button"
+                                (click)="onReset()">
+                            <i class="fas fa-broom"></i>
+                        </button>
+                    </div>
+
+                    <div>
+                        <button matTooltip="Go to companies" class="btn btn-outline-dark btn-circle" type="button"
+                                (click)="back()">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    </div>
                 </div>
-
-                <div>
-                    <button matTooltip="Go to companies" class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
-                        <i class="fas fa-undo"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- buttons -->
+                <!-- buttons -->
 
 
-        </form>
-        <!-- form -->
+            </form>
+            <!-- form -->
+
+
+        </div>
+        <!-- left side -->
+
+        <!-- right side -->
+        <div class="col-md-6 meta-info">
+
+        </div>
+        <!-- right side -->
 
 
     </div>
-    <!-- left side -->
-
-    <!-- right side -->
-    <div class="col-md-6 meta-info">
-
-    </div>
-    <!-- right side -->
-
-
-</div>
+</ng-template>
