@@ -56,4 +56,10 @@ module.exports = app => {
         controller.getStudentsWithoutContracts
     );
 
+    // get students without contracts or certificates
+    app.get("/api/students/courses/:data",
+        [authJwt.verifyToken],
+        controller.getStudentsWithCourses
+    );
+
 }
