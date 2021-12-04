@@ -31,26 +31,24 @@ class StudentRepo {
     }
 
     static async findNameAndIdByCourse(id) {
-        const {rows} = await pool.query(
-            `SELECT s.id                                   AS id,
-                    CONCAT(s.last_name, ' ', s.first_name) AS name
-             FROM students s
-                      JOIN courses_students cs ON s.id = cs.student_id
-             WHERE course_id = $1;`, [id]);
+        const {rows} = await pool.query(`SELECT s.id                                   AS id,
+                                                CONCAT(s.last_name, ' ', s.first_name) AS name
+                                         FROM students s
+                                                  JOIN courses_students cs ON s.id = cs.student_id
+                                         WHERE course_id = $1;`, [id]);
         console.log(`> StudentRepo.findNameAndIdByCourse(${id}): ${rows.length}`)
 
         return toCamelCase(rows);
     }
 
     static async findNameAndIdExceptCourse(id) {
-        const {rows} = await pool.query(
-            `SELECT s.id                                   AS id,
-                    CONCAT(s.last_name, ' ', s.first_name) AS name
-             FROM students s
-             WHERE NOT EXISTS(SELECT student_id
-                              FROM courses_students cs
-                              WHERE student_id = s.id
-                                AND course_id = $1);`, [id]);
+        const {rows} = await pool.query(`SELECT s.id                                   AS id,
+                                                CONCAT(s.last_name, ' ', s.first_name) AS name
+                                         FROM students s
+                                         WHERE NOT EXISTS(SELECT student_id
+                                                          FROM courses_students cs
+                                                          WHERE student_id = s.id
+                                                            AND course_id = $1);`, [id]);
         console.log(`> StudentRepo.findNameAndIdExceptCourse(${id}): ${rows.length}`)
 
         return toCamelCase(rows);
@@ -60,8 +58,7 @@ class StudentRepo {
         let values = [];
         for (let i of studentIds) values.push([+courseId, +i]);
 
-        const {rows} = await pool.query(format(
-            'INSERT INTO courses_students (course_id, student_id) VALUES %L', values));
+        const {rows} = await pool.query(format('INSERT INTO courses_students (course_id, student_id) VALUES %L', values));
 
         console.log(`> StudentRepo.addToCourse(${courseId}, ${studentIds}): ${rows.length}`);
 
@@ -70,12 +67,11 @@ class StudentRepo {
 
     static async removeFromCourse(courseId, studentIds) {
         const {rows} = await pool.query(`
-                    DELETE
-                    FROM courses_students
-                    WHERE course_id = $1
-                      AND student_id = ANY ($2::INT[])
-                    RETURNING *;`,
-            [courseId, studentIds]);
+            DELETE
+            FROM courses_students
+            WHERE course_id = $1
+              AND student_id = ANY ($2::INT[])
+            RETURNING *;`, [courseId, studentIds]);
 
         console.log(`> StudentRepo.removeFromCourse(${courseId}, ${studentIds}): ${rows.length}`);
 
@@ -86,7 +82,12 @@ class StudentRepo {
         const {rows} = await pool.query(`
             SELECT *
             FROM students
-            WHERE NOT EXISTS(SELECT 1 FROM contracts WHERE student_id = students.id)
+            WHERE NOT EXISTS(SELECT 1
+                             FROM contracts
+                                      JOIN courses_students cs ON contracts.course_student_id = cs.id
+                                      JOIN students s ON cs.student_id = s.id
+                             WHERE students.id = s.id
+                );
         `);
 
         console.log(`> StudentRepo.findWithoutContracts(): ${rows.length}`);
@@ -139,10 +140,9 @@ class StudentRepo {
 
     static async insert(firstName, lastName, dateOfBirth, phone, email, companyId) {
         const {rows} = await pool.query(`
-                    INSERT INTO students(first_name, last_name, date_of_birth, phone, email, company_id)
-                    VALUES ($1, $2, $3, $4, $5, $6)
-                    RETURNING *;`,
-            [firstName, lastName, dateOfBirth, phone, email, companyId]);
+            INSERT INTO students(first_name, last_name, date_of_birth, phone, email, company_id)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING *;`, [firstName, lastName, dateOfBirth, phone, email, companyId]);
 
         console.log(`> StudentRepo.insert(...args): ${rows.length}`);
 
@@ -159,16 +159,15 @@ class StudentRepo {
 
     static async update(id, firstName, lastName, dateOfBirth, phone, email, companyId) {
         const {rows} = await pool.query(`
-                    UPDATE students
-                    SET first_name    = $1,
-                        last_name     = $2,
-                        date_of_birth = $3,
-                        phone         = $4,
-                        email         = $5,
-                        company_id    = $6
-                    WHERE id = $7
-                    RETURNING *;`,
-            [firstName, lastName, dateOfBirth, phone, email, companyId, id]);
+            UPDATE students
+            SET first_name    = $1,
+                last_name     = $2,
+                date_of_birth = $3,
+                phone         = $4,
+                email         = $5,
+                company_id    = $6
+            WHERE id = $7
+            RETURNING *;`, [firstName, lastName, dateOfBirth, phone, email, companyId, id]);
 
         console.log(`> StudentRepo.update(...args): ${rows.length}`);
 
