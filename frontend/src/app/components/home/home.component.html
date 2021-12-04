@@ -1,133 +1,135 @@
-<div *ngIf="!loading" class="d-flex flex-column" id="content-wrapper">
-    <div id="content">
+<div *ngIf="loading; else content">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
 
-        <div class="container-fluid">
-            <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                <h3 class="text-dark mb-0">Dashboard</h3>
-                <a matTooltip="Click to download a word document"
-                   (click)="download()" class="btn btn-primary btn-sm d-none d-sm-inline-block"
-                   role="button"><i
-                        class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-xl-3 mb-4">
-                    <div class="card shadow border-start-primary py-2">
-                        <div class="card-body">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col me-2">
-                                    <div class="text-uppercase text-primary fw-bold text-xs mb-1">
-                                        <span>Earnings (monthly)</span>
-                                    </div>
-                                    <div class="text-dark fw-bold h5 mb-0">
-                                        <span>{{income[0].value | currency}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
-                            </div>
-                        </div>
-                    </div>
+<ng-template #content>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+
+            <div class="container-fluid">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Dashboard</h3>
+                    <a matTooltip="Click to download a word document"
+                       (click)="download()" class="btn btn-primary btn-sm d-none d-sm-inline-block"
+                       role="button"><i
+                            class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
                 </div>
-                <div class="col-md-6 col-xl-3 mb-4">
-                    <div class="card shadow border-start-success py-2">
-                        <div class="card-body">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col me-2">
-                                    <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Earnings (annual)</span>
-                                    </div>
-                                    <div class="text-dark fw-bold h5 mb-0">
-                                        <span>{{income[1].value | currency}}</span>
-                                    </div>
-                                </div>
-                                <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-3 mb-4">
-                    <div class="card shadow border-start-info py-2">
-                        <div class="card-body">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col me-2">
-                                    <div class="text-uppercase text-info fw-bold text-xs mb-1">
-                                        <span>Concluded contracts</span>
-                                    </div>
-                                    <div class="row g-0 align-items-center">
-                                        <div class="col-auto">
-                                            <div class="text-dark fw-bold h5 mb-0 me-3">
-                                                <span>{{income[2].value}}%</span></div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-start-primary py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col me-2">
+                                        <div class="text-uppercase text-primary fw-bold text-xs mb-1">
+                                            <span>Earnings (monthly)</span>
                                         </div>
-                                        <div class="col">
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-info"
-                                                     aria-valuemin="0"
-                                                     aria-valuemax="100"
-                                                     [ngStyle]="{'width':income[2].value ? income[2].value + '%' : '0%'}"><span
-                                                        class="visually-hidden">50%</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0">
+                                            <span>{{income[0].value | currency}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-start-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col me-2">
+                                        <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Earnings (annual)</span>
+                                        </div>
+                                        <div class="text-dark fw-bold h5 mb-0">
+                                            <span>{{income[1].value | currency}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-start-info py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col me-2">
+                                        <div class="text-uppercase text-info fw-bold text-xs mb-1">
+                                            <span>Concluded contracts</span>
+                                        </div>
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-auto">
+                                                <div class="text-dark fw-bold h5 mb-0 me-3">
+                                                    <span>{{income[2].value}}%</span></div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="progress progress-sm">
+                                                    <div class="progress-bar bg-info"
+                                                         aria-valuemin="0"
+                                                         aria-valuemax="100"
+                                                         [ngStyle]="{'width':income[2].value ? income[2].value + '%' : '0%'}"><span
+                                                            class="visually-hidden">50%</span></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
-                                <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div matTooltip="Click to load students without contracts"
+                             class="card shadow border-start-warning py-2" (click)="showStudentsWithoutContracts()">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col me-2">
+                                        <div class="text-uppercase text-warning fw-bold text-xs mb-1">
+                                            <span>Without contracts</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span>{{income[3].value}}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3 mb-4">
-                    <div matTooltip="Click to load students without contracts"
-                         class="card shadow border-start-warning py-2" (click)="showStudentsWithoutContracts()">
-                        <div class="card-body">
-                            <div class="row align-items-center no-gutters">
-                                <div class="col me-2">
-                                    <div class="text-uppercase text-warning fw-bold text-xs mb-1">
-                                        <span>Without contracts</span></div>
-                                    <div class="text-dark fw-bold h5 mb-0"><span>{{income[3].value}}</span></div>
-                                </div>
-                                <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
-                            </div>
-                        </div>
+
+
+                <!-- FAQ -->
+                <div>
+                    <div class="spacer"></div>
+                    <h3 class="text-center">FAQ</h3>
+                    <div class="col-md-8 m-0">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Where can I find the data?
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <p>Click <span class="text-black-50">LINKS</span> and select the link</p>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        How can I add some students or instructors to the course?
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <p>
+                                    Go to the <a [routerLink]="['/courses']">courses</a>, choose the course and click
+                                    <i class="fas fa-edit btn btn-outline-dark btn-circle"></i>
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </div>
                 </div>
+                <!-- FAQ -->
+
             </div>
-
-
-            <!-- FAQ -->
-            <div>
-                <div class="spacer"></div>
-                <h3 class="text-center">FAQ</h3>
-                <div class="col-md-8 m-0">
-                    <mat-accordion>
-                        <mat-expansion-panel (opened)="panelOpenState = true"
-                                             (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Where can I find the data?
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <p>Click <span class="text-black-50">LINKS</span> and select the link</p>
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel (opened)="panelOpenState = true"
-                                             (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    How can I add some students or instructors to the course?
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <p>
-                                Go to the <a [routerLink]="['/courses']">courses</a>, choose the course and click
-                                <i class="fas fa-edit btn btn-outline-dark btn-circle"></i>
-                            </p>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-            </div>
-            <!-- FAQ -->
-
         </div>
     </div>
-</div>
-
-<div *ngIf="loading">
-    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
-</div>
+</ng-template>
