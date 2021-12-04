@@ -3,6 +3,8 @@ const InstructorRepo = require('../repository/instructor.repo');
 const StudentRepo = require('../repository/student.repo');
 const cache = require('../config/cache.config');
 const {validateRequest} = require("../middleware");
+const keys = require('../keys');
+
 
 exports.getAll = async (req, res) => {
     const {instructorId} = req.query;
@@ -28,7 +30,7 @@ exports.getAll = async (req, res) => {
     console.debug('courses from DB')
     courses = await CourseRepo.find();
     if (courses) {
-        cache.set('courses', courses, 12 * 60 * 60);
+        cache.set('courses', courses, keys.TTL);
         return res.send(courses);
     }
 
@@ -49,7 +51,7 @@ exports.getOne = async (req, res) => {
     } else {
         console.debug("instructors from DB");
         instructors = await InstructorRepo.findByCourseId(id);
-        cache.set(`instructors_by_course_${id}`, instructors, 12 * 60 * 60);
+        cache.set(`instructors_by_course_${id}`, instructors, keys.TTL);
     }
 
     const totalStudents = await StudentRepo.countByCourseId(id);

@@ -1,5 +1,7 @@
 const InstructorRepo = require("../repository/instructor.repo");
 const cache = require("../config/cache.config");
+const keys = require('../keys');
+
 
 exports.getAll = async (req, res) => {
     const {name} = req.query;
@@ -14,7 +16,7 @@ exports.getAll = async (req, res) => {
     const instructors = await InstructorRepo.find();
     console.log('instructors from DB');
 
-    cache.set('instructors', instructors);
+    cache.set('instructors', instructors, keys.TTL);
 
     if (instructors) {
         return res.send(instructors);
@@ -31,7 +33,7 @@ exports.getByCourse = async (req, res) => {
 
         const courseUnrelatedInstructors = await InstructorRepo.findNameAndIdExceptCourse(req.params.id);
         console.log('courseUnrelatedInstructors from DB');
-        cache.set('courseUnrelatedInstructors', courseUnrelatedInstructors);
+        cache.set('courseUnrelatedInstructors', courseUnrelatedInstructors, keys.TTL);
 
         return res.send(courseUnrelatedInstructors);
     }
@@ -42,7 +44,7 @@ exports.getByCourse = async (req, res) => {
 
     const courseRelatedInstructors = await InstructorRepo.findNameAndIdByCourse(req.params.id);
     console.log('courseRelatedInstructors from DB');
-    cache.set('courseRelatedInstructors', courseRelatedInstructors);
+    cache.set('courseRelatedInstructors', courseRelatedInstructors, keys.TTL);
 
     return res.send(courseRelatedInstructors);
 

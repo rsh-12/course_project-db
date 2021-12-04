@@ -1,6 +1,8 @@
 const cache = require('../config/cache.config');
 const StudentRepo = require("../repository/student.repo");
 const {validateRequest} = require("../middleware");
+const keys = require('../keys');
+
 
 exports.getAll = async (req, res) => {
     const {name} = req.query;
@@ -17,7 +19,7 @@ exports.getAll = async (req, res) => {
 
     students = await StudentRepo.find();
     if (students) {
-        cache.set('students', students, 12 * 60 * 60);
+        cache.set('students', students, keys.TTL);
         console.log('students from DB');
         return res.send(students);
     }
@@ -75,7 +77,7 @@ exports.getStudentsWithoutContracts = async (req, res) => {
     const studentsWithoutContracts = await StudentRepo.findWithoutContracts();
     if (studentsWithoutContracts) {
         console.log('studentsWithoutContracts from DB');
-        cache.set('studentsWithoutContracts', studentsWithoutContracts, 24 * 60 * 60);
+        cache.set('studentsWithoutContracts', studentsWithoutContracts, keys.TTL);
 
         return res.send(studentsWithoutContracts);
     }

@@ -1,5 +1,6 @@
 const CompanyRepo = require('../repository/company.repo');
 const cache = require('../config/cache.config');
+const keys = require('../keys');
 
 exports.getAll = async (req, res) => {
     const {name} = req.query;
@@ -17,7 +18,7 @@ exports.getAll = async (req, res) => {
     companies = await CompanyRepo.find();
 
     if (companies) {
-        cache.set('companies', companies, 12 * 60 * 60);
+        cache.set('companies', companies, keys.TTL);
         console.log('companies from DB');
         return res.send(companies);
     }

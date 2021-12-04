@@ -2,6 +2,7 @@ const UserRepo = require('../repository/user.repo');
 const CommonRepo = require("../repository/common.repo");
 const cache = require('../config/cache.config');
 const {createCertificate} = require("../service/cerfificate.creator");
+const keys = require('../keys');
 
 exports.statistics = async (req, res) => {
     let totalRecords = cache.get('statistics');
@@ -14,7 +15,7 @@ exports.statistics = async (req, res) => {
     totalRecords = await CommonRepo.findStatistics();
 
     if (totalRecords) {
-        cache.set('statistics', totalRecords, 12 * 60 * 60);
+        cache.set('statistics', totalRecords, keys.TTL);
         console.log('statistics from DB');
         return res.send(totalRecords);
     }
@@ -41,7 +42,7 @@ exports.contracts = async (req, res) => {
     contracts = await CommonRepo.findContracts();
 
     if (contracts) {
-        cache.set('contracts', contracts, 12 * 60 * 60);
+        cache.set('contracts', contracts, keys.TTL);
         console.log('contracts from DB');
         return res.send(contracts);
     }
@@ -59,7 +60,7 @@ exports.income = async (req, res) => {
 
     income = await CommonRepo.findContractConclusionInfoAndIncome();
     console.log('income from DB');
-    cache.set('income', income);
+    cache.set('income', income, keys.TTL);
 
     return res.send(income);
 }
@@ -75,7 +76,7 @@ exports.getCertificates = async (req, res) => {
     certificates = await CommonRepo.findCertificates();
 
     console.log('certificates from DB');
-    cache.set('certificates', certificates);
+    cache.set('certificates', certificates, keys.TTL);
 
     return res.send(certificates);
 }
