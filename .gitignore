@@ -4,6 +4,7 @@ node_modules/
 .idea/
 tmpdir
 *.http
+todo.txt
 
 # database
 database/utils/numbers.txt
