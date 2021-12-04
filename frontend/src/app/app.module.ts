@@ -47,6 +47,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
+import { StudentsCoursesComponent } from './components/students/students-courses/students-courses.component';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import {MatSortModule} from "@angular/material/sort";
         DataListComponent,
         DialogDataComponent,
         CompanyDetailsComponent,
-        StudentDetailsComponent
+        StudentDetailsComponent,
+        StudentsCoursesComponent
     ],
     imports: [
         BrowserModule,
