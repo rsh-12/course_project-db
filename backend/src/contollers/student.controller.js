@@ -75,7 +75,7 @@ exports.getStudentsWithoutContracts = async (req, res) => {
     const studentsWithoutContracts = await StudentRepo.findWithoutContracts();
     if (studentsWithoutContracts) {
         console.log('studentsWithoutContracts from DB');
-        cache.set('studentsWithoutContracts', studentsWithoutContracts);
+        cache.set('studentsWithoutContracts', studentsWithoutContracts, 24 * 60 * 60);
 
         return res.send(studentsWithoutContracts);
     }
