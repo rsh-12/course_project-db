@@ -1,177 +1,182 @@
-<div *ngIf="loading">
+<div *ngIf="loading; else content">
     <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
 </div>
 
-<div class="row" *ngIf="!loading">
-    <div class="spacer-pt-30"></div>
-    <div class="col-md-6">
+<ng-template #content>
+    <div class="row" *ngIf="!loading">
+        <div class="spacer-pt-30"></div>
+        <div class="col-md-6">
 
-        <div *ngIf="currentCourse" class="edit-form">
-            <h3 class="text-center">Course</h3>
+            <div *ngIf="currentCourse" class="edit-form">
+                <h3 class="text-center">Course</h3>
 
-            <!-- form start-->
-            <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="form-group mb-4">
-                    <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
-                        <mat-label>Name</mat-label>
-                        <input matInput #name
-                               minlength="5"
-                               maxlength="50"
-                               required
-                               formControlName="name">
+                <!-- form start-->
+                <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group mb-4">
+                        <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
+                            <mat-label>Name</mat-label>
+                            <input matInput #name
+                                   minlength="5"
+                                   maxlength="50"
+                                   required
+                                   formControlName="name">
 
-                        <mat-hint align="end">{{name.value?.length || 0}}/50</mat-hint>
+                            <mat-hint align="end">{{name.value?.length || 0}}/50</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.name.errors">
-                            <div *ngIf="f.name.errors.required">Name is required</div>
-                            <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
-                            <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
-                            <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+                            <mat-error *ngIf="submitted && f.name.errors">
+                                <div *ngIf="f.name.errors.required">Name is required</div>
+                                <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
+                                <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
+                                <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
 
-                <div class="form-group mb-4">
-                    <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
-                        <mat-label>Category</mat-label>
-                        <input matInput #category
-                               minlength="5"
-                               maxlength="50"
-                               required
-                               formControlName="category">
+                    <div class="form-group mb-4">
+                        <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
+                            <mat-label>Category</mat-label>
+                            <input matInput #category
+                                   minlength="5"
+                                   maxlength="50"
+                                   required
+                                   formControlName="category">
 
-                        <mat-hint align="end">{{category.value?.length || 0}}/50</mat-hint>
+                            <mat-hint align="end">{{category.value?.length || 0}}/50</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.category.errors">
-                            <div *ngIf="f.category.errors.required">Category is required</div>
-                            <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
-                            <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
-                            <div *ngIf="f.category.errors.pattern">Please, remove the unnecessary space symbol</div>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+                            <mat-error *ngIf="submitted && f.category.errors">
+                                <div *ngIf="f.category.errors.required">Category is required</div>
+                                <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
+                                <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
+                                <div *ngIf="f.category.errors.pattern">Please, remove the unnecessary space symbol</div>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
 
-                <div class="form-group mb-4">
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Description</mat-label>
-                        <textarea matInput #description
-                                  required
-                                  minlength="5"
-                                  maxlength="250"
-                                  formControlName="description">
+                    <div class="form-group mb-4">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput #description
+                                      required
+                                      minlength="5"
+                                      maxlength="250"
+                                      formControlName="description">
                         </textarea>
 
-                        <mat-hint align="end">{{description.value?.length || 0}}/250</mat-hint>
+                            <mat-hint align="end">{{description.value?.length || 0}}/250</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.description.errors">
-                            <div *ngIf="f.description.errors.required">Description is required</div>
-                            <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
-                            <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
-                            <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="form-group mb-4">
-                    <mat-form-field hintLabel="Max value is 1000" appearance="outline">
-                        <mat-label>Hours</mat-label>
-                        <input matInput
-                               type="number"
-                               required
-                               min="10"
-                               max="1000"
-                               formControlName="hours">
-
-                        <mat-error *ngIf="submitted && f.hours.errors">
-                            <div *ngIf="f.hours.errors.required">Hours are required</div>
-                            <div *ngIf="f.hours.errors.min">Min value is 10</div>
-                            <div *ngIf="f.hours.errors.max">Max value is 1000</div>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-
-                <div class="form-group mb-4">
-                    <mat-form-field hintLabel="Max value is 1000000" appearance="outline">
-                        <mat-label>Price</mat-label>
-                        <input matInput
-                               type="number"
-                               required
-                               min="10"
-                               max="1000000"
-                               formControlName="price">
-
-                        <mat-error *ngIf="submitted && f.price.errors">
-                            <div *ngIf="f.price.errors.required">Price is required</div>
-                            <div *ngIf="f.price.errors.min">Min value is 0</div>
-                            <div *ngIf="f.price.errors.max">Max value is 1000000</div>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-
-                <div class="form-group mb-4">
-                    <mat-form-field appearance="outline" style="min-width: 50%">
-                        <mat-label>Enter a date range</mat-label>
-                        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
-                            <input matStartDate formControlName="startDate" placeholder="Start date">
-                            <input matEndDate formControlName="endDate" placeholder="End date">
-                        </mat-date-range-input>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #picker></mat-date-range-picker>
-
-                        <mat-error *ngIf="f.startDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                        <mat-error *ngIf="f.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-                    </mat-form-field>
-                </div>
-
-
-                <!-- buttons -->
-                <div class="form-buttons">
-                    <div>
-                        <button matTooltip="Submit" type="submit" class="btn btn-outline-primary btn-circle">
-                            <i class="far fa-save"></i>
-                        </button>
+                            <mat-error *ngIf="submitted && f.description.errors">
+                                <div *ngIf="f.description.errors.required">Description is required</div>
+                                <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
+                                <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
+                                <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
                     </div>
 
-                    <div>
-                        <button matTooltip="Reset"
-                                class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
-                            <i class="fas fa-broom"></i>
-                        </button>
+                    <div class="form-group mb-4">
+                        <mat-form-field hintLabel="Max value is 1000" appearance="outline">
+                            <mat-label>Hours</mat-label>
+                            <input matInput
+                                   type="number"
+                                   required
+                                   min="10"
+                                   max="1000"
+                                   formControlName="hours">
+
+                            <mat-error *ngIf="submitted && f.hours.errors">
+                                <div *ngIf="f.hours.errors.required">Hours are required</div>
+                                <div *ngIf="f.hours.errors.min">Min value is 10</div>
+                                <div *ngIf="f.hours.errors.max">Max value is 1000</div>
+                            </mat-error>
+                        </mat-form-field>
                     </div>
 
-                    <div>
-                        <button matTooltip="Go to courses" class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
-                            <i class="fas fa-undo"></i>
-                        </button>
+
+                    <div class="form-group mb-4">
+                        <mat-form-field hintLabel="Max value is 1000000" appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input matInput
+                                   type="number"
+                                   required
+                                   min="10"
+                                   max="1000000"
+                                   formControlName="price">
+
+                            <mat-error *ngIf="submitted && f.price.errors">
+                                <div *ngIf="f.price.errors.required">Price is required</div>
+                                <div *ngIf="f.price.errors.min">Min value is 0</div>
+                                <div *ngIf="f.price.errors.max">Max value is 1000000</div>
+                            </mat-error>
+                        </mat-form-field>
                     </div>
-                </div>
-                <!-- buttons -->
 
 
-            </form>
-            <!-- form end -->
+                    <div class="form-group mb-4">
+                        <mat-form-field appearance="outline" style="min-width: 50%">
+                            <mat-label>Enter a date range</mat-label>
+                            <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                                <input matStartDate formControlName="startDate" placeholder="Start date">
+                                <input matEndDate formControlName="endDate" placeholder="End date">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+
+                            <mat-error *ngIf="f.startDate.hasError('matStartDateInvalid')">Invalid start date
+                            </mat-error>
+                            <mat-error *ngIf="f.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                    <!-- buttons -->
+                    <div class="form-buttons">
+                        <div>
+                            <button matTooltip="Submit" type="submit" class="btn btn-outline-primary btn-circle">
+                                <i class="far fa-save"></i>
+                            </button>
+                        </div>
+
+                        <div>
+                            <button matTooltip="Reset"
+                                    class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
+                                <i class="fas fa-broom"></i>
+                            </button>
+                        </div>
+
+                        <div>
+                            <button matTooltip="Go to courses" class="btn btn-outline-dark btn-circle" type="button"
+                                    (click)="back()">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- buttons -->
+
+
+                </form>
+                <!-- form end -->
+            </div>
+
+        </div>
+        <div class="col-md-6 meta-info">
+
+            <!-- tabs -->
+            <div *ngIf="isEditMode && currentCourse.id">
+                <mat-tab-group>
+                    <mat-tab label="Instructors">
+                        <app-data-list [entityId]="currentCourse.id"
+                                       [entityName]="'instructors'"></app-data-list>
+                    </mat-tab>
+
+                    <mat-tab label="Students">
+                        <app-data-list [entityId]="currentCourse.id" [entityName]="'students'"></app-data-list>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <!-- tabs -->
+
         </div>
 
     </div>
-    <div class="col-md-6 meta-info">
-
-        <!-- tabs -->
-        <div *ngIf="isEditMode && currentCourse.id">
-            <mat-tab-group>
-                <mat-tab label="Instructors">
-                    <app-data-list [entityId]="currentCourse.id"
-                                   [entityName]="'instructors'"></app-data-list>
-                </mat-tab>
-
-                <mat-tab label="Students">
-                    <app-data-list [entityId]="currentCourse.id" [entityName]="'students'"></app-data-list>
-                </mat-tab>
-            </mat-tab-group>
-        </div>
-        <!-- tabs -->
-
-    </div>
-
-</div>
+</ng-template>
