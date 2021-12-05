@@ -145,6 +145,22 @@ exports.update = async (req, res) => {
     return res.send(student);
 };
 
+// get students without contracts or certificates
+exports.getStudentsWithCourses = async (req, res) => {
+    let students;
+
+    const {content} = req.query;
+    if (content === 'contracts') {
+        students = await StudentRepo.findWithCoursesWithoutContracts();
+        return res.send(students);
+    } else if (content === 'certificates') {
+        students = await StudentRepo.findWithCoursesWithoutCertificates();
+        return res.send(students);
+    }
+
+    return res.status(404).send({message: 'Students not found'});
+}
+
 function sendFromCache(res, key) {
     const data = cache.get(key);
 
