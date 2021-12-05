@@ -100,15 +100,26 @@ class CommonRepo {
 
     static async insertCertificate(id, dateOfIssue) {
         const {rows} = await pool.query(`
-                    INSERT INTO certificates(courses_students_id, date_of_issue)
-                    VALUES ($1, $2)
-                    RETURNING *;`,
-            [id, dateOfIssue]);
+            INSERT INTO certificates(courses_students_id, date_of_issue)
+            VALUES ($1, $2)
+            RETURNING *;`, [id, dateOfIssue]);
 
         console.log(`> CommonRepo.insertCertificate(): ${rows.length}`);
 
         return toCamelCase(rows)[0];
     }
+
+    static async insertContract(id, conclusionDate, completionDate) {
+        const {rows} = await pool.query(`
+            INSERT INTO contracts(courses_students_id, conclusion_date, completion_date)
+            VALUES ($1, $2, $3)
+            RETURNING *;`, [id, conclusionDate, completionDate]);
+
+        console.log(`> CommonRepo.insertContract(): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
 }
 
 module.exports = CommonRepo;
