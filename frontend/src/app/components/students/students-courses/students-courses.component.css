@@ -1,0 +1,17 @@
+.block {
+    margin: 0 auto;
+    max-height: 500px;
+    overflow: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+.list-item {
+    padding: 3px;
+}
+
+a {
+    cursor: pointer;
+}
