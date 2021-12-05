@@ -90,15 +90,23 @@ export class CommonService {
     }
 
     deleteCertificate(id: number | string) {
-        return this.http.delete(API_URL + '/certificates/' + id, {responseType: 'text'});
+        return this.http.delete(API_URL + 'certificates/' + id, {responseType: 'text'});
     }
 
     deleteContract(id: number | string) {
-        return this.http.delete(API_URL + '/contracts/' + id, {responseType: 'text'});
+        return this.http.delete(API_URL + 'contracts/' + id, {responseType: 'text'});
     }
 
     public goToPage(url: string): void {
         this.router.navigate([url]);
     }
 
+    addCertificate(id: number | string) {
+        return this.http.post(API_URL + 'certificates', id, {responseType: 'text'});
+    }
+
+
+    addContract(id: number) {
+        return this.http.post(API_URL + 'contracts', id, {responseType: 'text'});
+    }
 }
