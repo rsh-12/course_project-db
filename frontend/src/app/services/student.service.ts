@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Student} from "../common/student";
 import {CommonData} from "../common/commonData";
+import {StudentsWithCourses} from "../components/students/students-courses/students-courses.component";
 
 const API_URL = 'http://localhost:8080/api/students/';
 
@@ -60,6 +61,10 @@ export class StudentService {
 
     add(data: any): Observable<Student> {
         return this.http.post<Student>(API_URL, data);
+    }
+
+    findWithCoursesWithout(data: string): Observable<StudentsWithCourses[]> {
+        return this.http.get<StudentsWithCourses[]>(API_URL + 'courses/' + data);
     }
 
 }
