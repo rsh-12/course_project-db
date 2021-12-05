@@ -13,7 +13,7 @@ class CommonRepo {
         const {rows} = await pool.query(`
             SELECT contracts.*, companies.name company, s.last_name, s.first_name, c.name course
             FROM contracts
-                     JOIN courses_students cs ON cs.id = contracts.course_student_id
+                     JOIN courses_students cs ON cs.id = contracts.courses_students_id
                      JOIN courses c ON c.id = cs.course_id
                      JOIN students s ON cs.student_id = s.id
                      JOIN companies ON s.company_id = companies.id;
@@ -57,7 +57,7 @@ class CommonRepo {
         const {rows} = await pool.query(`
             SELECT 'month' AS type, SUM(c2.price) AS value
             FROM contracts c
-                     JOIN courses_students cs ON cs.id = c.course_student_id
+                     JOIN courses_students cs ON cs.id = c.courses_students_id
                      JOIN courses c2 ON c2.id = cs.course_id
             WHERE c2.start_date BETWEEN CURRENT_DATE - INTERVAL '1 mon' AND CURRENT_DATE
 
@@ -65,7 +65,7 @@ class CommonRepo {
 
             SELECT 'year', SUM(c2.price)
             FROM contracts c
-                     JOIN courses_students cs ON cs.id = c.course_student_id
+                     JOIN courses_students cs ON cs.id = c.courses_students_id
                      JOIN courses c2 ON c2.id = cs.course_id
             WHERE c2.start_date BETWEEN CURRENT_DATE - INTERVAL '1 year' AND CURRENT_DATE
 
@@ -76,7 +76,7 @@ class CommonRepo {
                     FROM students
                     WHERE EXISTS(SELECT 1
                                  FROM contracts c
-                                          JOIN courses_students cs ON cs.id = c.course_student_id
+                                          JOIN courses_students cs ON cs.id = c.courses_students_id
                                           JOIN students s ON cs.student_id = s.id
                                  WHERE cs.student_id = students.id)) * 100
                        /
@@ -88,7 +88,7 @@ class CommonRepo {
             FROM students
             WHERE NOT EXISTS(SELECT 1
                              FROM contracts c
-                                      JOIN courses_students cs ON cs.id = c.course_student_id
+                                      JOIN courses_students cs ON cs.id = c.courses_students_id
                                       JOIN students s ON cs.student_id = s.id
                              WHERE cs.student_id = students.id);
         `);
