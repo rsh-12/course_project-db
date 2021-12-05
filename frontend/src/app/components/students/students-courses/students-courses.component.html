@@ -1,1 +1,32 @@
-<p>students-courses works!</p>
+<div *ngIf="loading; else content">
+    <mat-spinner class="spinner m-0" [diameter]="50"></mat-spinner>
+</div>
+
+<ng-template #content>
+    <div *ngIf="students.length; else noData" class="block">
+        <ul>
+            <li *ngFor="let d of students">
+                <div class="d-flex justify-content-between list-inline-item list-item">
+                    <div>
+                        <a [routerLink]="['/students', d.studentId]"
+                           matTooltip="Go to the student with id {{d.studentId}}"
+                           class="link-info">{{d.lastName}} {{d.firstName}}</a> -
+                        <a [routerLink]="['/courses', d.courseId]"
+                           matTooltip="Go to the course with id {{d.courseId}}"
+                           class="link-primary">{{d.course}}</a>
+                    </div>
+                    <div>
+                        <button (click)="openDialog(d.id)" class="btn btn-outline-primary btn-circle">Sign</button>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+
+    <ng-template #noData>
+        <p class="text-center">Nothing found</p>
+    </ng-template>
+
+</ng-template>

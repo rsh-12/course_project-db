@@ -1,4 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {StudentService} from "../../../services/student.service";
+import {NotificationService} from "../../../services/notification.service";
+import {CommonService} from "../../../services/common.service";
+import {MatDialog} from "@angular/material/dialog";
+import {PickDateDialogComponent} from "../../pick-date-dialog/pick-date-dialog.component";
 
 export interface StudentsWithCourses {
     // courses_students
@@ -21,25 +27,101 @@ export interface StudentsWithCourses {
 })
 export class StudentsCoursesComponent implements OnInit {
 
-    @Input() loadStudentsWithoutContracts = true;
-
+    @Input() data: string = '';
     loading = false;
-    data: StudentsWithCourses[] = [];
+    students: StudentsWithCourses[] = [];
 
-    constructor() {
+    constructor(private route: ActivatedRoute,
+                private studentService: StudentService,
+                private commonService: CommonService,
+                private dialog: MatDialog,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit(): void {
-        this.loadStudentsWithoutContracts
-            ? this.retrieveStudentsWithoutContracts()
-            : this.retrieveStudentsWithoutCertificates();
+        if (this.data === 'certificates') {
+            // get students without certificates
+
+            this.retrieveStudentsWithout(this.data);
+        } else if (this.data === 'contracts') {
+            // get students without contracts
+            this.retrieveStudentsWithout(this.data);
+        }
     }
 
-    private retrieveStudentsWithoutContracts() {
+    openDialog(id: number) {
+        let obj;
+        const currentDate = new Date();
+        this.data === 'contracts'
+            ? obj = {
+                conclusionDate: new Date(),
+                completionDate:
+                    new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), currentDate.getDate())
+            }
+            : obj = {
+                dateOfIssue: new Date()
+            };
 
+        const dialogRef = this.dialog.open(PickDateDialogComponent, {data: obj});
+
+        dialogRef.afterClosed().subscribe(res => {
+            if (StudentsCoursesComponent.hasErrors(res)) {
+                return;
+            }
+
+            this.add(id, {
+                conclusionDate: res.conclusionDate,
+                completionDate: res.completionDate,
+                dateOfIssue: res.dateOfIssue
+            });
+
+        }, err => {
+            console.log(err)
+        })
     }
 
-    private retrieveStudentsWithoutCertificates() {
-
+    private static hasErrors(res: any) {
+        if (!res) return true;
+        return (res.conclusionDate || res.completionDate) && res.conclusionDate >= res.completionDate;
     }
+
+    private retrieveStudentsWithout(data: string) {
+
+        this.loading = true;
+
+        this.studentService.findWithCoursesWithout(data).subscribe(
+            res => {
+                console.log(res);
+                this.students = res;
+            }, err => {
+                console.log(err);
+                this.notificationService.unknownError();
+            },
+            () => this.loading = false
+        );
+    }
+
+    add(id: number, dates: { conclusionDate?: Date, completionDate?: Date, dateOfIssue?: Date }): void {
+        let operation;
+        if (this.data === 'certificates') {
+            operation = this.commonService.addCertificate(id, dates);
+        } else if (this.data === 'contracts') {
+            operation = this.commonService.addContract(id, dates);
+        } else return;
+
+        this.loading = true;
+
+        operation.subscribe(res => {
+                console.log(res);
+                this.notificationService.openSnackBar('Success');
+                window.location.reload();
+            }, err => {
+                // console.log(err);
+                console.log(err.error)
+                this.notificationService.openSnackBar(err.error.message);
+                this.loading = false;
+            }, () => this.loading = false
+        );
+    }
+
 }
