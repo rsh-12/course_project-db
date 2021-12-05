@@ -97,6 +97,18 @@ class CommonRepo {
 
         return rows;
     }
+
+    static async insertCertificate(id, dateOfIssue) {
+        const {rows} = await pool.query(`
+                    INSERT INTO certificates(courses_students_id, date_of_issue)
+                    VALUES ($1, $2)
+                    RETURNING *;`,
+            [id, dateOfIssue]);
+
+        console.log(`> CommonRepo.insertCertificate(): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
 }
 
 module.exports = CommonRepo;
