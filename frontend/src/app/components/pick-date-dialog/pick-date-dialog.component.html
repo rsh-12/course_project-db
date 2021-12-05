@@ -1,0 +1,45 @@
+<div mat-dialog-content>
+    <!-- for contracts -->
+    <div *ngIf="data.conclusionDate && data.completionDate">
+        <p>Please choose the date of conclusion and completion of the contract</p>
+
+        <div style="max-width: 400px;" class="m-5">
+        <span class="text-danger">In order for the request to be sent,
+            the date of conclusion of the contract must be less than the date of its completion</span>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a conclusion date</mat-label>
+            <input required matInput [matDatepicker]="picker" [(ngModel)]="data.conclusionDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>choose a completion date</mat-label>
+            <input required matInput [matDatepicker]="picker2" [(ngModel)]="data.completionDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+
+    <!-- for certificates -->
+    <div *ngIf="data.dateOfIssue">
+        <p>Please choose the date of issue of the certificate</p>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input required matInput [matDatepicker]="picker3" [(ngModel)]="data.dateOfIssue">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Submit</button>
+</div>
