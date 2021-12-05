@@ -48,6 +48,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import { StudentsCoursesComponent } from './components/students/students-courses/students-courses.component';
+import { PickDateDialogComponent } from './components/pick-date-dialog/pick-date-dialog.component';
 
 @NgModule({
     declarations: [
@@ -69,7 +70,8 @@ import { StudentsCoursesComponent } from './components/students/students-courses
         DialogDataComponent,
         CompanyDetailsComponent,
         StudentDetailsComponent,
-        StudentsCoursesComponent
+        StudentsCoursesComponent,
+        PickDateDialogComponent
     ],
     imports: [
         BrowserModule,
