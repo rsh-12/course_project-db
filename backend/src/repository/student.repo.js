@@ -84,7 +84,7 @@ class StudentRepo {
             FROM students
             WHERE NOT EXISTS(SELECT 1
                              FROM contracts
-                                      JOIN courses_students cs ON contracts.course_student_id = cs.id
+                                      JOIN courses_students cs ON contracts.courses_students_id = cs.id
                                       JOIN students s ON cs.student_id = s.id
                              WHERE students.id = s.id
                 );
