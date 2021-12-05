@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NotificationService} from "../../../services/notification.service";
+import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 
 @Component({
     selector: 'app-contracts-list',
@@ -15,6 +16,7 @@ export class ContractsListComponent implements OnInit {
 
     contracts: Contract[] = [];
     loading = false;
+    loadStudents = false;
     dataSource!: MatTableDataSource<Contract>;
     displayedColumns: string[] = ['company', 'lastName', 'firstName', 'course', 'conclusion', 'action'];
 
@@ -78,4 +80,8 @@ export class ContractsListComponent implements OnInit {
         );
     }
 
+
+    lol($event: Event) {
+
+    }
 }
