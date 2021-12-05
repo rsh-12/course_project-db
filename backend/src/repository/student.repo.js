@@ -193,6 +193,27 @@ class StudentRepo {
         return toCamelCase(rows);
     }
 
+    static async findWithCoursesWithoutCertificates() {
+        const {rows} = await pool.query(`
+            SELECT cs.id  AS id,
+                   s.id   AS student_id,
+                   s.last_name,
+                   s.first_name,
+                   c.id   AS course_id,
+                   c.name AS course
+            FROM courses_students cs
+                     JOIN courses c ON c.id = cs.course_id
+                     JOIN students s ON s.id = cs.student_id
+            WHERE NOT EXISTS(SELECT courses_students_id
+                             FROM certificates
+                             WHERE certificates.courses_students_id = cs.id);
+        `);
+
+        console.log(`> StudentRepo.findWithCoursesWithoutCertificates(): ${rows.length}`);
+
+        return toCamelCase(rows);
+    }
+
 }
 
 module.exports = StudentRepo;
