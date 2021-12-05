@@ -16,6 +16,7 @@ export class CertificatesListComponent implements OnInit {
     loading = false;
     displayedColumns: string[] = ['studentLastName', 'course', 'dateOfIssue', 'action'];
     dataSource!: MatTableDataSource<CertificateInfo>;
+    loadStudents = false;
 
     constructor(private commonService: CommonService,
                 private notificationService: NotificationService) {

@@ -1,9 +1,11 @@
 <div class="spacer-pt-10"></div>
 <h1 class="text-center">Certificates</h1>
 
-<div style="float: right;" class="mb-3" matTooltip="Sign a new contract">
-    <button class="btn btn-outline-primary btn-circle">
-        <i class="fas fa-plus"></i>
+<div style="float: right;" class="mb-3">
+    <button
+            (click)="loadStudents = !loadStudents"
+            class="btn btn-outline-primary btn-circle">
+        <i [ngClass]="loadStudents ? 'fas fa-minus':'fas fa-plus'"></i>
     </button>
 </div>
 
@@ -72,6 +74,9 @@
                            aria-label="Select page of periodic elements">
             </mat-paginator>
         </div>
+
+        <hr>
+        <app-students-courses *ngIf="loadStudents" [data]="'certificates'"></app-students-courses>
 
     </div>
 
