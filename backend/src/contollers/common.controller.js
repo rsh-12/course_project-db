@@ -94,3 +94,41 @@ exports.downloadCertificate = async (req, res) => {
 
     await res.download(file);
 }
+
+exports.addCertificate = async (req, res) => {
+    const {id, dates} = req.body;
+    if (!id || !dates.dateOfIssue) {
+        return res.status(400).send({message: 'ID or date of issue not found'});
+    }
+
+    const certificate = await CommonRepo.insertCertificate(id, dates.dateOfIssue);
+    if (certificate) {
+        cache.flushAll();
+
+        return res.status(201).send({message: 'Success'});
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+}
+
+exports.addContract = async (req, res) => {
+    const {id, dates} = req.body;
+    if (!id || !dates.conclusionDate || !dates.completionDate) {
+        return res.status(400).send({message: 'ID not provided'});
+    }
+
+    await CommonRepo.insertContract(id, dates.conclusionDate, dates.completionDate)
+        .then(result => {
+            if (result) {
+                cache.flushAll();
+
+                return res.status(201).send({message: 'Success'});
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+            const message = err.message;
+
+            return res.status(500).send({message});
+        });
+}
