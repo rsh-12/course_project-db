@@ -102,11 +102,11 @@ export class CommonService {
     }
 
     addCertificate(id: number | string, dates: { conclusionDate?: Date; completionDate?: Date; }) {
-        return this.http.post(API_URL + 'certificates', {id, dates}, {responseType: 'text'});
+        return this.http.post(API_URL + 'certificates', {id, dates});
     }
 
 
-    addContract(id: number, dates: { dateOfIssue?: Date }) {
-        return this.http.post(API_URL + 'contracts', {id, dates}, {responseType: 'text'});
+    addContract(id: number | string, dates: { dateOfIssue?: Date }) {
+        return this.http.post(API_URL + 'contracts', {id, dates});
     }
 }
