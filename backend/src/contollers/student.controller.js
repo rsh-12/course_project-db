@@ -148,13 +148,28 @@ exports.update = async (req, res) => {
 // get students without contracts or certificates
 exports.getStudentsWithCourses = async (req, res) => {
     let students;
+    const keyContracts = 'students-courses-without-contracts';
+    const keyCertificates = 'students-courses-without-certificates';
 
-    const {content} = req.query;
-    if (content === 'contracts') {
+    const {data} = req.params;
+    if (data === 'contracts') {
+        const sent = sendFromCache(res, keyContracts);
+        if (sent) return;
+
         students = await StudentRepo.findWithCoursesWithoutContracts();
+        console.log('Students with courses without contracts from DB');
+        cache.set(keyContracts, students, keys.TTL);
+
         return res.send(students);
-    } else if (content === 'certificates') {
+
+    } else if (data === 'certificates') {
+        const sent = sendFromCache(res, keyCertificates);
+        if (sent) return;
+
         students = await StudentRepo.findWithCoursesWithoutCertificates();
+        console.log('Students with courses without certificates from DB');
+        cache.set(keyCertificates, students, keys.TTL);
+
         return res.send(students);
     }
 
