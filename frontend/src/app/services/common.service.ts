@@ -101,12 +101,12 @@ export class CommonService {
         this.router.navigate([url]);
     }
 
-    addCertificate(id: number | string) {
-        return this.http.post(API_URL + 'certificates', id, {responseType: 'text'});
+    addCertificate(id: number | string, dates: { conclusionDate?: Date; completionDate?: Date; }) {
+        return this.http.post(API_URL + 'certificates', {id, dates}, {responseType: 'text'});
     }
 
 
-    addContract(id: number) {
-        return this.http.post(API_URL + 'contracts', id, {responseType: 'text'});
+    addContract(id: number, dates: { dateOfIssue?: Date }) {
+        return this.http.post(API_URL + 'contracts', {id, dates}, {responseType: 'text'});
     }
 }
