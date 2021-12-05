@@ -37,8 +37,21 @@ module.exports = function (app) {
     );
 
     app.get("/api/certificates/download/:id",
-        [deleteImage],
+        [
+            authJwt.verifyToken,
+            deleteImage
+        ],
         controller.downloadCertificate
+    );
+
+    app.post("/api/certificates",
+        [authJwt.verifyToken],
+        controller.addCertificate
+    );
+
+    app.post("/api/contracts",
+        [authJwt.verifyToken],
+        controller.addContract
     );
 
 }
