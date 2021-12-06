@@ -78,6 +78,7 @@ export class CertificatesListComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.successfullyDeleted();
+                this.retrieveCertificates();
             }, err => {
                 console.log(err);
                 this.notificationService.unknownError();
