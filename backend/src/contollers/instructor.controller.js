@@ -1,6 +1,7 @@
 const InstructorRepo = require("../repository/instructor.repo");
 const cache = require("../config/cache.config");
 const keys = require('../keys');
+const {validateRequest} = require("../middleware");
 
 
 exports.getAll = async (req, res) => {
@@ -23,7 +24,7 @@ exports.getAll = async (req, res) => {
     }
 
     return res.status(404).send({message: 'Instructors not found'});
-}
+};
 
 exports.getByCourse = async (req, res) => {
     if (req.query.except) {
@@ -48,7 +49,7 @@ exports.getByCourse = async (req, res) => {
 
     return res.send(courseRelatedInstructors);
 
-}
+};
 
 exports.moveInstructors = async (req, res) => {
     const {ids} = req.body;
@@ -68,7 +69,7 @@ exports.moveInstructors = async (req, res) => {
 
     cache.flushAll();
     return res.sendStatus(200);
-}
+};
 
 exports.delete = async (req, res) => {
     const {id} = req.params;
@@ -80,8 +81,31 @@ exports.delete = async (req, res) => {
     cache.flushAll();
 
     return res.send(instructor);
-}
+};
 
+exports.getOne = async (req, res) => {
+    const {id} = req.params;
+    const instructor = await InstructorRepo.findById(id);
+    if (instructor) {
+        return res.send(instructor);
+    }
+
+    return res.status(404).send({message: 'Instructor not found'});
+};
+
+exports.update = async (req, res) => {
+    const {id} = req.params;
+    const {firstName, lastName, education, degree} = req.body;
+    validateRequest.allArgsProvided(firstName, lastName, education, degree);
+
+    const instructor = await InstructorRepo.update(id, firstName, lastName, education, degree);
+    if (instructor) {
+        cache.flushAll();
+        return res.send({message: 'Success'});
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+};
 
 function sendFromCache(res, key) {
     const data = cache.get(key);
