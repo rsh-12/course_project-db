@@ -15,6 +15,7 @@ import {CertificatesListComponent} from "./components/certificates/certificates-
 import {InstructorsListComponent} from "./components/instructors/instructors-list/instructors-list.component";
 import {CompanyDetailsComponent} from "./components/companies/company-details/company-details.component";
 import {StudentDetailsComponent} from "./components/students/student-details/student-details.component";
+import {InstructorDetailsComponent} from "./components/instructors/instructor-details/instructor-details.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
@@ -37,8 +38,8 @@ const routes: Routes = [
     // {path: 'certificates/:id', component: , canActivate: [AuthGuardService]},
     // {path: 'certificates/add', component: , canActivate: [AuthGuardService]},
     {path: 'instructors', component: InstructorsListComponent, canActivate: [AuthGuardService]},
-    // {path: 'instructors/:id', component: , canActivate: [AuthGuardService]},
-    // {path: 'instructors/add', component: , canActivate: [AuthGuardService]},
+    {path: 'instructors/:id', component: InstructorDetailsComponent, canActivate: [AuthGuardService]},
+    {path: 'instructors/add', component: InstructorDetailsComponent, canActivate: [AuthGuardService]},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '404', redirectTo: 'home'},
     {path: '**', redirectTo: 'home'},
