@@ -55,7 +55,7 @@ class CommonRepo {
 
     static async findContractConclusionInfoAndIncome() {
         const {rows} = await pool.query(`
-            SELECT 'month' AS type, SUM(c2.price) AS value
+            SELECT 'month' AS type, COALESCE(SUM(c2.price), 0) AS value
             FROM contracts c
                      JOIN courses_students cs ON cs.id = c.courses_students_id
                      JOIN courses c2 ON c2.id = cs.course_id
@@ -63,7 +63,7 @@ class CommonRepo {
 
             UNION ALL
 
-            SELECT 'year', SUM(c2.price)
+            SELECT 'year', COALESCE(SUM(c2.price), 0)
             FROM contracts c
                      JOIN courses_students cs ON cs.id = c.courses_students_id
                      JOIN courses c2 ON c2.id = cs.course_id
