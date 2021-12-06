@@ -133,6 +133,19 @@ class CommonRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async deleteContract(id) {
+        const {rows} = await pool.query(`
+            DELETE
+            FROM contracts
+            WHERE id = $1
+            RETURNING *;
+        `, [id]);
+
+        console.log(`> CommonRepo.deleteContract(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
 }
 
 module.exports = CommonRepo;
