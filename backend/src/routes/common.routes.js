@@ -44,6 +44,11 @@ module.exports = function (app) {
         controller.downloadCertificate
     );
 
+    app.delete("/api/certificates/:id",
+        [authJwt.verifyToken],
+        controller.deleteCertificate
+    );
+
     app.post("/api/certificates",
         [authJwt.verifyToken],
         controller.addCertificate
