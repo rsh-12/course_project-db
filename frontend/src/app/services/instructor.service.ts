@@ -41,4 +41,13 @@ export class InstructorService {
     delete(id: number): Observable<any> {
         return this.http.delete(API_URL + id);
     }
+
+    findById(id: number | string): Observable<Instructor> {
+        return this.http.get<Instructor>(API_URL + id);
+    }
+
+    update(id: number | string, data: any): Observable<Object> {
+        return this.http.put(API_URL + id, data);
+    }
+
 }
