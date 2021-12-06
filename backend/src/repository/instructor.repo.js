@@ -103,6 +103,32 @@ class InstructorRepo {
 
         return toCamelCase(rows);
     }
+
+    static async findById(id) {
+        const {rows} = await pool.query(`SELECT *
+                                         FROM instructors
+                                         WHERE id = $1;`, [id]);
+
+        console.log(`> InstructorRepo.findById(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
+    static async update(id, firstName, lastName, education, degree) {
+        const {rows} = await pool.query(`UPDATE instructors
+                                         SET first_name = $2,
+                                             last_name  = $3,
+                                             education  = $4,
+                                             degree     = $5
+                                         WHERE id = $1
+                                         RETURNING *;`,
+            [id, firstName, lastName, education, degree]);
+
+        console.log(`> InstructorRepo.update(${id}, ...data): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
 }
 
 module.exports = InstructorRepo
