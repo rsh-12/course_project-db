@@ -1,0 +1,155 @@
+<!-- spinner -->
+<div *ngIf="loading; else content">
+    <mat-spinner class="spinner m-0" [diameter]="100"></mat-spinner>
+</div>
+<!-- spinner -->
+
+
+<ng-template #content>
+    <div class="row">
+        <div class="spacer-pt-30"></div>
+
+
+        <!-- left side -->
+        <div class="col-md-6">
+            <h3 class="text-center">Instructor</h3>
+
+            <!-- form -->
+            <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+                <!-- instructor's lastName -->
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                        <mat-label>Last name</mat-label>
+                        <input matInput #lastName
+                               required
+                               minlength="2"
+                               maxlength="30"
+                               formControlName="lastName">
+
+                        <mat-hint align="end">{{lastName.value?.length || 0}}/30</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.lastName.errors">
+                            <div *ngIf="f.lastName.errors.minlength">Min length is 2 characters</div>
+                            <div *ngIf="f.lastName.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.lastName.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                <!-- instructor's lastName -->
+
+
+                <!-- instructor's firstName -->
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                        <mat-label>First name</mat-label>
+                        <input matInput #firstName
+                               required
+                               minlength="2"
+                               maxlength="30"
+                               formControlName="firstName">
+
+                        <mat-hint align="end">{{firstName.value?.length || 0}}/30</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.firstName.errors">
+                            <div *ngIf="f.firstName.errors.minlength">Min length is 2 characters</div>
+                            <div *ngIf="f.firstName.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.firstName.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                <!-- instructor's firstName -->
+
+
+                <!---->
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                        <mat-label>Education</mat-label>
+                        <input matInput #education
+                               required
+                               minlength="10"
+                               maxlength="150"
+                               formControlName="education">
+
+                        <mat-hint align="end">{{education.value?.length || 0}}/150</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.education.errors">
+                            <div *ngIf="f.education.errors.minlength">Min length is 10 characters</div>
+                            <div *ngIf="f.education.errors.maxlength">Max length is 150 characters</div>
+                            <div *ngIf="f.education.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+                <!---->
+
+                <div class="form-group mb-4">
+                    <mat-form-field hintLabel="Max 30 characters" appearance="outline" class="w-100">
+                        <mat-label>Degree</mat-label>
+                        <input matInput #degree
+                               required
+                               minlength="2"
+                               maxlength="30"
+                               formControlName="degree">
+
+                        <mat-hint align="end">{{degree.value?.length || 0}}/30</mat-hint>
+
+                        <mat-error *ngIf="submitted && f.degree.errors">
+                            <div *ngIf="f.degree.errors.minlength">Min length is 2 characters</div>
+                            <div *ngIf="f.degree.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.degree.errors.pattern">Please, remove the unnecessary space symbol</div>
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+
+                <!-- buttons -->
+                <div class="form-buttons">
+                    <div>
+                        <!-- submit -->
+                        <button matTooltip="Submit"
+                                type="submit" class="btn btn-outline-primary btn-circle">
+                            <i class="far fa-save"></i>
+                        </button>
+                        <!-- submit -->
+                    </div>
+
+                    <div>
+                        <!-- reset -->
+                        <button matTooltip="Reset"
+                                class="btn btn-outline-danger btn-circle" type="button" (click)="onReset()">
+                            <i class="fas fa-broom"></i>
+                        </button>
+                        <!-- reset -->
+                    </div>
+
+                    <div>
+                        <!-- go to instructors -->
+                        <button matTooltip="Go to instructors"
+                                class="btn btn-outline-dark btn-circle" type="button" (click)="back()">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <!-- go to instructors -->
+                    </div>
+                </div>
+                <!-- buttons -->
+
+            </form>
+            <!-- form -->
+
+
+        </div>
+        <!-- left side -->
+
+
+        <!-- right side -->
+
+        <!-- right side -->
+
+
+    </div>
+</ng-template>
