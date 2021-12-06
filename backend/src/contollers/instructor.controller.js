@@ -107,6 +107,19 @@ exports.update = async (req, res) => {
     return res.status(500).send({message: 'Something went wrong'});
 };
 
+exports.add = async (req, res) => {
+    const {firstName, lastName, education, degree} = req.body;
+    validateRequest.allArgsProvided(firstName, lastName, education, degree);
+
+    const instructor = await InstructorRepo.add(firstName, lastName, education, degree);
+    if (instructor) {
+        cache.flushAll();
+        return res.status(201).send({message: 'Success'});
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+};
+
 function sendFromCache(res, key) {
     const data = cache.get(key);
 

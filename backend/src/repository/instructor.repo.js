@@ -129,6 +129,18 @@ class InstructorRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async add(firstName, lastName, education, degree) {
+        const {rows} = await pool.query(`
+                    INSERT INTO instructors(first_name, last_name, education, degree)
+                    VALUES ($1, $2, $3, $4)
+                    RETURNING *;`,
+            [firstName, lastName, education, degree]);
+
+        console.log(`> InstructorRepo.add(...data): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
 }
 
 module.exports = InstructorRepo
