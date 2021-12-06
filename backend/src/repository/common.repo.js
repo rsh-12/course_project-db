@@ -120,6 +120,19 @@ class CommonRepo {
         return toCamelCase(rows)[0];
     }
 
+    static async deleteCertificate(id) {
+        const {rows} = await pool.query(`
+            DELETE
+            FROM certificates
+            WHERE id = $1
+            RETURNING *;
+        `, [id]);
+
+        console.log(`> CommonRepo.deleteCertificate(${id}): ${rows.length}`);
+
+        return toCamelCase(rows)[0];
+    }
+
 }
 
 module.exports = CommonRepo;
