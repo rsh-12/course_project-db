@@ -50,4 +50,8 @@ export class InstructorService {
         return this.http.put(API_URL + id, data);
     }
 
+    add(data: any): Observable<Object> {
+        return this.http.post(API_URL, data);
+    }
+
 }
