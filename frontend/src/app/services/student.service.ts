@@ -4,8 +4,9 @@ import {Observable} from "rxjs";
 import {Student} from "../common/student";
 import {CommonData} from "../common/commonData";
 import {StudentsWithCourses} from "../components/students/students-courses/students-courses.component";
+import {environment} from "../../environments/environment";
 
-const API_URL = 'http://localhost:8080/api/students/';
+const API_URL = environment.API_URL + 'students/';
 
 @Injectable({
     providedIn: 'root'

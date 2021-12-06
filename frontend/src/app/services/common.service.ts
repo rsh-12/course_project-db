@@ -10,8 +10,9 @@ import {InstructorService} from "./instructor.service";
 import {StudentService} from "./student.service";
 import {FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = environment.API_URL;
 
 @Injectable({
     providedIn: 'root'

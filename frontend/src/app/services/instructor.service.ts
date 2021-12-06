@@ -3,8 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Instructor} from "../common/instructor";
 import {CommonData} from "../common/commonData";
+import {environment} from "../../environments/environment";
 
-const API_URL = 'http://localhost:8080/api/instructors/';
+const API_URL = environment.API_URL + 'instructors/';
 
 @Injectable({
     providedIn: 'root'
