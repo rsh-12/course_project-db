@@ -10,6 +10,8 @@ module.exports = {
     DB_USER: process.env.DB_USER,
     DB_PASSWORD: process.env.DB_PASSWORD,
 
+    FRONTEND_URL: process.env.FRONTEND_URL,
+
     // CACHE
     TTL: 43200, // 12(h) * 60(m) * 60(s)
 
