@@ -12,6 +12,16 @@ module.exports = app => {
         controller.getAll
     );
 
+    app.get("/api/instructors/:id",
+        [authJwt.verifyToken],
+        controller.getOne
+    );
+
+    app.put("/api/instructors/:id",
+        [authJwt.verifyToken],
+        controller.update
+    );
+
     app.get("/api/instructors/course/:id",
         [authJwt.verifyToken],
         controller.getByCourse
