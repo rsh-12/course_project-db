@@ -11,7 +11,7 @@ exports.signUp = async (req, res) => {
     const user = await UserRepo.insert(username, encryptedPassword);
 
     return user
-        ? res.send(user)
+        ? res.send({message: 'Success'})
         : res.sendStatus(500);
 };
 
