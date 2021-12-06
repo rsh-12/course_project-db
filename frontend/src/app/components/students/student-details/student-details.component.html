@@ -109,11 +109,12 @@
                 <div class="form-group mb-4">
                     <mat-form-field appearance="outline" hintLabel="Max 20 characters">
                         <mat-label>Email</mat-label>
-                        <input matInput
+                        <input #email
+                               matInput
                                required
                                formControlName="email">
 
-                        <mat-hint align="end">{{phone.value?.length || 0}}/20</mat-hint>
+                        <mat-hint align="end">{{email.value?.length || 0}}/20</mat-hint>
 
                         <mat-error *ngIf="submitted && f.email.errors">
                             <div *ngIf="f.email.errors.email">Invalid email address</div>
