@@ -29,7 +29,7 @@ exports.whoAmI = async (req, res) => {
     return user
         ? res.send(user)
         : res.sendStatus(404);
-}
+};
 
 exports.contracts = async (req, res) => {
     let contracts = cache.get('contracts');
@@ -48,7 +48,7 @@ exports.contracts = async (req, res) => {
     }
 
     return res.status(404).send({message: 'Contracts not found or something went wrong'});
-}
+};
 
 exports.income = async (req, res) => {
     let income = cache.get('income');
@@ -63,7 +63,7 @@ exports.income = async (req, res) => {
     cache.set('income', income, keys.TTL);
 
     return res.send(income);
-}
+};
 
 exports.getCertificates = async (req, res) => {
     let certificates = cache.get('certificates');
@@ -79,7 +79,7 @@ exports.getCertificates = async (req, res) => {
     cache.set('certificates', certificates, keys.TTL);
 
     return res.send(certificates);
-}
+};
 
 exports.downloadCertificate = async (req, res) => {
     const {id} = req.params;
@@ -93,7 +93,7 @@ exports.downloadCertificate = async (req, res) => {
     const file = await createCertificate(text);
 
     await res.download(file);
-}
+};
 
 exports.addCertificate = async (req, res) => {
     const {id, dates} = req.body;
@@ -109,7 +109,7 @@ exports.addCertificate = async (req, res) => {
     }
 
     return res.status(500).send({message: 'Something went wrong'});
-}
+};
 
 exports.addContract = async (req, res) => {
     const {id, dates} = req.body;
@@ -131,16 +131,26 @@ exports.addContract = async (req, res) => {
 
             return res.status(500).send({message});
         });
-}
+};
 
 exports.deleteCertificate = async (req, res) => {
     const {id} = req.params;
     const certificate = await CommonRepo.deleteCertificate(id);
     if (certificate) {
         cache.flushAll();
-
         return res.status(204).send({message: 'Success'});
     }
 
     return res.status(500).send({message: 'Something went wrong'});
-}
+};
+
+exports.deleteContract = async (req, res) => {
+    const {id} = req.params;
+    const contract = await CommonRepo.deleteContract(id);
+    if (contract) {
+        cache.flushAll();
+        return res.status(204).send({message: 'Success'});
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+};
