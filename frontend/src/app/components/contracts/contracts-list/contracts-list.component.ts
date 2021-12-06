@@ -71,6 +71,7 @@ export class ContractsListComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.successfullyDeleted();
+                this.retrieveContracts();
             }, err => {
                 console.log(err);
                 this.notificationService.unknownError();
@@ -80,8 +81,4 @@ export class ContractsListComponent implements OnInit {
         );
     }
 
-
-    lol($event: Event) {
-
-    }
 }
