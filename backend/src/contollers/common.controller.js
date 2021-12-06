@@ -132,3 +132,15 @@ exports.addContract = async (req, res) => {
             return res.status(500).send({message});
         });
 }
+
+exports.deleteCertificate = async (req, res) => {
+    const {id} = req.params;
+    const certificate = await CommonRepo.deleteCertificate(id);
+    if (certificate) {
+        cache.flushAll();
+
+        return res.status(204).send({message: 'Success'});
+    }
+
+    return res.status(500).send({message: 'Something went wrong'});
+}
