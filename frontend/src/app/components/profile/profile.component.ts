@@ -46,4 +46,17 @@ export class ProfileComponent implements OnInit {
     private deleteAccount() {
         this.notificationService.openSnackBar('Not implemented');
     }
+
+    flushAll() {
+        this.commonService.clearCache().subscribe(
+            res => {
+                console.log(res);
+                this.notificationService.openSnackBar('Success');
+            }, err => {
+                console.log(err);
+                this.notificationService.unknownError();
+            }
+        );
+    }
+
 }
