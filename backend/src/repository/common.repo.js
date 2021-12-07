@@ -80,7 +80,7 @@ class CommonRepo {
                                           JOIN students s ON cs.student_id = s.id
                                  WHERE cs.student_id = students.id)) * 100
                        /
-                   (SELECT COUNT(*) FROM students) AS percentages
+		(SELECT GREATEST(COUNT(*), 1) FROM students) AS percentages
 
             UNION ALL
 
