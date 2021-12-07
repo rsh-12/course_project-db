@@ -64,4 +64,9 @@ module.exports = function (app) {
         controller.addContract
     );
 
+    app.delete("/api/caches",
+        [authJwt.verifyToken],
+        controller.clearCache
+    );
+
 }
