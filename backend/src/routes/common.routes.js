@@ -38,7 +38,7 @@ module.exports = function (app) {
 
     app.get("/api/certificates/download/:id",
         [
-            authJwt.verifyToken,
+            // authJwt.verifyToken,
             deleteImage
         ],
         controller.downloadCertificate
