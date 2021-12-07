@@ -154,3 +154,8 @@ exports.deleteContract = async (req, res) => {
 
     return res.status(500).send({message: 'Something went wrong'});
 };
+
+exports.clearCache = (req, res) => {
+    cache.flushAll();
+    return res.send({message: 'Cache cleared successfully'});
+}
