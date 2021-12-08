@@ -1,22 +1,17 @@
 const UserRepo = require('../repository/user.repo');
 const CommonRepo = require("../repository/common.repo");
-const cache = require('../config/cache.config');
 const {createCertificate} = require("../service/cerfificate.creator");
-const keys = require('../keys');
+const cachingService = require("../service/caching.service");
+const {keys, nodes} = cachingService;
 
 exports.statistics = async (req, res) => {
-    let totalRecords = cache.get('statistics');
+    if (cachingService.sendFromCache(keys.statistics, res)) return;
 
-    if (!!totalRecords) {
-        console.log('statistics from cache');
-        return res.send(totalRecords);
-    }
-
-    totalRecords = await CommonRepo.findStatistics();
-
+    const totalRecords = await CommonRepo.findStatistics();
     if (totalRecords) {
-        cache.set('statistics', totalRecords, keys.TTL);
+        cachingService.set(keys.statistics, totalRecords);
         console.log('statistics from DB');
+
         return res.send(totalRecords);
     }
 
@@ -32,18 +27,13 @@ exports.whoAmI = async (req, res) => {
 };
 
 exports.contracts = async (req, res) => {
-    let contracts = cache.get('contracts');
+    if (cachingService.sendFromCache(keys.contracts, res)) return;
 
-    if (!!contracts) {
-        console.log('contracts from cache');
-        return res.send(contracts);
-    }
-
-    contracts = await CommonRepo.findContracts();
-
+    const contracts = await CommonRepo.findContracts();
     if (contracts) {
-        cache.set('contracts', contracts, keys.TTL);
+        cachingService.set(keys.contracts, contracts);
         console.log('contracts from DB');
+
         return res.send(contracts);
     }
 
@@ -51,32 +41,21 @@ exports.contracts = async (req, res) => {
 };
 
 exports.income = async (req, res) => {
-    let income = cache.get('income');
+    if (cachingService.sendFromCache(keys.income, res)) return;
 
-    if (!!income) {
-        console.log('income from cache');
-        return res.send(income);
-    }
-
-    income = await CommonRepo.findContractConclusionInfoAndIncome();
+    const income = await CommonRepo.findContractConclusionInfoAndIncome();
     console.log('income from DB');
-    cache.set('income', income, keys.TTL);
+    cachingService.set(keys.income, income);
 
     return res.send(income);
 };
 
 exports.getCertificates = async (req, res) => {
-    let certificates = cache.get('certificates');
+    if (cachingService.sendFromCache(keys.certificates, res)) return;
 
-    if (!!certificates) {
-        console.log('certificates from cache');
-        return res.send(certificates);
-    }
-
-    certificates = await CommonRepo.findCertificates();
-
+    const certificates = await CommonRepo.findCertificates();
     console.log('certificates from DB');
-    cache.set('certificates', certificates, keys.TTL);
+    cachingService.set(keys.certificates, certificates);
 
     return res.send(certificates);
 };
@@ -103,8 +82,7 @@ exports.addCertificate = async (req, res) => {
 
     const certificate = await CommonRepo.insertCertificate(id, dates.dateOfIssue);
     if (certificate) {
-        cache.flushAll();
-
+        cachingService.remove(nodes.certificates);
         return res.status(201).send({message: 'Success'});
     }
 
@@ -120,24 +98,23 @@ exports.addContract = async (req, res) => {
     await CommonRepo.insertContract(id, dates.conclusionDate, dates.completionDate)
         .then(result => {
             if (result) {
-                cache.flushAll();
-
+                cachingService.remove(nodes.contracts);
                 return res.status(201).send({message: 'Success'});
             }
         })
         .catch(err => {
             console.log(err.message);
             const message = err.message;
-
             return res.status(500).send({message});
         });
 };
 
 exports.deleteCertificate = async (req, res) => {
     const {id} = req.params;
+
     const certificate = await CommonRepo.deleteCertificate(id);
     if (certificate) {
-        cache.flushAll();
+        cachingService.remove(nodes.certificates);
         return res.status(204).send({message: 'Success'});
     }
 
@@ -146,9 +123,10 @@ exports.deleteCertificate = async (req, res) => {
 
 exports.deleteContract = async (req, res) => {
     const {id} = req.params;
+
     const contract = await CommonRepo.deleteContract(id);
     if (contract) {
-        cache.flushAll();
+        cachingService.remove(nodes.contracts);
         return res.status(204).send({message: 'Success'});
     }
 
@@ -156,6 +134,6 @@ exports.deleteContract = async (req, res) => {
 };
 
 exports.clearCache = (req, res) => {
-    cache.flushAll();
-    return res.send({message: 'Cache cleared successfully'});
+    cachingService.flushAll();
+    return res.send({message: 'Success'});
 }
