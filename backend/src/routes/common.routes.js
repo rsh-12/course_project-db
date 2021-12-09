@@ -69,4 +69,9 @@ module.exports = function (app) {
         controller.clearCache
     );
 
+    app.get("/api/prices",
+        [authJwt.verifyToken],
+        controller.getPriceInfo
+    );
+
 }
