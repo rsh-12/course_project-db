@@ -1,25 +1,22 @@
 const CompanyRepo = require('../repository/company.repo');
-const cache = require('../config/cache.config');
-const keys = require('../keys');
+const cachingService = require("../service/caching.service");
+const {keys, nodes} = cachingService;
 
 exports.getAll = async (req, res) => {
+    // searching by name
     const {name} = req.query;
     if (!!name) {
         const companiesByName = await CompanyRepo.findByName(name);
         return res.send(companiesByName);
     }
 
-    let companies = cache.get('companies');
-    if (!!companies) {
-        console.log('companies from cache');
-        return res.send(companies);
-    }
+    if (cachingService.sendFromCache(keys.companies, res)) return;
 
-    companies = await CompanyRepo.find();
-
+    const companies = await CompanyRepo.find();
     if (companies) {
-        cache.set('companies', companies, keys.TTL);
+        cachingService.set(keys.companies, companies);
         console.log('companies from DB');
+
         return res.send(companies);
     }
 
@@ -28,10 +25,10 @@ exports.getAll = async (req, res) => {
 
 exports.delete = async (req, res) => {
     const {id} = req.params;
+
     const company = await CompanyRepo.delete(id);
     if (company) {
-        cache.flushAll();
-
+        cachingService.remove(nodes.companies);
         return res.sendStatus(204);
     }
 
@@ -46,8 +43,7 @@ exports.add = async (req, res) => {
 
     const company = await CompanyRepo.insert(name, description);
     if (company) {
-        cache.flushAll();
-
+        cachingService.remove(nodes.companies);
         return res.send(company);
     }
 
@@ -67,14 +63,14 @@ exports.getOne = async (req, res) => {
 exports.update = async (req, res) => {
     const {id} = req.params;
     const {name, description} = req.body;
+
     if (!name || !description || !id) {
         return res.sendStatus(400).send({message: 'Name and description are required'})
     }
 
     const company = await CompanyRepo.update(id, name, description);
     if (company) {
-        cache.flushAll();
-
+        cachingService.remove(nodes.companies);
         return res.send(company);
     }
 
