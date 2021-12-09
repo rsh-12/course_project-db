@@ -2,6 +2,7 @@ const UserRepo = require('../repository/user.repo');
 const CommonRepo = require("../repository/common.repo");
 const {createCertificate} = require("../service/cerfificate.creator");
 const cachingService = require("../service/caching.service");
+const CourseRepo = require("../repository/course.repo");
 const {keys, nodes} = cachingService;
 
 exports.statistics = async (req, res) => {
@@ -136,4 +137,16 @@ exports.deleteContract = async (req, res) => {
 exports.clearCache = (req, res) => {
     cachingService.flushAll();
     return res.send({message: 'Success'});
-}
+};
+
+exports.getPriceInfo = async (req, res) => {
+    const priceInfo = await CourseRepo.priceInfo();
+    if (!priceInfo) {
+        return res.status(500).send({message: 'Something went wrong'});
+    }
+
+    const updatedPriceInfo = Object.fromEntries(Object.entries(priceInfo)
+        .map(([k, v]) => [k, Math.round(Number(v))]));
+
+    return res.send(updatedPriceInfo);
+};
