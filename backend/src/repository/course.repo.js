@@ -38,10 +38,9 @@ class CourseRepo {
     }
 
     static async insert(name, category, description, hours, startDate, endDate, price) {
-        const {rows} = await pool.query(
-            `INSERT INTO courses(name, category, description, hours, start_date, end_date, price)
-             VALUES ($1, $2, $3, $4, $5, $6, $7) returning *;`,
-            [name, category, description, hours, startDate, endDate, price]);
+        const {rows} = await pool.query(`INSERT INTO courses(name, category, description, hours, start_date, end_date, price)
+                                         VALUES ($1, $2, $3, $4, $5, $6,
+                                                 $7) returning *;`, [name, category, description, hours, startDate, endDate, price]);
 
         console.log(`> CourseRepo.insert(values): ${rows.length}`)
 
@@ -58,8 +57,7 @@ class CourseRepo {
                                              start_date  = $6,
                                              end_date    = $7,
                                              price       = $8
-                                         WHERE id = $1 returning *;`,
-            [id, name, category, description, hours, startDate, endDate, price]);
+                                         WHERE id = $1 returning *;`, [id, name, category, description, hours, startDate, endDate, price]);
 
         console.log(`> CourseRepo.update(values): ${rows.length}`)
 
@@ -96,6 +94,19 @@ class CourseRepo {
 
         return toCamelCase(rows);
     }
+
+    static async findByNameOrCategory(arg) {
+        const {rows} = await pool.query(`
+            SELECT *
+            FROM courses c
+            WHERE c.category ILIKE $1
+               OR C.name ILIKE $1;`, [`%${arg}%`]);
+
+        console.log(`> CourseRepo.findByNameOrCategory(${arg}): ${rows.length}`)
+
+        return toCamelCase(rows);
+    }
+
 
     static async countOfInstructors(id) {
         const {rows} = await pool.query(`
