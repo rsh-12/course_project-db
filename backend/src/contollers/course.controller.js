@@ -17,7 +17,7 @@ exports.getAll = async (req, res) => {
 
     const {name} = req.query;
     if (!!name) {
-        const courses = await CourseRepo.findByName(name);
+        const courses = await CourseRepo.findByNameOrCategory(name);
         return res.send(courses);
     }
 
