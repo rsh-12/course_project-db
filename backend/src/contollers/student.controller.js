@@ -1,30 +1,25 @@
-const cache = require('../config/cache.config');
 const StudentRepo = require("../repository/student.repo");
 const {validateRequest} = require("../middleware");
-const keys = require('../keys');
+const cachingService = require('../service/caching.service');
+const {keys, nodes} = cachingService;
 
 
 exports.getAll = async (req, res) => {
+    // searching by name
     const {name} = req.query;
     if (!!name) {
         const studentsByName = await StudentRepo.findByName(name);
         return res.send(studentsByName);
     }
 
-    let students = cache.get('students');
-    if (!!students) {
-        console.log('students from cache');
-        return res.send(students);
-    }
+    const sent = cachingService.sendFromCache(keys.students, res);
+    if (sent) return;
 
-    students = await StudentRepo.find();
-    if (students) {
-        cache.set('students', students, keys.TTL);
-        console.log('students from DB');
-        return res.send(students);
-    }
+    const students = await StudentRepo.find();
+    cachingService.set(keys.students, students);
 
-    return res.status(404).send({message: 'Students not found'});
+    console.log('students from DB');
+    return res.send(students);
 };
 
 exports.getOne = async (req, res) => {
@@ -34,20 +29,18 @@ exports.getOne = async (req, res) => {
     }
 
     const student = await StudentRepo.findById(id);
-
     return res.send(student);
 };
 
 exports.getByCourse = async (req, res) => {
+    // add to cache
     const {except} = req.query;
     if (except) {
         const courseUnrelatedStudents = await StudentRepo.findNameAndIdExceptCourse(req.params.id);
-
         return res.send(courseUnrelatedStudents);
     }
 
     const courseRelatedStudents = await StudentRepo.findNameAndIdByCourse(req.params.id);
-
     return res.send(courseRelatedStudents);
 };
 
@@ -60,24 +53,27 @@ exports.moveStudents = async (req, res) => {
         data = await StudentRepo.addToCourse(id, ids);
         console.log(`${data.length} students added to course(id=${id})`);
 
-        cache.flushAll();
+        // cache.flushAll();
+        cachingService.remove(nodes.students);
         return res.sendStatus(200);
     }
 
     data = await StudentRepo.removeFromCourse(id, ids);
     console.log(`${data.length} students removed from course(id=${id})`);
 
-    cache.flushAll();
+    // cache.flushAll();
+    cachingService.remove(nodes.students);
     return res.sendStatus(200);
 };
 
 exports.getStudentsWithoutContracts = async (req, res) => {
-    if (sendFromCache(res, 'studentsWithoutContracts')) return;
+    const sent = cachingService.sendFromCache(keys.studentsWithoutContracts, res);
+    if (sent) return;
 
     const studentsWithoutContracts = await StudentRepo.findWithoutContracts();
     if (studentsWithoutContracts) {
         console.log('studentsWithoutContracts from DB');
-        cache.set('studentsWithoutContracts', studentsWithoutContracts, keys.TTL);
+        cachingService.set(keys.studentsWithoutContracts, studentsWithoutContracts);
 
         return res.send(studentsWithoutContracts);
     }
@@ -88,11 +84,12 @@ exports.getStudentsWithoutContracts = async (req, res) => {
 exports.delete = async (req, res) => {
     const {id} = req.params;
     const student = await StudentRepo.delete(id);
-
     if (!student) {
         return res.status(404).send({message: `Student(id=${id}) not found`});
     }
-    cache.flushAll();
+
+    // cache.flushAll();
+    cachingService.remove(nodes.students);
 
     return res.send(student);
 };
@@ -100,7 +97,6 @@ exports.delete = async (req, res) => {
 exports.getByCompany = async (req, res) => {
     const {id} = req.params;
     const students = await StudentRepo.findByCompany(id);
-
     if (students) {
         return res.send(students);
     }
@@ -121,7 +117,8 @@ exports.add = async (req, res) => {
         return res.status(500).send({message: 'An error occurred while inserting data into the students table'});
     }
 
-    cache.flushAll();
+    // cache.flushAll();
+    cachingService.remove(nodes.students);
 
     return res.send(student);
 };
@@ -140,7 +137,8 @@ exports.update = async (req, res) => {
         return res.status(500).send({message: 'An error occurred while inserting data into the students table'});
     }
 
-    cache.flushAll();
+    // cache.flushAll();
+    cachingService.remove(nodes.students);
 
     return res.send(student);
 };
@@ -148,42 +146,26 @@ exports.update = async (req, res) => {
 // get students without contracts or certificates
 exports.getStudentsWithCourses = async (req, res) => {
     let students;
-    const keyContracts = 'students-courses-without-contracts';
-    const keyCertificates = 'students-courses-without-certificates';
 
     const {data} = req.params;
     if (data === 'contracts') {
-        const sent = sendFromCache(res, keyContracts);
-        if (sent) return;
+        if (cachingService.sendFromCache(keys.keyContracts, res)) return;
 
         students = await StudentRepo.findWithCoursesWithoutContracts();
         console.log('Students with courses without contracts from DB');
-        cache.set(keyContracts, students, keys.TTL);
+        cachingService.set(keys.keyContracts, students);
 
         return res.send(students);
 
     } else if (data === 'certificates') {
-        const sent = sendFromCache(res, keyCertificates);
-        if (sent) return;
+        if (cachingService.sendFromCache(keys.keyCertificates, res)) return;
 
         students = await StudentRepo.findWithCoursesWithoutCertificates();
         console.log('Students with courses without certificates from DB');
-        cache.set(keyCertificates, students, keys.TTL);
+        cachingService.set(keys.keyCertificates, students);
 
         return res.send(students);
     }
 
     return res.status(404).send({message: 'Students not found'});
-}
-
-function sendFromCache(res, key) {
-    const data = cache.get(key);
-
-    if (!!data) {
-        console.log(`${key} from cache`);
-        res.send(data);
-        return true;
-    }
-
-    return false;
 }
