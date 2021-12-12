@@ -1,9 +1,9 @@
 const CourseRepo = require('../repository/course.repo');
 const InstructorRepo = require('../repository/instructor.repo');
 const StudentRepo = require('../repository/student.repo');
-const cache = require('../config/cache.config');
 const {validateRequest} = require("../middleware");
-const keys = require('../keys');
+const cachingService = require("../service/caching.service");
+const {keys, nodes} = cachingService;
 
 
 exports.getAll = async (req, res) => {
@@ -15,22 +15,20 @@ exports.getAll = async (req, res) => {
         return res.send(courses);
     }
 
+    // searching by name
     const {name} = req.query;
     if (!!name) {
         const courses = await CourseRepo.findByNameOrCategory(name);
         return res.send(courses);
     }
 
-    let courses = cache.get('courses');
-    if (!!courses) {
-        console.debug('courses from cache');
-        return res.send(courses);
-    }
+    if (cachingService.sendFromCache(keys.courses, res)) return;
 
-    console.debug('courses from DB')
-    courses = await CourseRepo.find();
+    const courses = await CourseRepo.find();
     if (courses) {
-        cache.set('courses', courses, keys.TTL);
+        console.debug('courses from DB')
+        cachingService.set(keys.courses, courses);
+
         return res.send(courses);
     }
 
@@ -39,38 +37,26 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     const {id} = req.params;
+
     const course = await CourseRepo.findById(id);
-
-    if (!course) {
-        return res.status(404).send({message: `Course(id=${id}) not found`});
-    }
-
-    let instructors = cache.get(`instructors_by_course_${id}`);
-    if (!!instructors) {
-        console.debug("instructors from cache");
-    } else {
-        console.debug("instructors from DB");
-        instructors = await InstructorRepo.findByCourseId(id);
-        cache.set(`instructors_by_course_${id}`, instructors, keys.TTL);
-    }
-
+    const instructors = await InstructorRepo.findByCourseId(id);
     const totalStudents = await StudentRepo.countByCourseId(id);
 
     return res.send({course, instructors, totalStudents})
-}
+};
 
 exports.delete = async (req, res) => {
     const {id} = req.params;
-    const course = await CourseRepo.delete(id);
 
+    const course = await CourseRepo.delete(id);
     if (!course) {
         return res.status(404).send({message: `Course(id=${id}) not found`});
     }
 
-    cache.flushAll();
+    cachingService.remove(nodes.courses);
 
     return res.send(course);
-}
+};
 
 exports.add = async (req, res) => {
     const {
@@ -81,15 +67,14 @@ exports.add = async (req, res) => {
     validateRequest.allArgsProvided(res, name, category, description, hours, startDate, endDate, price);
 
     const course = await CourseRepo.insert(name, category, description, hours, startDate, endDate, price);
-
     if (!course) {
         return res.sendStatus(500);
     }
 
-    cache.flushAll();
+    cachingService.remove(nodes.courses);
 
     return res.send(course);
-}
+};
 
 exports.update = async (req, res) => {
     const {id} = req.params;
@@ -105,12 +90,11 @@ exports.update = async (req, res) => {
     validateRequest.allArgsProvided(res, name, category, description, hours, startDate, endDate, price);
 
     const course = await CourseRepo.update(id, name, category, description, hours, startDate, endDate, price);
-
     if (!course) {
         return res.sendStatus(500);
     }
 
-    cache.flushAll();
+    cachingService.remove(nodes.courses);
 
     return res.send(course);
-}
+};
