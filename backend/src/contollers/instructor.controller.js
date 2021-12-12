@@ -1,25 +1,24 @@
 const InstructorRepo = require("../repository/instructor.repo");
-const cache = require("../config/cache.config");
-const keys = require('../keys');
 const {validateRequest} = require("../middleware");
+const cachingService = require("../service/caching.service");
+const {keys, nodes} = cachingService;
 
 
 exports.getAll = async (req, res) => {
+    // searching by name
     const {name} = req.query;
     if (!!name) {
         const instructorsByName = await InstructorRepo.findByName(name);
-
         return res.send(instructorsByName);
     }
 
-    if (sendFromCache(res, 'instructors')) return;
+    if (cachingService.sendFromCache(keys.instructors, res)) return;
 
     const instructors = await InstructorRepo.find();
-    console.log('instructors from DB');
-
-    cache.set('instructors', instructors, keys.TTL);
-
     if (instructors) {
+        console.log('instructors from DB');
+        cachingService.set(keys.instructors, instructors);
+
         return res.send(instructors);
     }
 
@@ -28,24 +27,21 @@ exports.getAll = async (req, res) => {
 
 exports.getByCourse = async (req, res) => {
     if (req.query.except) {
-        if (sendFromCache(res, 'courseUnrelatedInstructors')) {
-            return;
-        }
+
+        if (cachingService.sendFromCache(keys.courseUnrelatedInstructors, res)) return;
 
         const courseUnrelatedInstructors = await InstructorRepo.findNameAndIdExceptCourse(req.params.id);
         console.log('courseUnrelatedInstructors from DB');
-        cache.set('courseUnrelatedInstructors', courseUnrelatedInstructors, keys.TTL);
+        cachingService.set(keys.courseUnrelatedInstructors, courseUnrelatedInstructors);
 
         return res.send(courseUnrelatedInstructors);
     }
 
-    if (sendFromCache(res, 'courseRelatedInstructors')) {
-        return;
-    }
+    if (cachingService.sendFromCache(keys.courseRelatedInstructors, res)) return;
 
     const courseRelatedInstructors = await InstructorRepo.findNameAndIdByCourse(req.params.id);
     console.log('courseRelatedInstructors from DB');
-    cache.set('courseRelatedInstructors', courseRelatedInstructors, keys.TTL);
+    cachingService.set(keys.courseRelatedInstructors, courseRelatedInstructors);
 
     return res.send(courseRelatedInstructors);
 
@@ -60,14 +56,16 @@ exports.moveInstructors = async (req, res) => {
         data = await InstructorRepo.addToCourse(id, ids);
         console.log(`${data.length} instructors added to course(id=${id})`);
 
-        cache.flushAll();
+        cachingService.remove(nodes.instructors);
+
         return res.sendStatus(200);
     }
 
     data = await InstructorRepo.removeFromCourse(id, ids);
     console.log(`${data.length} instructors removed from course(id=${id})`);
 
-    cache.flushAll();
+    cachingService.remove(nodes.instructors);
+
     return res.sendStatus(200);
 };
 
@@ -78,7 +76,8 @@ exports.delete = async (req, res) => {
     if (!instructor) {
         return res.status(404).send({message: `Instructor(id=${id}) not found`});
     }
-    cache.flushAll();
+
+    cachingService.remove(nodes.instructors);
 
     return res.send(instructor);
 };
@@ -100,7 +99,7 @@ exports.update = async (req, res) => {
 
     const instructor = await InstructorRepo.update(id, firstName, lastName, education, degree);
     if (instructor) {
-        cache.flushAll();
+        cachingService.remove(nodes.instructors);
         return res.send({message: 'Success'});
     }
 
@@ -113,22 +112,9 @@ exports.add = async (req, res) => {
 
     const instructor = await InstructorRepo.add(firstName, lastName, education, degree);
     if (instructor) {
-        cache.flushAll();
+        cachingService.remove(nodes.instructors);
         return res.status(201).send({message: 'Success'});
     }
 
     return res.status(500).send({message: 'Something went wrong'});
 };
-
-function sendFromCache(res, key) {
-    const data = cache.get(key);
-
-    if (!!data) {
-        console.log(`${key} from cache`);
-        res.send(data);
-        return true;
-    }
-
-    return false;
-}
-
