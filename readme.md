@@ -4,4 +4,4 @@
 
 <hr>
 
-<img align="center" alt="logic model" src="database/public.png">
+[//]: # (<img align="center" alt="logic model" src="database/public.png">)
