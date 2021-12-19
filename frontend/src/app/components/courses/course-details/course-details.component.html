@@ -16,17 +16,19 @@
                         <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
                             <mat-label>Name</mat-label>
                             <input matInput #name
-                                   minlength="5"
-                                   maxlength="50"
                                    required
                                    formControlName="name">
 
                             <mat-hint align="end">{{name.value?.length || 0}}/50</mat-hint>
 
-                            <mat-error *ngIf="submitted && f.name.errors">
+                            <mat-error *ngIf="f.name.errors">
                                 <div *ngIf="f.name.errors.required">Name is required</div>
-                                <div *ngIf="f.name.errors.minlength">Min length is 5 characters</div>
-                                <div *ngIf="f.name.errors.maxlength">Max length is 50 characters</div>
+                                <div *ngIf="f.name.errors.minlength">Min length
+                                    is {{f.name.errors.minlength.requiredLength}} characters
+                                </div>
+                                <div *ngIf="f.name.errors.maxlength"> Max length
+                                    is {{f.name.errors.maxlength.requiredLength}} characters
+                                </div>
                                 <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
                             </mat-error>
                         </mat-form-field>
@@ -36,17 +38,19 @@
                         <mat-form-field hintLabel="Max 50 characters" appearance="outline" class="w-100">
                             <mat-label>Category</mat-label>
                             <input matInput #category
-                                   minlength="5"
-                                   maxlength="50"
                                    required
                                    formControlName="category">
 
                             <mat-hint align="end">{{category.value?.length || 0}}/50</mat-hint>
 
-                            <mat-error *ngIf="submitted && f.category.errors">
+                            <mat-error *ngIf="f.category.errors">
                                 <div *ngIf="f.category.errors.required">Category is required</div>
-                                <div *ngIf="f.category.errors.minlength">Min length is 5 characters</div>
-                                <div *ngIf="f.category.errors.maxlength">Max length is 50 characters</div>
+                                <div *ngIf="f.category.errors.minlength">Min length
+                                    is {{f.category.errors.minlength.requiredLength}} characters
+                                </div>
+                                <div *ngIf="f.category.errors.maxlength">
+                                    Max length is {{f.category.errors.maxlength.requiredLength}} characters
+                                </div>
                                 <div *ngIf="f.category.errors.pattern">Please, remove the unnecessary space symbol</div>
                             </mat-error>
                         </mat-form-field>
@@ -57,17 +61,19 @@
                             <mat-label>Description</mat-label>
                             <textarea matInput #description
                                       required
-                                      minlength="5"
-                                      maxlength="250"
                                       formControlName="description">
                         </textarea>
 
                             <mat-hint align="end">{{description.value?.length || 0}}/250</mat-hint>
 
-                            <mat-error *ngIf="submitted && f.description.errors">
+                            <mat-error *ngIf="f.description.errors">
                                 <div *ngIf="f.description.errors.required">Description is required</div>
-                                <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
-                                <div *ngIf="f.description.errors.maxlength">Max length is 50 characters</div>
+                                <div *ngIf="f.description.errors.minlength">Min length
+                                    is {{f.description.errors.minlength.requiredLength}} characters
+                                </div>
+                                <div *ngIf="f.description.errors.maxlength">
+                                    Max length is {{f.description.errors.maxlength.requiredLength}} characters
+                                </div>
                                 <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol
                                 </div>
                             </mat-error>
@@ -84,10 +90,10 @@
                                    max="1000"
                                    formControlName="hours">
 
-                            <mat-error *ngIf="submitted && f.hours.errors">
+                            <mat-error *ngIf="f.hours.errors">
                                 <div *ngIf="f.hours.errors.required">Hours are required</div>
-                                <div *ngIf="f.hours.errors.min">Min value is 10</div>
-                                <div *ngIf="f.hours.errors.max">Max value is 1000</div>
+                                <div *ngIf="f.hours.errors.min">Min value is {{f.hours.errors.min.min}}</div>
+                                <div *ngIf="f.hours.errors.max">Max value is {{f.hours.errors.max.max}}</div>
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -99,14 +105,12 @@
                             <input matInput
                                    type="number"
                                    required
-                                   min="10"
-                                   max="1000000"
                                    formControlName="price">
 
-                            <mat-error *ngIf="submitted && f.price.errors">
+                            <mat-error *ngIf="f.price.errors">
                                 <div *ngIf="f.price.errors.required">Price is required</div>
-                                <div *ngIf="f.price.errors.min">Min value is 0</div>
-                                <div *ngIf="f.price.errors.max">Max value is 1000000</div>
+                                <div *ngIf="f.price.errors.min">Min value is {{f.price.errors.min.min}}</div>
+                                <div *ngIf="f.price.errors.max">Max value is {{f.price.errors.max.max}}</div>
                             </mat-error>
                         </mat-form-field>
                     </div>
