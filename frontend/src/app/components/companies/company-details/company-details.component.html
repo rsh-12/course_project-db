@@ -21,15 +21,20 @@
                         <mat-label>Name</mat-label>
                         <input matInput #name
                                required
-                               minlength="3"
-                               maxlength="30"
                                formControlName="name">
 
                         <mat-hint align="end">{{name.value?.length || 0}}/30</mat-hint>
 
-                        <mat-error *ngIf="submitted && f.name.errors">
-                            <div *ngIf="f.name.errors.minlength">Min length is 3 characters</div>
-                            <div *ngIf="f.name.errors.maxlength">Max length is 30 characters</div>
+                        <mat-error *ngIf="f.name.errors">
+
+                            <div *ngIf="f.name.errors.required">Name is required</div>
+
+                            <div *ngIf="f.name.errors.minlength">Min length
+                                is {{f.name.errors.minlength.requiredLength}} characters
+                            </div>
+                            <div *ngIf="f.name.errors.maxlength">Max length
+                                is {{f.name.errors.maxlength.requiredLength}} characters
+                            </div>
                             <div *ngIf="f.name.errors.pattern">Please, remove the unnecessary space symbol</div>
                         </mat-error>
 
@@ -45,8 +50,6 @@
 
                         <textarea matInput #description
                                   required
-                                  minlength="5"
-                                  maxlength="120"
                                   formControlName="description">
                         </textarea>
 
@@ -54,8 +57,12 @@
 
                         <mat-error *ngIf="submitted && f.description.errors">
                             <div *ngIf="f.description.errors.required">Description is required</div>
-                            <div *ngIf="f.description.errors.minlength">Min length is 5 characters</div>
-                            <div *ngIf="f.description.errors.maxlength">Max length is 120 characters</div>
+                            <div *ngIf="f.description.errors.minlength">Min length
+                                is {{f.description.errors.minlength.requiredLength}} characters
+                            </div>
+                            <div *ngIf="f.description.errors.maxlength">
+                                Max length is {{f.description.errors.maxlength.requiredLength}} characters
+                            </div>
                             <div *ngIf="f.description.errors.pattern">Please, remove the unnecessary space symbol</div>
                         </mat-error>
 
