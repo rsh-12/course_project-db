@@ -24,15 +24,17 @@
                         <mat-label>Last name</mat-label>
                         <input matInput #lastName
                                required
-                               minlength="2"
-                               maxlength="30"
                                formControlName="lastName">
 
                         <mat-hint align="end">{{lastName.value?.length || 0}}/30</mat-hint>
 
                         <mat-error *ngIf="submitted && f.lastName.errors">
-                            <div *ngIf="f.lastName.errors.minlength">Min length is 2 characters</div>
-                            <div *ngIf="f.lastName.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.lastName.errors.minlength">Min length
+                                is {{f.lastName.errors.minlength.requiredLength}} characters
+                            </div>
+                            <div *ngIf="f.lastName.errors.maxlength">
+                                Max length is {{f.lastName.errors.maxlength.requiredLength}} characters
+                            </div>
                             <div *ngIf="f.lastName.errors.pattern">Please, remove the unnecessary space symbol</div>
                         </mat-error>
 
@@ -47,15 +49,17 @@
                         <mat-label>First name</mat-label>
                         <input matInput #firstName
                                required
-                               minlength="2"
-                               maxlength="30"
                                formControlName="firstName">
 
                         <mat-hint align="end">{{firstName.value?.length || 0}}/30</mat-hint>
 
                         <mat-error *ngIf="submitted && f.firstName.errors">
-                            <div *ngIf="f.firstName.errors.minlength">Min length is 2 characters</div>
-                            <div *ngIf="f.firstName.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.firstName.errors.minlength">
+                                Min length is {{f.firstName.errors.minlength.requiredLength}} characters
+                            </div>
+                            <div *ngIf="f.firstName.errors.maxlength">
+                                Max length is {{f.firstName.errors.maxlength.requiredLength}} characters
+                            </div>
                             <div *ngIf="f.firstName.errors.pattern">Please, remove the unnecessary space symbol</div>
                         </mat-error>
 
@@ -70,15 +74,17 @@
                         <mat-label>Education</mat-label>
                         <input matInput #education
                                required
-                               minlength="10"
-                               maxlength="150"
                                formControlName="education">
 
                         <mat-hint align="end">{{education.value?.length || 0}}/150</mat-hint>
 
                         <mat-error *ngIf="submitted && f.education.errors">
-                            <div *ngIf="f.education.errors.minlength">Min length is 10 characters</div>
-                            <div *ngIf="f.education.errors.maxlength">Max length is 150 characters</div>
+                            <div *ngIf="f.education.errors.minlength">
+                                Min length is {{f.education.errors.minlength.requiredLength}} characters
+                            </div>
+                            <div *ngIf="f.education.errors.maxlength">
+                                Max length is {{f.education.errors.maxlength.requiredLength}} characters
+                            </div>
                             <div *ngIf="f.education.errors.pattern">Please, remove the unnecessary space symbol</div>
                         </mat-error>
 
@@ -98,8 +104,12 @@
                         <mat-hint align="end">{{degree.value?.length || 0}}/30</mat-hint>
 
                         <mat-error *ngIf="submitted && f.degree.errors">
-                            <div *ngIf="f.degree.errors.minlength">Min length is 2 characters</div>
-                            <div *ngIf="f.degree.errors.maxlength">Max length is 30 characters</div>
+                            <div *ngIf="f.degree.errors.minlength">
+                                Min length is {{f.degree.errors.minlength.requiredLength}} characters
+                            </div>
+                            <div *ngIf="f.degree.errors.maxlength">
+                                Max length is {{f.degree.errors.maxlength.requiredLength}} characters
+                            </div>
                             <div *ngIf="f.degree.errors.pattern">Please, remove the unnecessary space symbol</div>
                         </mat-error>
 
