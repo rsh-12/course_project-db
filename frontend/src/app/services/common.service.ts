@@ -106,7 +106,6 @@ export class CommonService {
         return this.http.post(API_URL + 'certificates', {id, dates});
     }
 
-
     addContract(id: number | string, dates: { dateOfIssue?: Date }) {
         return this.http.post(API_URL + 'contracts', {id, dates});
     }
@@ -114,4 +113,5 @@ export class CommonService {
     clearCache(): Observable<Object> {
         return this.http.delete(API_URL + 'caches');
     }
+    
 }
