@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 -- Компании-клиенты центра повышения квалификации
 INSERT INTO companies(name, description)
 VALUES ('IT cat', 'Software development and maintenance'),
@@ -93,3 +95,6 @@ INSERT INTO courses_students(student_id, course_id)
 VALUES (1, 3),
        (1, 4),
        (2, 4);
+
+
+COMMIT;
