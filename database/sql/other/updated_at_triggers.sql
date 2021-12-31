@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 CREATE OR REPLACE FUNCTION update_timestamp() RETURNS TRIGGER AS
 $update_timestamp$
 BEGIN
@@ -35,4 +37,6 @@ CREATE TRIGGER updated_at_users
     ON users
     FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp();
+
+COMMIT;
 
