@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 /* КОМПАНИИ */
 CREATE TABLE companies
 (
@@ -92,6 +94,14 @@ CREATE TABLE courses
 
 COMMENT ON TABLE courses IS 'Курсы, доступные для прохождения';
 
+/* КУРСЫ И СТУДЕНТЫ */
+CREATE TABLE courses_students
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
+    course_id  INT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 /* СЕРТИФИКАТЫ */
 CREATE TABLE certificates
@@ -116,16 +126,6 @@ CREATE TABLE courses_instructors
 );
 
 COMMENT ON TABLE courses_instructors IS 'Курсы и преподаватели';
-
-
-/* КУРСЫ И СТУДЕНТЫ */
-CREATE TABLE courses_students
-(
-    id         SERIAL PRIMARY KEY,
-    student_id INT NOT NULL REFERENCES students (id) ON DELETE CASCADE,
-    course_id  INT NOT NULL REFERENCES courses (id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 COMMENT ON TABLE courses_students IS 'Курсы и студенты';
 
@@ -155,3 +155,5 @@ CREATE TABLE users
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMIT;
