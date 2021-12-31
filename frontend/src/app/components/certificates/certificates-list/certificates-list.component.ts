@@ -47,10 +47,7 @@ export class CertificatesListComponent implements OnInit {
             data => {
                 console.log(data)
                 this.dataSource = new MatTableDataSource<CertificateInfo>(data)
-            }, error => {
-                console.log(error);
-                this.loading = false;
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
     }
@@ -86,6 +83,12 @@ export class CertificatesListComponent implements OnInit {
             },
             () => this.loading = false
         );
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
