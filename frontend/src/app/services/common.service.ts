@@ -6,11 +6,11 @@ import {CurrentUser} from "../common/currentUser";
 import {Income} from "../common/income";
 import {Contract} from "../common/contract";
 import {CertificateInfo} from "../common/certificateInfo";
-import {InstructorService} from "./instructor.service";
-import {StudentService} from "./student.service";
-import {FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
+import {catchError} from "rxjs/operators";
+import {UtilsService} from "./utils.service";
+import {FormGroup} from "@angular/forms";
 
 const API_URL = environment.API_URL;
 
@@ -19,25 +19,12 @@ const API_URL = environment.API_URL;
 })
 export class CommonService {
 
-    static nonWhitespaceRegExp: RegExp = new RegExp("^\\S");
-
     constructor(private http: HttpClient,
-                private instructorService: InstructorService,
-                private studentService: StudentService,
                 private router: Router) {
     }
 
-    static commonValidators(min = 5, max = 50) {
-        return [
-            Validators.required,
-            Validators.pattern(this.nonWhitespaceRegExp),
-            Validators.minLength(min),
-            Validators.maxLength(max),
-        ];
-    }
-
-    static isNumeric(val: string): boolean {
-        return /^\d+$/.test(val);
+    getStatistics(): Observable<TotalRecords> {
+        return this.http.get<TotalRecords>(API_URL + 'statistics');
     }
 
     getStudentAge(form: FormGroup) {
@@ -48,8 +35,8 @@ export class CommonService {
         return 0;
     }
 
-    getStatistics(): Observable<TotalRecords> {
-        return this.http.get<TotalRecords>(API_URL + 'statistics');
+    goToPage(url: string): void {
+        this.router.navigate([url]).then();
     }
 
     whoAmI(): Observable<CurrentUser> {
@@ -65,29 +52,8 @@ export class CommonService {
     }
 
     getCertificates(): Observable<CertificateInfo[]> {
-        return this.http.get<CertificateInfo[]>(API_URL + 'certificates');
-    }
-
-    // load data with specific service class
-    defineLoadingMethod(isRelated: boolean, entityId: number, entityName: string) {
-        const serviceClass = this.defineServiceClass(entityName);
-
-        return isRelated
-            ? serviceClass.findByCourse(entityId)
-            : serviceClass.findExceptCourse(entityId);
-    }
-
-    // modify data with specific service class
-    defineModifyingMethod(isAdding: boolean, entityId: number, entityName: string, data: { ids: number[] }) {
-        const serviceClass = this.defineServiceClass(entityName);
-
-        return isAdding
-            ? serviceClass.addToCourse(entityId, data)
-            : serviceClass.removeFromCourse(entityId, data);
-    }
-
-    private defineServiceClass(entityName: string) {
-        return entityName === 'instructors' ? this.instructorService : this.studentService;
+        return this.http.get<CertificateInfo[]>(API_URL + 'certificates')
+            .pipe(catchError(UtilsService.handleError));
     }
 
     deleteCertificate(id: number | string) {
@@ -96,10 +62,6 @@ export class CommonService {
 
     deleteContract(id: number | string) {
         return this.http.delete(API_URL + 'contracts/' + id, {responseType: 'text'});
-    }
-
-    public goToPage(url: string): void {
-        this.router.navigate([url]);
     }
 
     addCertificate(id: number | string, dates: { conclusionDate?: Date; completionDate?: Date; }) {
@@ -113,5 +75,5 @@ export class CommonService {
     clearCache(): Observable<Object> {
         return this.http.delete(API_URL + 'caches');
     }
-    
+
 }
