@@ -32,9 +32,7 @@ export class CompaniesListComponent implements OnInit {
             data => {
                 console.log(data);
                 this.companies = data;
-            }, error => {
-                console.log(error);
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
     }
@@ -86,12 +84,6 @@ export class CompaniesListComponent implements OnInit {
         );
     }
 
-    private refreshList() {
-        this.currentCompany = {};
-        this.currentIndex = -1;
-        this.retrieveCompanies();
-    }
-
     loadRelatedStudents() {
         if (!this.currentCompany.id) return;
 
@@ -107,6 +99,18 @@ export class CompaniesListComponent implements OnInit {
                 this.notificationService.openSnackBar(err.error.message);
             }
         );
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
+    }
+
+    private refreshList() {
+        this.currentCompany = {};
+        this.currentIndex = -1;
+        this.retrieveCompanies();
     }
 
 }
