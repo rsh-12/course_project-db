@@ -33,11 +33,20 @@ export class StudentService {
     }
 
     findExceptCourse(id: number) {
-        return this.http.get<CommonData[]>(`${API_URL}course/${id}?except=true`);
+        return this.http.get<CommonData[]>(`${API_URL}course/${id}`, {
+            params: {
+                except: true
+            }
+        });
     }
 
     addToCourse(id: number, data: { ids: number[] }) {
-        return this.http.post(`${API_URL}course/${id}?add=true`, data, {responseType: 'text'});
+        return this.http.post(`${API_URL}course/${id}`, data, {
+            responseType: 'text',
+            params: {
+                add: true
+            }
+        });
     }
 
     removeFromCourse(id: number, data: { ids: number[] }) {
@@ -45,7 +54,11 @@ export class StudentService {
     }
 
     findByName(studentName: string): Observable<Student[]> {
-        return this.http.get<Student[]>(API_URL + '?name=' + studentName);
+        return this.http.get<Student[]>(API_URL, {
+            params: {
+                name: studentName
+            }
+        });
     }
 
     delete(id: number) {
