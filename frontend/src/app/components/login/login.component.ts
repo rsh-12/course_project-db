@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.authService.isAuthenticated()) {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home']).then();
         }
 
         if (this.tokenStorage.getToken()) {
