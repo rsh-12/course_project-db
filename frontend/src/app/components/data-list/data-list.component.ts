@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NotificationService} from "../../services/notification.service";
 import {CommonData} from "../../common/commonData";
 import {Observable} from "rxjs";
-import {CommonService} from "../../services/common.service";
+import {InstructorService} from "../../services/instructor.service";
+import {StudentService} from "../../services/student.service";
 
 @Component({
     selector: 'app-data-list',
@@ -21,7 +22,8 @@ export class DataListComponent implements OnInit {
     loading = false;
 
     constructor(private notificationService: NotificationService,
-                private commonService: CommonService) {
+                private instructorService: InstructorService,
+                private studentService: StudentService) {
     }
 
     ngOnInit(): void {
@@ -32,7 +34,7 @@ export class DataListComponent implements OnInit {
         this.isDataRelated = isRelated;
 
         let serviceMethod: Observable<any>;
-        serviceMethod = this.commonService.defineLoadingMethod(isRelated, this.entityId, this.entityName);
+        serviceMethod = this.defineLoadingMethod(isRelated, this.entityId, this.entityName);
 
         serviceMethod.subscribe(
             res => {
@@ -57,8 +59,7 @@ export class DataListComponent implements OnInit {
         let message = isAdding ? 'Successfully added to course' : 'Successfully removed from course';
 
         let serviceMethod: Observable<any>;
-        serviceMethod = this.commonService
-            .defineModifyingMethod(isAdding, this.entityId, this.entityName, {ids: entityIds});
+        serviceMethod = this.defineModifyingMethod(isAdding, this.entityId, this.entityName, {ids: entityIds});
 
         serviceMethod.subscribe(
             res => {
@@ -79,6 +80,27 @@ export class DataListComponent implements OnInit {
 
     private collectDataIds() {
         return this.data.filter(d => d.checked).map(value => value.id);
+    }
+
+
+    /**/
+
+    // load data with specific service class
+    defineLoadingMethod(isRelated: boolean, entityId: number, entityName: string) {
+        const serviceClass = entityName === 'instructors' ? this.instructorService : this.studentService;
+
+        return isRelated
+            ? serviceClass.findByCourse(entityId)
+            : serviceClass.findExceptCourse(entityId);
+    }
+
+    // modify data with specific service class
+    defineModifyingMethod(isAdding: boolean, entityId: number, entityName: string, data: { ids: number[] }) {
+        const serviceClass = entityName === 'instructors' ? this.instructorService : this.studentService;
+
+        return isAdding
+            ? serviceClass.addToCourse(entityId, data)
+            : serviceClass.removeFromCourse(entityId, data);
     }
 
 }
