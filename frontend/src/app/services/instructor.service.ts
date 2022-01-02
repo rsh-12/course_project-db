@@ -20,7 +20,11 @@ export class InstructorService {
     }
 
     findByName(instructorName: string): Observable<Instructor[]> {
-        return this.http.get<Instructor[]>(API_URL + '?name=' + instructorName);
+        return this.http.get<Instructor[]>(API_URL, {
+            params: {
+                name: instructorName
+            }
+        });
     }
 
     findByCourse(id: number): Observable<CommonData[]> {
@@ -28,7 +32,11 @@ export class InstructorService {
     }
 
     findExceptCourse(id: number) {
-        return this.http.get<CommonData[]>(`${API_URL}course/${id}?except=true`);
+        return this.http.get<CommonData[]>(`${API_URL}course/${id}`, {
+            params: {
+                except: true
+            }
+        });
     }
 
     removeFromCourse(id: number, data: { ids: number[] }) {
@@ -36,7 +44,12 @@ export class InstructorService {
     }
 
     addToCourse(id: number, data: { ids: number[] }) {
-        return this.http.post(`${API_URL}course/${id}?add=true`, data, {responseType: 'text'});
+        return this.http.post(`${API_URL}course/${id}`, data, {
+            responseType: 'text',
+            params: {
+                add: true
+            }
+        });
     }
 
     delete(id: number): Observable<any> {
