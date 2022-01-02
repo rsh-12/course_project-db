@@ -85,7 +85,7 @@ export class NavbarComponent implements OnInit {
     }
 
     navigateTo() {
-        this.router.navigate([this.value]);
+        this.router.navigate([this.value]).then();
         this.value = '';
     }
 }
