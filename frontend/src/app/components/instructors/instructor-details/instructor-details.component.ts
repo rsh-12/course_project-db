@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
 import {CommonService} from "../../../services/common.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Instructor} from "../../../common/instructor";
 import {InstructorService} from "../../../services/instructor.service";
 import {NotificationService} from "../../../services/notification.service";
+import {UtilsService} from "../../../services/utils.service";
 
 @Component({
     selector: 'app-instructor-details',
@@ -30,14 +31,14 @@ export class InstructorDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.params.id;
-        this.isEditMode = CommonService.isNumeric(id);
+        this.isEditMode = UtilsService.isNumeric(id);
 
         if (this.isEditMode) {
             this.getInstructorById(id);
             return;
         }
 
-        this.router.navigate(['instructors/add']);
+        this.router.navigate(['instructors/add']).then();
 
         this.currentInstructor = {
             lastName: '',
@@ -89,10 +90,10 @@ export class InstructorDetailsComponent implements OnInit {
     private initFormGroup() {
         this.form = this.formBuilder.group({
             id: [this.currentInstructor.id],
-            lastName: [this.currentInstructor.lastName, CommonService.commonValidators(2, 30)],
-            firstName: [this.currentInstructor.firstName, CommonService.commonValidators(2, 30)],
-            education: [this.currentInstructor.education, CommonService.commonValidators(10, 150)],
-            degree: [this.currentInstructor.degree, CommonService.commonValidators(2, 30)],
+            lastName: [this.currentInstructor.lastName, UtilsService.commonValidators(2, 30)],
+            firstName: [this.currentInstructor.firstName, UtilsService.commonValidators(2, 30)],
+            education: [this.currentInstructor.education, UtilsService.commonValidators(10, 150)],
+            degree: [this.currentInstructor.degree, UtilsService.commonValidators(2, 30)],
         });
     }
 
