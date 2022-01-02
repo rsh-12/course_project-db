@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Company} from "../common/company";
 import {environment} from "../../environments/environment";
+import {catchError} from "rxjs/operators";
+import {UtilsService} from "./utils.service";
 
 const API_URL = environment.API_URL + 'companies/';
 
@@ -15,11 +17,16 @@ export class CompanyService {
     }
 
     findAll(): Observable<Company[]> {
-        return this.http.get<Company[]>(API_URL);
+        return this.http.get<Company[]>(API_URL)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     findByName(companyName: string): Observable<Company[]> {
-        return this.http.get<Company[]>(API_URL + '?name=' + companyName);
+        return this.http.get<Company[]>(API_URL, {
+            params: {
+                name: companyName
+            }
+        });
     }
 
     delete(id: number): Observable<Object> {
