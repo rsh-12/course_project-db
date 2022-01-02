@@ -5,6 +5,7 @@ import {CompanyService} from "../../../services/company.service";
 import {NotificationService} from "../../../services/notification.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonService} from "../../../services/common.service";
+import {UtilsService} from "../../../services/utils.service";
 
 @Component({
     selector: 'app-company-details',
@@ -38,12 +39,12 @@ export class CompanyDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.params.id;
-        this.isEditMode = CommonService.isNumeric(id);
+        this.isEditMode = UtilsService.isNumeric(id);
 
         if (this.isEditMode) {
             this.getCompanyById(id);
         } else {
-            this.router.navigate(['companies/add']);
+            this.router.navigate(['companies/add']).then();
 
             this.currentCompany = {
                 name: '',
@@ -120,8 +121,8 @@ export class CompanyDetailsComponent implements OnInit {
     private initFormGroup() {
         this.form = this.formBuilder.group({
             id: [this.currentCompany.id],
-            name: [this.currentCompany.name, CommonService.commonValidators(3, 30)],
-            description: [this.currentCompany.description, CommonService.commonValidators(5, 120)],
+            name: [this.currentCompany.name, UtilsService.commonValidators(3, 30)],
+            description: [this.currentCompany.description, UtilsService.commonValidators(5, 120)],
         });
     }
 
@@ -133,4 +134,5 @@ export class CompanyDetailsComponent implements OnInit {
         this.submitted = false;
         this.form.reset();
     }
+
 }
