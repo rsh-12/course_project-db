@@ -6,7 +6,7 @@ import {Instructor} from "../../../common/instructor";
 import {CourseById} from "../../../common/courseById";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../services/notification.service";
-import {CommonService} from "../../../services/common.service";
+import {UtilsService} from "../../../services/utils.service";
 
 @Component({
     selector: 'app-course-details',
@@ -17,8 +17,8 @@ export class CourseDetailsComponent implements OnInit {
 
     loading = false;
     isEditMode = true;
-
     submitted = false;
+
     currentCourse: Course = {id: 0}
     currentInstructor: Instructor = {};
     totalStudents = 0;
@@ -47,7 +47,7 @@ export class CourseDetailsComponent implements OnInit {
         if (this.isEditMode) {
             this.getCourseById(id);
         } else {
-            this.router.navigate(['courses/add']);
+            this.router.navigate(['courses/add']).then();
 
             const currentDate = new Date();
             this.currentCourse = {
@@ -144,9 +144,9 @@ export class CourseDetailsComponent implements OnInit {
     private initFormGroup() {
         this.form = this.formBuilder.group({
             id: [this.currentCourse.id],
-            name: [this.currentCourse.name?.trim(), CommonService.commonValidators()],
-            category: [this.currentCourse.category?.trim(), CommonService.commonValidators()],
-            description: [this.currentCourse.description, CommonService.commonValidators(5, 250)],
+            name: [this.currentCourse.name?.trim(), UtilsService.commonValidators()],
+            category: [this.currentCourse.category?.trim(), UtilsService.commonValidators()],
+            description: [this.currentCourse.description, UtilsService.commonValidators(5, 250)],
             hours: [this.currentCourse.hours,
                 [Validators.required, Validators.min(10), Validators.max(1000)]],
             price: [this.currentCourse.price,
@@ -157,6 +157,6 @@ export class CourseDetailsComponent implements OnInit {
     }
 
     back() {
-        this.router.navigate(['/courses'])
+        this.router.navigate(['/courses']).then()
     }
 }
