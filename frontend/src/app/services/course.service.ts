@@ -17,14 +17,22 @@ export class CourseService {
 
     findAll(instructorId?: number): Observable<Course[]> {
         if (!!instructorId) {
-            return this.http.get<Course[]>(`${API_URL}?instructorId=${instructorId}`);
+            return this.http.get<Course[]>(API_URL, {
+                params: {
+                    instructorId
+                }
+            });
         }
 
         return this.http.get<Course[]>(API_URL);
     }
 
     findByName(name: string): Observable<Course[]> {
-        return this.http.get<Course[]>(API_URL + '?name=' + name);
+        return this.http.get<Course[]>(API_URL, {
+            params: {
+                name
+            }
+        });
     }
 
     findById(id: string): Observable<CourseById> {
