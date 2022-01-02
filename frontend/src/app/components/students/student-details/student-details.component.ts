@@ -5,8 +5,9 @@ import {StudentService} from "../../../services/student.service";
 import {NotificationService} from "../../../services/notification.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CompanyService} from "../../../services/company.service";
-import {CommonService} from "../../../services/common.service";
 import {Company} from "../../../common/company";
+import {UtilsService} from "../../../services/utils.service";
+import {CommonService} from "../../../services/common.service";
 
 @Component({
     selector: 'app-student-details',
@@ -40,14 +41,14 @@ export class StudentDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.params.id;
-        this.isEditMode = CommonService.isNumeric(id);
+        this.isEditMode = UtilsService.isNumeric(id);
 
         if (this.isEditMode) {
             this.getStudentById(id);
             return;
         }
 
-        this.router.navigate(['students/add']);
+        this.router.navigate(['students/add']).then();
 
         this.currentCompany = {};
         this.currentIndex = -1;
@@ -71,8 +72,8 @@ export class StudentDetailsComponent implements OnInit {
     private initFormGroup() {
         this.form = this.formBuilder.group({
             id: [this.currentStudent.id],
-            lastName: [this.currentStudent.lastName, CommonService.commonValidators(2, 30)],
-            firstName: [this.currentStudent.firstName, CommonService.commonValidators(2, 30)],
+            lastName: [this.currentStudent.lastName, UtilsService.commonValidators(2, 30)],
+            firstName: [this.currentStudent.firstName, UtilsService.commonValidators(2, 30)],
             dateOfBirth: [this.currentStudent.dateOfBirth, [Validators.required]],
             phone: [this.currentStudent.phone,
                 [Validators.pattern('(\\+7|8)9(\\d{7,13})'), Validators.required,
@@ -151,7 +152,7 @@ export class StudentDetailsComponent implements OnInit {
     }
 
     back() {
-        this.router.navigate(['/students']);
+        this.router.navigate(['/students']).then();
     }
 
     onReset() {
