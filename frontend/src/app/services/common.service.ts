@@ -44,11 +44,13 @@ export class CommonService {
     }
 
     getIncome(): Observable<Income[]> {
-        return this.http.get<Income[]>(API_URL + 'income');
+        return this.http.get<Income[]>(API_URL + 'income')
+            .pipe(catchError(UtilsService.handleError));
     }
 
     getContracts(): Observable<Contract[]> {
-        return this.http.get<Contract[]>(API_URL + 'contracts');
+        return this.http.get<Contract[]>(API_URL + 'contracts')
+            .pipe(catchError(UtilsService.handleError));
     }
 
     getCertificates(): Observable<CertificateInfo[]> {
@@ -57,23 +59,28 @@ export class CommonService {
     }
 
     deleteCertificate(id: number | string) {
-        return this.http.delete(API_URL + 'certificates/' + id, {responseType: 'text'});
+        return this.http.delete(API_URL + 'certificates/' + id, {responseType: 'text'})
+            .pipe(catchError(UtilsService.handleError));
     }
 
     deleteContract(id: number | string) {
-        return this.http.delete(API_URL + 'contracts/' + id, {responseType: 'text'});
+        return this.http.delete(API_URL + 'contracts/' + id, {responseType: 'text'})
+            .pipe(catchError(UtilsService.handleError));
     }
 
     addCertificate(id: number | string, dates: { conclusionDate?: Date; completionDate?: Date; }) {
-        return this.http.post(API_URL + 'certificates', {id, dates});
+        return this.http.post(API_URL + 'certificates', {id, dates})
+            .pipe(catchError(UtilsService.handleError));
     }
 
     addContract(id: number | string, dates: { dateOfIssue?: Date }) {
-        return this.http.post(API_URL + 'contracts', {id, dates});
+        return this.http.post(API_URL + 'contracts', {id, dates})
+            .pipe(catchError(UtilsService.handleError));
     }
 
     clearCache(): Observable<Object> {
-        return this.http.delete(API_URL + 'caches');
+        return this.http.delete(API_URL + 'caches')
+            .pipe(catchError(UtilsService.handleError));
     }
 
 }
