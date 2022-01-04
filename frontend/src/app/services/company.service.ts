@@ -26,22 +26,27 @@ export class CompanyService {
             params: {
                 name: companyName
             }
-        });
+        }).pipe(catchError(UtilsService.handleError));
     }
 
     delete(id: number): Observable<Object> {
-        return this.http.delete(API_URL + id);
+        return this.http.delete(API_URL + id)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     findById(id: number | string): Observable<Company> {
-        return this.http.get<Company>(API_URL + id);
+        return this.http.get<Company>(API_URL + id)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     add(data: any): Observable<Object> {
-        return this.http.post(API_URL, data);
+        return this.http.post(API_URL, data)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     update(id: number, data: any) {
-        return this.http.put(API_URL + id, data);
+        return this.http.put(API_URL + id, data)
+            .pipe(catchError(UtilsService.handleError));
     }
+
 }
