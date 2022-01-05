@@ -73,10 +73,7 @@ export class CompanyDetailsComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.openSnackBar('Company updated successfully');
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
     }
@@ -88,10 +85,7 @@ export class CompanyDetailsComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.openSnackBar('Company created successfully');
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-            },
+            }, error => this.handleError(error),
 
             () => {
                 this.back();
@@ -107,10 +101,7 @@ export class CompanyDetailsComponent implements OnInit {
         this.companyService.findById(id).subscribe(
             data => {
                 this.currentCompany = data;
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-            },
+            }, error => this.handleError(error),
             () => {
                 this.initFormGroup();
                 return this.loading = false;
@@ -133,6 +124,12 @@ export class CompanyDetailsComponent implements OnInit {
     onReset() {
         this.submitted = false;
         this.form.reset();
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
