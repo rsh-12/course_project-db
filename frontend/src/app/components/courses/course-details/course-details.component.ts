@@ -95,9 +95,7 @@ export class CourseDetailsComponent implements OnInit {
             data => {
                 this.response = data;
                 this.currentCourse = this.response.course;
-            }, error => {
-                console.log(error);
-            },
+            }, error => this.handleError(error),
             () => {
                 this.initFormGroup();
                 this.loading = false;
@@ -115,10 +113,7 @@ export class CourseDetailsComponent implements OnInit {
                 res => {
                     console.log(res);
                     this.notificationService.openSnackBar('Course updated successfully');
-                }, error => {
-                    console.log(error);
-                    this.notificationService.openSnackBar(error.error.message);
-                },
+                }, error => this.handleError(error),
                 () => this.loading = false
             );
         }
@@ -129,10 +124,7 @@ export class CourseDetailsComponent implements OnInit {
             res => {
                 this.currentCourse = res;
                 this.notificationService.openSnackBar('Course created successfully')
-            }, error => {
-                console.log(error);
-                this.notificationService.openSnackBar(error.error.message);
-            },
+            }, error => this.handleError(error),
             () => {
                 this.back();
                 return this.loading = false;
@@ -159,4 +151,11 @@ export class CourseDetailsComponent implements OnInit {
     back() {
         this.router.navigate(['/courses']).then()
     }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
+    }
+
 }
