@@ -4,7 +4,6 @@ import {Company} from "../../../common/company";
 import {CompanyService} from "../../../services/company.service";
 import {NotificationService} from "../../../services/notification.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CommonService} from "../../../services/common.service";
 import {UtilsService} from "../../../services/utils.service";
 
 @Component({
@@ -12,7 +11,7 @@ import {UtilsService} from "../../../services/utils.service";
     templateUrl: './company-details.component.html',
     styleUrls: ['./company-details.component.css'],
     host: {
-        '(keyup.escape)': 'commonService.goToPage("/companies")'
+        '(keyup.escape)': 'this.back()'
     }
 })
 export class CompanyDetailsComponent implements OnInit {
@@ -27,7 +26,6 @@ export class CompanyDetailsComponent implements OnInit {
 
     constructor(private companyService: CompanyService,
                 private notificationService: NotificationService,
-                public commonService: CommonService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private router: Router) {
@@ -53,7 +51,6 @@ export class CompanyDetailsComponent implements OnInit {
 
             this.initFormGroup();
         }
-
     }
 
     onSubmit() {
@@ -92,7 +89,6 @@ export class CompanyDetailsComponent implements OnInit {
                 return this.loading = false;
             }
         );
-
     }
 
     private getCompanyById(id: string) {
@@ -118,7 +114,7 @@ export class CompanyDetailsComponent implements OnInit {
     }
 
     back() {
-        this.commonService.goToPage('/companies')
+        this.router.navigate(['/companies']).then();
     }
 
     onReset() {
