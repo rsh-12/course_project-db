@@ -48,9 +48,7 @@ export class ContractsListComponent implements OnInit {
                 console.log(data)
                 this.contracts = data;
                 this.dataSource = new MatTableDataSource<Contract>(data)
-            }, error => {
-                console.log(error);
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
     }
@@ -71,13 +69,15 @@ export class ContractsListComponent implements OnInit {
                 console.log(res);
                 this.notificationService.successfullyDeleted();
                 this.retrieveContracts();
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-                this.loading = false;
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
