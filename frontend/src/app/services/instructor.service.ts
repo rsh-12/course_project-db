@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {Instructor} from "../common/instructor";
 import {CommonData} from "../common/commonData";
 import {environment} from "../../environments/environment";
+import {catchError} from "rxjs/operators";
+import {UtilsService} from "./utils.service";
 
 const API_URL = environment.API_URL + 'instructors/';
 
@@ -16,7 +18,8 @@ export class InstructorService {
     }
 
     findAll(): Observable<Instructor[]> {
-        return this.http.get<Instructor[]>(API_URL);
+        return this.http.get<Instructor[]>(API_URL)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     findByName(instructorName: string): Observable<Instructor[]> {
@@ -24,11 +27,12 @@ export class InstructorService {
             params: {
                 name: instructorName
             }
-        });
+        }).pipe(catchError(UtilsService.handleError));
     }
 
     findByCourse(id: number): Observable<CommonData[]> {
-        return this.http.get<CommonData[]>(`${API_URL}course/${id}`);
+        return this.http.get<CommonData[]>(`${API_URL}course/${id}`)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     findExceptCourse(id: number) {
@@ -36,11 +40,12 @@ export class InstructorService {
             params: {
                 except: true
             }
-        });
+        }).pipe(catchError(UtilsService.handleError));
     }
 
     removeFromCourse(id: number, data: { ids: number[] }) {
-        return this.http.post(`${API_URL}course/${id}`, data, {responseType: 'text'});
+        return this.http.post(`${API_URL}course/${id}`, data, {responseType: 'text'})
+            .pipe(catchError(UtilsService.handleError));
     }
 
     addToCourse(id: number, data: { ids: number[] }) {
@@ -49,23 +54,27 @@ export class InstructorService {
             params: {
                 add: true
             }
-        });
+        }).pipe(catchError(UtilsService.handleError));
     }
 
     delete(id: number): Observable<any> {
-        return this.http.delete(API_URL + id);
+        return this.http.delete(API_URL + id)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     findById(id: number | string): Observable<Instructor> {
-        return this.http.get<Instructor>(API_URL + id);
+        return this.http.get<Instructor>(API_URL + id)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     update(id: number | string, data: any): Observable<Object> {
-        return this.http.put(API_URL + id, data);
+        return this.http.put(API_URL + id, data)
+            .pipe(catchError(UtilsService.handleError));
     }
 
     add(data: any): Observable<Object> {
-        return this.http.post(API_URL, data);
+        return this.http.post(API_URL, data)
+            .pipe(catchError(UtilsService.handleError));
     }
 
 }
