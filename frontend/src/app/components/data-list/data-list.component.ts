@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NotificationService} from "../../services/notification.service";
 import {CommonData} from "../../common/commonData";
 import {Observable} from "rxjs";
@@ -10,7 +10,7 @@ import {StudentService} from "../../services/student.service";
     templateUrl: './data-list.component.html',
     styleUrls: ['./data-list.component.css']
 })
-export class DataListComponent implements OnInit {
+export class DataListComponent {
 
     @Input() entityId!: number;
     @Input() entityName!: string;
@@ -26,9 +26,6 @@ export class DataListComponent implements OnInit {
                 private studentService: StudentService) {
     }
 
-    ngOnInit(): void {
-    }
-
     loadRelatedData(isRelated: boolean) {
         this.loading = this.showData = true;
         this.isDataRelated = isRelated;
@@ -40,10 +37,7 @@ export class DataListComponent implements OnInit {
             res => {
                 this.data = res;
                 this.notificationService.openSnackBar(res.length + ' objects found');
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -66,11 +60,7 @@ export class DataListComponent implements OnInit {
                 console.log(res);
                 this.notificationService.openSnackBar(message);
                 this.showData = false;
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-                this.loading = false;
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => {
                 this.loading = false;
                 this.loadRelatedData(this.isDataRelated);
@@ -81,9 +71,6 @@ export class DataListComponent implements OnInit {
     private collectDataIds() {
         return this.data.filter(d => d.checked).map(value => value.id);
     }
-
-
-    /**/
 
     // load data with specific service class
     defineLoadingMethod(isRelated: boolean, entityId: number, entityName: string) {
@@ -101,6 +88,12 @@ export class DataListComponent implements OnInit {
         return isAdding
             ? serviceClass.addToCourse(entityId, data)
             : serviceClass.removeFromCourse(entityId, data);
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
