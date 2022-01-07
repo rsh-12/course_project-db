@@ -32,10 +32,7 @@ export class CoursesListComponent implements OnInit {
             data => {
                 this.totalCourses = data.length
                 this.courses = data;
-            }, error => {
-                this.totalCourses = 0;
-                console.log(error);
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
     }
@@ -57,9 +54,7 @@ export class CoursesListComponent implements OnInit {
                 this.courses = data;
                 this.courseName = '';
                 this.notificationService.openSnackBar(`${this.totalCourses} objects found`);
-            }, error => {
-                console.log(error);
-            },
+            }, error => this.handleError(error),
             () => this.loading = false
         );
     }
@@ -86,13 +81,16 @@ export class CoursesListComponent implements OnInit {
                     this.refreshList();
                     this.notificationService.successfullyDeleted();
                 },
-                error => {
-                    console.log(error);
-                    this.notificationService.unknownError();
-                },
+                error => this.handleError(error),
                 () => this.loading = false
             );
         }
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
