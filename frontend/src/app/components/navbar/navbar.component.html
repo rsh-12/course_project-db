@@ -48,24 +48,23 @@
             <li class="nav-item dropdown no-arrow mx-1">
                 <div class="nav-item dropdown no-arrow">
                     <a class="dropdown-toggle nav-link text-black-50"
-                       href="/home" routerLink="home">HOME</a>
+                       routerLink="/home" routerLinkActive="active-link">HOME</a>
                 </div>
             </li>
             <li class="nav-item dropdown no-arrow mx-1">
                 <div class="nav-item dropdown no-arrow">
                     <a matTooltip="Open the navigation list"
-                            class="dropdown-toggle nav-link text-black-50"
-                       aria-expanded="false" data-bs-toggle="dropdown"
-                       href="#"><span
+                       class="dropdown-toggle nav-link text-black-50 cursor-pointer"
+                       aria-expanded="false" data-bs-toggle="dropdown"><span
                             class="badge bg-danger badge-counter">{{totalCount}}</span>
                         LINKS&nbsp;&nbsp;&nbsp;
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
                         <h6 class="dropdown-header">contents</h6><a
-                            class="dropdown-item d-flex align-items-center" href="/companies"
-                            routerLink="companies">
+                            class="dropdown-item d-flex align-items-center"
+                            routerLink="/companies">
                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                   src="assets/img/avatars/company.png">
+                                                                   src="assets/img/avatars/company.png" alt="company">
                         </div>
                         <div class="fw-bold">
                             <div class="text-truncate"><span>Companies</span>
@@ -73,9 +72,9 @@
                             <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records
                                 - {{totalRecords.companies}}</p>
                         </div>
-                    </a><a class="dropdown-item d-flex align-items-center" href="/students" routerLink="students">
+                    </a><a class="dropdown-item d-flex align-items-center" routerLink="/students">
                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                   src="assets/img/avatars/student.png">
+                                                                   src="assets/img/avatars/student.png" alt="student">
                         </div>
                         <div class="fw-bold">
                             <div class="text-truncate">
@@ -83,9 +82,9 @@
                             <p class="small text-gray-500 mb-0" *ngIf="totalRecords">Total records
                                 - {{totalRecords.students}}</p>
                         </div>
-                    </a><a class="dropdown-item d-flex align-items-center" href="/contracts" routerLink="contracts">
+                    </a><a class="dropdown-item d-flex align-items-center" routerLink="/contracts">
                         <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                   src="assets/img/avatars/contract.png">
+                                                                   src="assets/img/avatars/contract.png" alt="contract">
                         </div>
                         <div class="fw-bold">
                             <div class="text-truncate"><span>Contracts</span>
@@ -94,10 +93,11 @@
                                 - {{totalRecords.contracts}}</p>
                         </div>
                     </a>
-                        <a class="dropdown-item d-flex align-items-center" href="/certificates"
-                           routerLink="certificates">
+                        <a class="dropdown-item d-flex align-items-center"
+                           routerLink="/certificates">
                             <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                       src="assets/img/avatars/certificate.png">
+                                                                       src="assets/img/avatars/certificate.png"
+                                                                       alt="certificate">
                             </div>
                             <div class="fw-bold">
                                 <div class="text-truncate"><span>Certificates</span>
@@ -107,9 +107,9 @@
                             </div>
                         </a>
 
-                        <a class="dropdown-item d-flex align-items-center" href="/courses" routerLink="courses">
+                        <a class="dropdown-item d-flex align-items-center" routerLink="/courses">
                             <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                       src="assets/img/avatars/course.png">
+                                                                       src="assets/img/avatars/course.png" alt="course">
                             </div>
                             <div class="fw-bold">
                                 <div class="text-truncate"><span>Courses</span>
@@ -119,9 +119,10 @@
                             </div>
                         </a>
 
-                        <a class="dropdown-item d-flex align-items-center" href="/instructors" routerLink="instructors">
+                        <a class="dropdown-item d-flex align-items-center" routerLink="/instructors">
                             <div class="dropdown-list-image me-3"><img class="rounded-circle"
-                                                                       src="assets/img/avatars/teacher.png">
+                                                                       src="assets/img/avatars/teacher.png"
+                                                                       alt="instructor">
                             </div>
                             <div class="fw-bold">
                                 <div class="text-truncate"><span>Instructors</span>
@@ -139,13 +140,14 @@
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow">
                 <div matTooltip="Open menu"
-                        class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
+                     class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                                            aria-expanded="false" data-bs-toggle="dropdown"
                                                            href="#"><span
                         class="d-none d-lg-inline me-2 text-gray-600 small">{{username}}</span><img
-                        class="border rounded-circle img-profile" src="assets/img/avatars/profile.png"></a>
+                        class="border rounded-circle img-profile" src="assets/img/avatars/profile.png"
+                        alt="profile"></a>
                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
-                            class="dropdown-item" href="/profile" routerLink="profile"><i
+                            class="dropdown-item" routerLink="/profile"><i
                             class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item cursor-pointer" (click)="logout()"><i
@@ -160,16 +162,14 @@
             <li class="nav-item dropdown no-arrow mx-1">
                 <div class="nav-item dropdown no-arrow">
                     <a class="dropdown-toggle nav-link"
-
-                       href="/login" routerLink="login">Sign In</a>
+                       routerLink="/login">Sign In</a>
                 </div>
             </li>
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow mx-1">
                 <div class="nav-item dropdown no-arrow">
                     <a class="dropdown-toggle nav-link"
-
-                       href="/register" routerLink="register">Sign Up</a>
+                       routerLink="/register">Sign Up</a>
                 </div>
             </li>
 
@@ -178,7 +178,8 @@
                                                            aria-expanded="false" data-bs-toggle="dropdown"
                                                            href="#"><span
                         class="d-none d-lg-inline me-2 text-gray-600 small">{{username}}</span><img
-                        class="border rounded-circle img-profile" src="assets/img/avatars/profile.png"></a>
+                        class="border rounded-circle img-profile" src="assets/img/avatars/profile.png"
+                        alt="profile"></a>
                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
                             class="dropdown-item" href="#"><i
                             class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a
