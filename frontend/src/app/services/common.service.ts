@@ -24,7 +24,8 @@ export class CommonService {
     }
 
     getStatistics(): Observable<TotalRecords> {
-        return this.http.get<TotalRecords>(API_URL + 'statistics');
+        return this.http.get<TotalRecords>(API_URL + 'statistics')
+            .pipe(catchError(UtilsService.handleError));
     }
 
     getStudentAge(form: FormGroup) {
@@ -40,7 +41,8 @@ export class CommonService {
     }
 
     whoAmI(): Observable<CurrentUser> {
-        return this.http.get<CurrentUser>(API_URL + 'whoami');
+        return this.http.get<CurrentUser>(API_URL + 'whoami')
+            .pipe(catchError(UtilsService.handleError));
     }
 
     getIncome(): Observable<Income[]> {
