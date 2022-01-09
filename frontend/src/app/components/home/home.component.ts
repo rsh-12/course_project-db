@@ -33,9 +33,7 @@ export class HomeComponent implements OnInit {
         this.commonService.getStatistics().subscribe(
             data => {
                 this.statistics = data;
-            }, err => {
-                console.log(err)
-            }
+            }, errorMsg => this.handleError(errorMsg)
         )
     }
 
@@ -43,9 +41,7 @@ export class HomeComponent implements OnInit {
         this.commonService.getIncome().subscribe(
             data => {
                 this.income = data;
-            }, error => {
-                console.log(error);
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -58,10 +54,7 @@ export class HomeComponent implements OnInit {
                     students: data,
                     title: 'Students without contracts'
                 });
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-            }
+            }, errorMsg => this.handleError(errorMsg)
         );
     }
 
@@ -74,6 +67,12 @@ export class HomeComponent implements OnInit {
                 saveAs(blob, "statistics.docx");
                 console.log("Document created successfully");
             }))
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
