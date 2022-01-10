@@ -106,11 +106,7 @@ export class StudentDetailsComponent implements OnInit {
                 this.currentStudent = data;
                 this.notificationService.openSnackBar('Student created successfully');
                 this.back();
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-                this.loading = false
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -123,11 +119,7 @@ export class StudentDetailsComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.openSnackBar('Student updated successfully');
-            }, err => {
-                this.loading = false;
-                console.log(err);
-                this.notificationService.openSnackBar(err.error.message);
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
 
@@ -140,10 +132,7 @@ export class StudentDetailsComponent implements OnInit {
             data => {
                 console.log(data);
                 this.currentStudent = data;
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => {
                 this.initFormGroup();
                 this.loading = false;
@@ -169,11 +158,7 @@ export class StudentDetailsComponent implements OnInit {
                 console.log(data)
                 this.currentCompany = data;
             },
-            err => {
-                this.loadingCompany = false;
-                console.log(err);
-                this.notificationService.unknownError();
-            },
+            errorMsg => this.handleError(errorMsg),
             () => this.loadingCompany = false
         );
     }
@@ -186,11 +171,7 @@ export class StudentDetailsComponent implements OnInit {
             data => {
                 console.log(data);
                 this.companies = data;
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-                this.loadingCompany = false;
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loadingCompany = false
         );
     }
@@ -200,8 +181,13 @@ export class StudentDetailsComponent implements OnInit {
         this.currentCompany = company;
         this.currentStudent.companyId = company.id;
         this.form.controls['companyId'].setValue(company.id);
-
         console.log(this.form.value)
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
