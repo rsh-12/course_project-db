@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from "../../../common/course";
 import {CourseService} from "../../../services/course.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Instructor} from "../../../common/instructor";
 import {CourseById} from "../../../common/courseById";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../services/notification.service";
 import {UtilsService} from "../../../services/utils.service";
+import {isNumeric} from "rxjs/internal-compatibility";
 
 @Component({
     selector: 'app-course-details',
@@ -41,28 +42,19 @@ export class CourseDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.loading = true;
 
-        const id = this.route.snapshot.params.id;
-        this.isEditMode = /^\d+$/.test(id);
+        this.route.params.subscribe((params: Params) => {
+                const pathVariable = params['id'];
+                if (isNumeric(pathVariable)) {
+                    this.getCourseById(pathVariable);
+                    return;
+                }
 
-        if (this.isEditMode) {
-            this.getCourseById(id);
-        } else {
-            this.router.navigate(['courses/add']).then();
-
-            const currentDate = new Date();
-            this.currentCourse = {
-                name: '',
-                category: '',
-                description: '',
-                hours: 0,
-                price: 0,
-                startDate: new Date(),
-                endDate: new Date(currentDate.setMonth(currentDate.getMonth() + 1)),
-            }
-
-            this.initFormGroup();
-            this.loading = false;
-        }
+                this.initFormGroup();
+                this.loading = false;
+            },
+            error => console.log(error),
+            () => this.loading = false
+        );
     }
 
     get f(): { [key: string]: AbstractControl } {
@@ -90,7 +82,7 @@ export class CourseDetailsComponent implements OnInit {
         this.form.reset();
     }
 
-    private getCourseById(id: string) {
+    private getCourseById(id: string | number) {
         this.courseService.findById(id).subscribe(
             data => {
                 this.response = data;
@@ -152,9 +144,8 @@ export class CourseDetailsComponent implements OnInit {
         this.router.navigate(['/courses']).then()
     }
 
-    private handleError(defaultErrorMsg: string, errorMsg?: string) {
-        let message = errorMsg ? errorMsg : defaultErrorMsg
-        this.notificationService.openSnackBar(message);
+    private handleError(errorMsg: string) {
+        this.notificationService.openSnackBar(errorMsg);
         this.loading = false;
     }
 
