@@ -3,8 +3,9 @@ import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
 import {Company} from "../../../common/company";
 import {CompanyService} from "../../../services/company.service";
 import {NotificationService} from "../../../services/notification.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {UtilsService} from "../../../services/utils.service";
+import {isNumeric} from "rxjs/internal-compatibility";
 
 @Component({
     selector: 'app-company-details',
@@ -36,21 +37,14 @@ export class CompanyDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const id = this.route.snapshot.params.id;
-        this.isEditMode = UtilsService.isNumeric(id);
-
-        if (this.isEditMode) {
-            this.getCompanyById(id);
-        } else {
-            this.router.navigate(['companies/add']).then();
-
-            this.currentCompany = {
-                name: '',
-                description: ''
-            };
-
-            this.initFormGroup();
-        }
+        this.route.params.subscribe((params: Params) => {
+            const pathVariable = params['id'];
+            if (isNumeric(pathVariable)) {
+                this.getCompanyById(pathVariable);
+            } else {
+                this.initFormGroup();
+            }
+        });
     }
 
     onSubmit() {
@@ -91,7 +85,7 @@ export class CompanyDetailsComponent implements OnInit {
         );
     }
 
-    private getCompanyById(id: string) {
+    private getCompanyById(id: string | number) {
         this.loading = true;
 
         this.companyService.findById(id).subscribe(
