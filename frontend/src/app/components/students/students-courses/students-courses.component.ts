@@ -93,10 +93,7 @@ export class StudentsCoursesComponent implements OnInit {
             res => {
                 console.log(res);
                 this.students = res;
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -115,13 +112,18 @@ export class StudentsCoursesComponent implements OnInit {
                 console.log(res);
                 this.notificationService.openSnackBar('Success');
                 window.location.reload();
-            }, err => {
-                // console.log(err);
-                console.log(err.error)
-                this.notificationService.openSnackBar(err.error.message);
-                this.loading = false;
-            }, () => this.loading = false
+            },
+            errorMsg => {
+                this.handleError(errorMsg);
+            },
+            () => this.loading = false
         );
+    }
+
+    private handleError(defaultErrorMsg: string, errorMsg?: string) {
+        let message = errorMsg ? errorMsg : defaultErrorMsg
+        this.notificationService.openSnackBar(message);
+        this.loading = false;
     }
 
 }
