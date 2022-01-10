@@ -38,7 +38,7 @@ export class CourseService {
         }).pipe(catchError(UtilsService.handleError));
     }
 
-    findById(id: string): Observable<CourseById> {
+    findById(id: string | number): Observable<CourseById> {
         return this.http.get<CourseById>(API_URL + id)
             .pipe(catchError(UtilsService.handleError));
     }
