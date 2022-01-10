@@ -41,9 +41,9 @@ export class CompanyDetailsComponent implements OnInit {
             const pathVariable = params['id'];
             if (isNumeric(pathVariable)) {
                 this.getCompanyById(pathVariable);
-            } else {
-                this.initFormGroup();
+                return;
             }
+            this.initFormGroup();
         });
     }
 
