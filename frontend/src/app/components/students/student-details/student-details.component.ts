@@ -184,9 +184,8 @@ export class StudentDetailsComponent implements OnInit {
         console.log(this.form.value)
     }
 
-    private handleError(defaultErrorMsg: string, errorMsg?: string) {
-        let message = errorMsg ? errorMsg : defaultErrorMsg
-        this.notificationService.openSnackBar(message);
+    private handleError(errorMsg: string) {
+        this.notificationService.openSnackBar(errorMsg);
         this.loading = false;
     }
 
