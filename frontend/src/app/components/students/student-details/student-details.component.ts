@@ -3,11 +3,12 @@ import {Student} from "../../../common/student";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StudentService} from "../../../services/student.service";
 import {NotificationService} from "../../../services/notification.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {CompanyService} from "../../../services/company.service";
 import {Company} from "../../../common/company";
 import {UtilsService} from "../../../services/utils.service";
 import {CommonService} from "../../../services/common.service";
+import {isNumeric} from "rxjs/internal-compatibility";
 
 @Component({
     selector: 'app-student-details',
@@ -40,29 +41,14 @@ export class StudentDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const id = this.route.snapshot.params.id;
-        this.isEditMode = UtilsService.isNumeric(id);
-
-        if (this.isEditMode) {
-            this.getStudentById(id);
-            return;
-        }
-
-        this.router.navigate(['students/add']).then();
-
-        this.currentCompany = {};
-        this.currentIndex = -1;
-
-        const currentDate = new Date();
-        this.currentStudent = {
-            lastName: '',
-            firstName: '',
-            dateOfBirth: new Date(currentDate.setFullYear(currentDate.getFullYear() - 18)),
-            phone: '',
-            email: ''
-        };
-
-        this.initFormGroup();
+        this.route.params.subscribe((params: Params) => {
+            const pathVariable = params['id'];
+            if (isNumeric(pathVariable)) {
+                this.getStudentById(pathVariable);
+                return;
+            }
+            this.initFormGroup();
+        })
     }
 
     get f(): { [key: string]: AbstractControl } {
@@ -125,7 +111,7 @@ export class StudentDetailsComponent implements OnInit {
 
     }
 
-    private getStudentById(id: string) {
+    private getStudentById(id: string | number) {
         this.loading = true;
 
         this.studentService.findById(id).subscribe(
