@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup} from "@angular/forms";
 import {CommonService} from "../../../services/common.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Instructor} from "../../../common/instructor";
 import {InstructorService} from "../../../services/instructor.service";
 import {NotificationService} from "../../../services/notification.service";
 import {UtilsService} from "../../../services/utils.service";
+import {isNumeric} from "rxjs/internal-compatibility";
 
 @Component({
     selector: 'app-instructor-details',
@@ -30,24 +31,14 @@ export class InstructorDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const id = this.route.snapshot.params.id;
-        this.isEditMode = UtilsService.isNumeric(id);
-
-        if (this.isEditMode) {
-            this.getInstructorById(id);
-            return;
-        }
-
-        this.router.navigate(['instructors/add']).then();
-
-        this.currentInstructor = {
-            lastName: '',
-            firstName: '',
-            education: '',
-            degree: 'PhD'
-        };
-
-        this.initFormGroup();
+        this.route.params.subscribe((params: Params) => {
+            const pathVariable = params['id'];
+            if (isNumeric(pathVariable)) {
+                this.getInstructorById(pathVariable)
+                return;
+            }
+            this.initFormGroup();
+        })
     }
 
     get f(): { [key: string]: AbstractControl } {
