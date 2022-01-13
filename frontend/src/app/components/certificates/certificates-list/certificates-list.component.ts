@@ -47,7 +47,7 @@ export class CertificatesListComponent implements OnInit {
             data => {
                 console.log(data)
                 this.dataSource = new MatTableDataSource<CertificateInfo>(data)
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -76,7 +76,7 @@ export class CertificatesListComponent implements OnInit {
                 console.log(res);
                 this.notificationService.successfullyDeleted();
                 this.retrieveCertificates();
-            }, err => this.handleError(err),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }

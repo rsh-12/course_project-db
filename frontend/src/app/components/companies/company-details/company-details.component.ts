@@ -64,7 +64,7 @@ export class CompanyDetailsComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.openSnackBar('Company updated successfully');
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -76,7 +76,7 @@ export class CompanyDetailsComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.openSnackBar('Company created successfully');
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
 
             () => {
                 this.back();
@@ -91,7 +91,7 @@ export class CompanyDetailsComponent implements OnInit {
         this.companyService.findById(id).subscribe(
             data => {
                 this.currentCompany = data;
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => {
                 this.initFormGroup();
                 return this.loading = false;

@@ -48,7 +48,7 @@ export class ContractsListComponent implements OnInit {
                 console.log(data)
                 this.contracts = data;
                 this.dataSource = new MatTableDataSource<Contract>(data)
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -69,7 +69,7 @@ export class ContractsListComponent implements OnInit {
                 console.log(res);
                 this.notificationService.successfullyDeleted();
                 this.retrieveContracts();
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
