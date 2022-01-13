@@ -13,9 +13,7 @@ import {Course} from "../../../common/course";
 export class InstructorsListComponent implements OnInit {
 
     instructors: Instructor[] = [];
-    currentInstructor: Instructor = {
-        id: 0
-    };
+    currentInstructor: Instructor = {};
 
     courses: Map<number, Course[]> = new Map<number, Course[]>();
 
@@ -90,7 +88,6 @@ export class InstructorsListComponent implements OnInit {
             },
             () => this.loadingCourses = false
         );
-
     }
 
     searchByName() {
