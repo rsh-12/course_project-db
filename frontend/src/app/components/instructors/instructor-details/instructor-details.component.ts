@@ -68,10 +68,7 @@ export class InstructorDetailsComponent implements OnInit {
             data => {
                 console.log(data);
                 this.currentInstructor = data;
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-            }, () => {
+            }, errorMsg => this.handleError(errorMsg), () => {
                 this.initFormGroup();
                 this.loading = false;
             }
@@ -96,11 +93,8 @@ export class InstructorDetailsComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.openSnackBar('Instructor updated successfully');
-            }, err => {
-                console.error(err);
-                this.notificationService.unknownError();
-                this.loading = false;
-            }, () => this.loading = false
+            }, errorMsg => this.handleError(errorMsg),
+            () => this.loading = false
         );
     }
 
@@ -111,12 +105,14 @@ export class InstructorDetailsComponent implements OnInit {
                 console.log(res);
                 this.notificationService.openSnackBar('Instructor added successfully');
                 this.back();
-            }, err => {
-                console.error(err);
-                this.notificationService.unknownError();
-                this.loading = false;
-            }, () => this.loading = false
+            }, errorMsg => this.handleError(errorMsg),
+            () => this.loading = false
         );
+    }
+
+    private handleError(errorMsg: string) {
+        this.notificationService.openSnackBar(errorMsg);
+        this.loading = false;
     }
 
 }
