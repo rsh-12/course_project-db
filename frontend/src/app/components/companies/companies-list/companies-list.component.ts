@@ -32,7 +32,7 @@ export class CompaniesListComponent implements OnInit {
             data => {
                 console.log(data);
                 this.companies = data;
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -58,7 +58,7 @@ export class CompaniesListComponent implements OnInit {
                 console.log(res);
                 this.notificationService.openSnackBar('The company deleted successfully');
                 this.refreshList();
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -73,7 +73,7 @@ export class CompaniesListComponent implements OnInit {
                 this.companies = data;
                 this.companyName = '';
                 this.notificationService.openSnackBar(`${data.length} objects found`);
-            }, error => this.handleError(error),
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -88,7 +88,7 @@ export class CompaniesListComponent implements OnInit {
                     students: data,
                     title: 'Students'
                 });
-            }, error => this.handleError(error)
+            }, errorMsg => this.handleError(errorMsg)
         );
     }
 
