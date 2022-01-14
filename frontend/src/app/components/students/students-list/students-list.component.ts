@@ -25,18 +25,6 @@ export class StudentsListComponent implements OnInit {
         this.retrieveStudents();
     }
 
-    private retrieveStudents() {
-        this.studentService.findAll().subscribe(
-            data => {
-                this.students = data;
-                this.loading = false;
-            }, error => {
-                console.log(error);
-                this.loading = false;
-            }
-        );
-    }
-
     setActiveStudent(student: Student, i: number) {
         this.currentIndex = i;
         this.currentStudent = student;
@@ -59,10 +47,7 @@ export class StudentsListComponent implements OnInit {
                 this.students = data;
                 this.studentName = ''
                 this.notificationService.openSnackBar(`${data.length} objects found`);
-            }, err => {
-                console.log(err);
-                this.notificationService.openSnackBar('Something went wrong');
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => this.loading = false
         );
     }
@@ -75,14 +60,19 @@ export class StudentsListComponent implements OnInit {
             res => {
                 console.log(res);
                 this.notificationService.successfullyDeleted();
-            }, err => {
-                console.log(err);
-                this.notificationService.unknownError();
-            },
+            }, errorMsg => this.handleError(errorMsg),
             () => {
                 this.loading = false;
                 this.refreshList();
             }
+        );
+    }
+
+    private retrieveStudents() {
+        this.studentService.findAll().subscribe(
+            data => this.students = data,
+            errorMsg => this.handleError(errorMsg),
+            () => this.loading = false
         );
     }
 
@@ -91,4 +81,10 @@ export class StudentsListComponent implements OnInit {
         this.currentIndex = -1;
         this.retrieveStudents();
     }
+
+    private handleError(errorMsg: string) {
+        this.notificationService.openSnackBar(errorMsg);
+        this.loading = false;
+    }
+
 }
