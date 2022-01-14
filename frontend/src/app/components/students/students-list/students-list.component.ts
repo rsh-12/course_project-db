@@ -21,7 +21,6 @@ export class StudentsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loading = true;
         this.retrieveStudents();
     }
 
@@ -69,6 +68,7 @@ export class StudentsListComponent implements OnInit {
     }
 
     private retrieveStudents() {
+        this.loading = true;
         this.studentService.findAll().subscribe(
             data => this.students = data,
             errorMsg => this.handleError(errorMsg),
