@@ -36,7 +36,6 @@ const routes: Routes = [
     {path: 'instructors/:id', component: InstructorDetailsComponent, canActivate: [AuthGuardService]},
     {path: 'instructors/add', component: InstructorDetailsComponent, canActivate: [AuthGuardService]},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: '404', redirectTo: 'home'},
     {path: '**', redirectTo: 'home'},
 ];
 
