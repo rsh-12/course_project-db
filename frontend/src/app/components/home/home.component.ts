@@ -7,6 +7,7 @@ import {DocumentCreator} from "./report-generator";
 import {Packer} from "docx";
 import {saveAs} from 'file-saver';
 import {TotalRecords} from "../../common/totalRecords";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-home',
@@ -24,7 +25,9 @@ export class HomeComponent implements OnInit {
 
     constructor(private commonService: CommonService,
                 private studentService: StudentService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Home');
     }
 
     ngOnInit(): void {

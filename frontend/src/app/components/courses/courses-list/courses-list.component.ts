@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../../../services/course.service";
 import {NotificationService} from "../../../services/notification.service";
 import {Course} from "../../../common/course";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-courses-list',
@@ -18,7 +19,9 @@ export class CoursesListComponent implements OnInit {
     loading = false;
 
     constructor(private courseService: CourseService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Courses')
     }
 
     ngOnInit(): void {

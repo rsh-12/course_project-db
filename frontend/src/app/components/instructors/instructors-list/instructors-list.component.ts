@@ -4,6 +4,7 @@ import {Instructor} from "../../../common/instructor";
 import {CourseService} from "../../../services/course.service";
 import {NotificationService} from "../../../services/notification.service";
 import {Course} from "../../../common/course";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-instructors-list',
@@ -24,7 +25,9 @@ export class InstructorsListComponent implements OnInit {
 
     constructor(private instructorService: InstructorService,
                 private courseService: CourseService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Instructors');
     }
 
     ngOnInit(): void {

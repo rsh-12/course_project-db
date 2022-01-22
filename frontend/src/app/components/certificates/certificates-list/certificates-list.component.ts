@@ -5,6 +5,7 @@ import {NotificationService} from "../../../services/notification.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-certificates-list',
@@ -19,7 +20,9 @@ export class CertificatesListComponent implements OnInit {
     loadStudents = false;
 
     constructor(private commonService: CommonService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Certificates');
     }
 
     @ViewChild(MatPaginator, {static: false})

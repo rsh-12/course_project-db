@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NotificationService} from "../../../services/notification.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-contracts-list',
@@ -20,7 +21,9 @@ export class ContractsListComponent implements OnInit {
     displayedColumns: string[] = ['company', 'lastName', 'firstName', 'course', 'conclusion', 'action'];
 
     constructor(private commonService: CommonService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Contracts');
     }
 
     @ViewChild(MatPaginator, {static: false})

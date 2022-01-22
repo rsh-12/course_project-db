@@ -7,6 +7,7 @@ import {InstructorService} from "../../../services/instructor.service";
 import {NotificationService} from "../../../services/notification.service";
 import {UtilsService} from "../../../services/utils.service";
 import {isNumeric} from "rxjs/internal-compatibility";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-instructor-details',
@@ -27,7 +28,8 @@ export class InstructorDetailsComponent implements OnInit {
                 private commonService: CommonService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private title: Title) {
+        title.setTitle('Instructor');
     }
 
     ngOnInit(): void {

@@ -3,6 +3,7 @@ import {CompanyService} from "../../../services/company.service";
 import {Company} from "../../../common/company";
 import {NotificationService} from "../../../services/notification.service";
 import {StudentService} from "../../../services/student.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-companies-list',
@@ -19,7 +20,9 @@ export class CompaniesListComponent implements OnInit {
 
     constructor(private companyService: CompanyService,
                 private notificationService: NotificationService,
-                private studentService: StudentService) {
+                private studentService: StudentService,
+                private title: Title) {
+        title.setTitle('Companies');
     }
 
     ngOnInit(): void {

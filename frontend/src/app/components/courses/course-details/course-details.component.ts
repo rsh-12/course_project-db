@@ -8,6 +8,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 import {NotificationService} from "../../../services/notification.service";
 import {UtilsService} from "../../../services/utils.service";
 import {isNumeric} from "rxjs/internal-compatibility";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-course-details',
@@ -36,7 +37,9 @@ export class CourseDetailsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private formBuilder: FormBuilder,
                 private notificationService: NotificationService,
-                private router: Router) {
+                private router: Router,
+                private title: Title) {
+        title.setTitle('Course');
     }
 
     ngOnInit(): void {

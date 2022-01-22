@@ -5,6 +5,7 @@ import {NotificationService} from "../../../services/notification.service";
 import {CommonService} from "../../../services/common.service";
 import {MatDialog} from "@angular/material/dialog";
 import {PickDateDialogComponent} from "../../pick-date-dialog/pick-date-dialog.component";
+import {Title} from "@angular/platform-browser";
 
 export interface StudentsWithCourses {
     // courses_students
@@ -35,7 +36,9 @@ export class StudentsCoursesComponent implements OnInit {
                 private studentService: StudentService,
                 private commonService: CommonService,
                 private dialog: MatDialog,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Students')
     }
 
     ngOnInit(): void {

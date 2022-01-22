@@ -3,6 +3,7 @@ import {AuthService} from "../../services/auth.service";
 import {TokenStorageService} from "../../services/token-storage.service";
 import {Router} from "@angular/router";
 import {NotificationService} from "../../services/notification.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-login',
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit {
     constructor(private authService: AuthService,
                 private tokenStorage: TokenStorageService,
                 private router: Router,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Sign in')
     }
 
     ngOnInit(): void {

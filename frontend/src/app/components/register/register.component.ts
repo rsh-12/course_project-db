@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-register',
@@ -17,7 +18,9 @@ export class RegisterComponent implements OnInit {
     isSignUpFailed = false;
     errorMessage = '';
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService,
+                private title: Title) {
+        title.setTitle('Sign up')
     }
 
     ngOnInit(): void {

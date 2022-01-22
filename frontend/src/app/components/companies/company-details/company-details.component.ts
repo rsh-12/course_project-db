@@ -6,6 +6,7 @@ import {NotificationService} from "../../../services/notification.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {UtilsService} from "../../../services/utils.service";
 import {isNumeric} from "rxjs/internal-compatibility";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-company-details',
@@ -29,7 +30,9 @@ export class CompanyDetailsComponent implements OnInit {
                 private notificationService: NotificationService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private title: Title) {
+        title.setTitle('Company');
     }
 
     get f(): { [key: string]: AbstractControl } {

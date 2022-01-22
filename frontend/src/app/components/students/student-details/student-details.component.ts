@@ -9,6 +9,7 @@ import {Company} from "../../../common/company";
 import {UtilsService} from "../../../services/utils.service";
 import {CommonService} from "../../../services/common.service";
 import {isNumeric} from "rxjs/internal-compatibility";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-student-details',
@@ -37,7 +38,9 @@ export class StudentDetailsComponent implements OnInit {
                 private notificationService: NotificationService,
                 private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private title: Title) {
+        title.setTitle('Student')
     }
 
     ngOnInit(): void {

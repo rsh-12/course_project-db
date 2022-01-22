@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StudentService} from "../../../services/student.service";
 import {Student} from "../../../common/student";
 import {NotificationService} from "../../../services/notification.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-students-list',
@@ -17,7 +18,9 @@ export class StudentsListComponent implements OnInit {
     studentName = '';
 
     constructor(private studentService: StudentService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private title: Title) {
+        title.setTitle('Students');
     }
 
     ngOnInit(): void {
